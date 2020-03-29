@@ -5,7 +5,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="350.0" prefWidth="445.0" xmlns="http://javafx.com/javafx/11.0.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FXMLController">
+<AnchorPane id="AnchorPane" prefHeight="350.0" prefWidth="447.0" xmlns="http://javafx.com/javafx/11.0.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FXMLController">
     <children>
         <JFXButton fx:id="addBook" layoutY="300.0" onAction="#handleAddBookButtonPushed" prefHeight="50.0" prefWidth="225.0" stylesheets="@addbook.css" text="Add" />
         <JFXTextField alignment="TOP_LEFT" focusColor="#2f5ad0" labelFloat="true" layoutX="4.0" layoutY="20.0" prefHeight="40.0" prefWidth="450.0" promptText="Title" unFocusColor="#5e751c">

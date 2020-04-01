@@ -5,25 +5,25 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="350.0" prefWidth="445.0" xmlns="http://javafx.com/javafx/11.0.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FXMLController">
+<AnchorPane id="AnchorPane" prefHeight="350.0" prefWidth="445.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FXMLController">
     <children>
         <JFXButton fx:id="addBook" layoutY="300.0" onAction="#handleAddBookButtonPushed" prefHeight="50.0" prefWidth="225.0" stylesheets="@addbook.css" text="Add" />
-        <JFXTextField alignment="TOP_LEFT" focusColor="#2f5ad0" labelFloat="true" layoutX="4.0" layoutY="20.0" prefHeight="40.0" prefWidth="450.0" promptText="Title" unFocusColor="#5e751c">
+        <JFXTextField fx:id="titleBar" alignment="TOP_LEFT" focusColor="#2f5ad0" labelFloat="true" layoutX="4.0" layoutY="20.0" prefHeight="40.0" prefWidth="450.0" promptText="Title" unFocusColor="#5e751c">
             <padding>
                 <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
             </padding>
         </JFXTextField>
-        <JFXTextField alignment="TOP_LEFT" focusColor="#2f5ad0" labelFloat="true" layoutX="4.0" layoutY="79.0" prefHeight="40.0" prefWidth="450.0" promptText="Author" unFocusColor="#5e751c">
+        <JFXTextField fx:id="authorBar" alignment="TOP_LEFT" focusColor="#2f5ad0" labelFloat="true" layoutX="4.0" layoutY="79.0" prefHeight="40.0" prefWidth="450.0" promptText="Author" unFocusColor="#5e751c">
             <padding>
                 <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
             </padding>
         </JFXTextField>
-        <JFXTextField alignment="TOP_LEFT" focusColor="#2f5ad0" labelFloat="true" layoutX="4.0" layoutY="155.0" prefHeight="40.0" prefWidth="450.0" promptText="Year" unFocusColor="#5e751c">
+        <JFXTextField fx:id="yearBar" alignment="TOP_LEFT" focusColor="#2f5ad0" labelFloat="true" layoutX="4.0" layoutY="155.0" prefHeight="40.0" prefWidth="450.0" promptText="Year" unFocusColor="#5e751c">
             <padding>
                 <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
             </padding>
         </JFXTextField>
-        <JFXTextField alignment="TOP_LEFT" focusColor="#2f5ad0" labelFloat="true" layoutX="4.0" layoutY="231.0" prefHeight="40.0" prefWidth="450.0" promptText="Publisher" unFocusColor="#5e751c">
+        <JFXTextField fx:id="publisherBar" alignment="TOP_LEFT" focusColor="#2f5ad0" labelFloat="true" layoutX="4.0" layoutY="231.0" prefHeight="40.0" prefWidth="450.0" promptText="Publisher" unFocusColor="#5e751c">
             <padding>
                 <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
             </padding>

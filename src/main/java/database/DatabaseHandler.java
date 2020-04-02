@@ -13,6 +13,7 @@ public final class DatabaseHandler {
     public DatabaseHandler(){
         createConnection();
         setupBookTable();
+        setupUserTable();
     }
 
     private void createConnection(){
@@ -70,6 +71,31 @@ public final class DatabaseHandler {
                         + "     publisher varchar(100),\n"
                         + "     year varchar(100), \n"
                         + "     isAvail boolean default true"
+                        + " )");
+            }
+        } catch(SQLException e){
+            System.err.println(e.getMessage() + " --- setupDatabase");
+        } finally{
+
+        }
+    }
+
+    private void setupUserTable() {
+        String TABLE_NAME = "USER";
+        try{
+            stmt = conn.createStatement();  //creates statement object from databse to exec commands
+
+            DatabaseMetaData dbm = conn.getMetaData();
+            ResultSet tables = dbm.getTables(null, null, TABLE_NAME.toUpperCase(), null);
+            if(tables.next()){
+                System.out.println("Table " + TABLE_NAME + "already exists. Ready to go!");
+            } else{
+                stmt.execute("CREATE TABLE " + TABLE_NAME + "("
+                        + "     username varchar(200) primary key,\n"
+                        + "     fullname varchar(200),\n"
+                        + "     email varchar(200),\n"
+                        + "     address varchar(100),\n"
+                        + "     phone varchar(100) \n"
                         + " )");
             }
         } catch(SQLException e){

@@ -19,7 +19,7 @@ import javafx.scene.layout.AnchorPane;
 import com.jfoenix.controls.JFXTextField;
 import javafx.stage.Stage;
 
-public class FXMLController implements Initializable {
+public class AddBookController implements Initializable {
 
     @FXML
     private AnchorPane rootPane;
@@ -45,11 +45,11 @@ public class FXMLController implements Initializable {
     @FXML
     private JFXButton cancel;
 
-    DatabaseHandler databaseHandler;
+    private DatabaseHandler databaseHandler;
 
 
     @FXML
-    private void handleAddBookButtonPushed() {
+    void handleAddBookButtonPushed() {
         String bookTitle = title.getText();
         String bookAuthor = author.getText();
         String bookYear = year.getText();
@@ -76,17 +76,6 @@ public class FXMLController implements Initializable {
             numberAlert.showAndWait();
         }
 
-        /*
-        stmt.execute("CREATE TABLE " + TABLE_NAME + "("
-                + "     id varchar(200) primary key,\n"
-                + "     title varchar(200),\n"
-                + "     author varchar(200),\n"
-                + "     publisher varchar(100),\n"
-                + "     year varchar(100), \n"
-                + "     isAvail boolean default true"
-                + " )");
-        */
-
         String qu = "INSERT INTO BOOK VALUES ("
                 + "'" + bookID + "',"
                 + "'" + bookTitle + "',"
@@ -99,13 +88,13 @@ public class FXMLController implements Initializable {
         if(databaseHandler.execAction(qu)){
             Alert emptyAlert = new Alert(Alert.AlertType.INFORMATION);
             emptyAlert.setHeaderText(null);
-            emptyAlert.setContentText("Successfully added to database.");
+            emptyAlert.setContentText("Successfully added the book to database.");
             emptyAlert.showAndWait();
         }
         else{
             Alert emptyAlert = new Alert(Alert.AlertType.ERROR);
             emptyAlert.setHeaderText(null);
-            emptyAlert.setContentText("Failed to add to database.");
+            emptyAlert.setContentText("Failed to add the book to the database.");
             emptyAlert.showAndWait();
         }
 

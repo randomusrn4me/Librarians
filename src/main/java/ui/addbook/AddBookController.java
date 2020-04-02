@@ -1,4 +1,4 @@
-package controller;
+package ui.addbook;
 
 import database.DatabaseHandler;
 import javafx.scene.control.Alert;

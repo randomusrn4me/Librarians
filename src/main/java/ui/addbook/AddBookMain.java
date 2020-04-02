@@ -1,4 +1,4 @@
-package model;
+package ui.addbook;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class Main extends Application {
+public class AddBookMain extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {

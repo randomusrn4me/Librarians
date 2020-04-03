@@ -38,7 +38,7 @@ public class FXMLController implements Initializable {
 
     @FXML
     void handleAddBookButtonPushed() throws IOException {
-        System.out.println("AddBook button pushed!!");
+        System.out.println("This now says something else!");
 
         Book konyv = new Book(titleBar.getText(), authorBar.getText(), Integer.parseInt(yearBar.getText()), publisherBar.getText());
 

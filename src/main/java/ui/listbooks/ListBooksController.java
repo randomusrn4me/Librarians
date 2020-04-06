@@ -58,7 +58,7 @@ public class ListBooksController implements Initializable {
     }
 
     private void loadData() throws SQLException {
-        DatabaseHandler databaseHandler = new DatabaseHandler();
+        DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
         String qu = "SELECT * FROM BOOK";
         ResultSet rs = databaseHandler.execQuery(qu);
         while(true){

@@ -108,16 +108,18 @@ public class AddBookController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        databaseHandler = new DatabaseHandler();
+        databaseHandler = DatabaseHandler.getInstance();
 
+        /*
         try {
             checkData();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
+        */
     }
 
+    /*
     private void checkData() throws SQLException {
         String qu = "SELECT title FROM BOOK";
         ResultSet rs = databaseHandler.execQuery(qu);
@@ -128,9 +130,11 @@ public class AddBookController implements Initializable {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-            String titlex = rs.getString("title");
-            System.out.println(titlex);
         }
 
     }
+
+    */
+
+
 }

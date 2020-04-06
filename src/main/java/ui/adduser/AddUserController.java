@@ -14,7 +14,7 @@ import java.util.ResourceBundle;
 
 public class AddUserController implements Initializable {
 
-    DatabaseHandler handler;
+    private DatabaseHandler handler;
 
     @FXML
     private AnchorPane rootPane;
@@ -91,6 +91,6 @@ public class AddUserController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        handler = new DatabaseHandler();
+        handler = DatabaseHandler.getInstance();
     }
 }

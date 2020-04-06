@@ -5,7 +5,7 @@ import java.sql.*;
 
 public final class DatabaseHandler {
 
-    private static DatabaseHandler handler;
+    private static DatabaseHandler handler = null;
     private static final String DB_URL = "jdbc:h2:~/database;create=true";
     private static Connection conn = null;
     private static Statement stmt = null;
@@ -14,6 +14,14 @@ public final class DatabaseHandler {
         createConnection();
         setupBookTable();
         setupUserTable();
+    }
+
+    public static DatabaseHandler getInstance(){
+
+        if(handler == null){
+            handler = new DatabaseHandler();
+        }
+        return handler;
     }
 
     private void createConnection(){

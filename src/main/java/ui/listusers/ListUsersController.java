@@ -58,7 +58,7 @@ public class ListUsersController implements Initializable {
     }
 
     private void loadData() throws SQLException {
-        DatabaseHandler databaseHandler = new DatabaseHandler();
+        DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
         String qu = "SELECT * FROM USER";
         ResultSet rs = databaseHandler.execQuery(qu);
         while(true){

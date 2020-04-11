@@ -12,7 +12,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="jfoenix-9.0.8" level="project" />
     <orderEntry type="library" name="derby" level="project" />
-    <orderEntry type="library" name="h2-1.4.200" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:11" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:win:11" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:11" level="project" />
@@ -21,5 +20,9 @@
     <orderEntry type="library" name="Maven: org.openjfx:javafx-base:win:11" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-fxml:11" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-fxml:win:11" level="project" />
+    <orderEntry type="library" name="javafx-swt" level="application" />
+    <orderEntry type="library" name="h2-1.4.200" level="application" />
+    <orderEntry type="library" name="fontawesomefx-commons-9.1.2" level="application" />
+    <orderEntry type="library" name="com_jfoenix_jfoenix_9.0.8_jfoenix-9.0.8" level="application" />
   </component>
 </module>

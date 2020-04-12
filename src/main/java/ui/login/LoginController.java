@@ -27,6 +27,8 @@ import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
 
+    private LoginFileAccess loginFileAccess;
+
     @FXML
     private TextField usernameBox;
 
@@ -41,11 +43,18 @@ public class LoginController implements Initializable {
 
     @FXML
     void loginButtonPushed() {
-        statusText.setText("login attemp");
+        String username = usernameBox.getText();
+        String password = passwordBox.getText();
+        if(loginFileAccess.mapOfUsers.containsKey(username)){
+
+            statusText.setText("User found");
+        }
+        //statusText.setText("login attemp");
         statusText.setFill(Color.GREEN);
     }
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        loginFileAccess = new LoginFileAccess();
         statusText.setText("Please sign in to start using the software");
     }
 }

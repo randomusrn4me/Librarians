@@ -1,6 +1,9 @@
 package ui.login;
 
+import java.math.BigInteger;
 import java.net.URL;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
@@ -44,13 +47,35 @@ public class LoginController implements Initializable {
     @FXML
     void loginButtonPushed() {
         String username = usernameBox.getText();
-        String password = passwordBox.getText();
-        if(loginFileAccess.mapOfUsers.containsKey(username)){
+        String password = hashing(passwordBox.getText());
 
-            statusText.setText("User found");
+        if(!loginFileAccess.mapOfUsers.containsKey(username)
+           ||
+           !loginFileAccess.mapOfUsers.get(username).equals(password)){
+                statusText.setText("Invalid user");
+                statusText.setFill(Color.RED);
+        } else {
+            statusText.setText("You are a valid user");
+            statusText.setFill(Color.GREEN);
         }
-        //statusText.setText("login attemp");
-        statusText.setFill(Color.GREEN);
+
+    }
+
+    public String hashing(String pw){
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-512");
+            byte[] messageDigest = md.digest(pw.getBytes());
+            BigInteger no = new BigInteger(1, messageDigest);
+            String hashtext = no.toString(16);
+            while (hashtext.length() < 32) {
+                hashtext = "0" + hashtext;
+            }
+            return hashtext;
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            System.out.println("Hashing unsuccessful");
+            return pw;
+        }
     }
 
     public void initialize(URL url, ResourceBundle resourceBundle) {

@@ -7,6 +7,7 @@ import java.io.ObjectInputStream;
 import java.util.TreeMap;
 
 public final class LoginFileAccess {
+
     public static TreeMap<String, String> mapOfUsers = null;
 
     public LoginFileAccess(){
@@ -22,7 +23,14 @@ public final class LoginFileAccess {
         }
     }
 
+    public TreeMap<String, String> getMapOfUsers(){
+        return mapOfUsers;
+    }
 
+    public static void setMapOfUsers(TreeMap<String, String> mapOfUsers) {
+        if(mapOfUsers != null){
+            LoginFileAccess.mapOfUsers = mapOfUsers;
+        }
 
-
+    }
 }

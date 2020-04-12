@@ -3,6 +3,7 @@
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
@@ -11,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="438.0" prefWidth="732.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/11.0.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.login.LoginController">
+<AnchorPane id="AnchorPane" prefHeight="438.0" prefWidth="732.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.login.LoginController">
    <children>
       <Pane layoutX="8.0" layoutY="39.0" prefHeight="376.0" prefWidth="250.0">
          <children>
@@ -19,7 +20,7 @@
                <children>
                   <HBox alignment="TOP_CENTER" prefHeight="55.0" prefWidth="377.0">
                      <children>
-                        <Text fx:id="statusText" strokeType="OUTSIDE" strokeWidth="0.0" text="Please sign in to start using the software" wrappingWidth="217.34765625" />
+                        <Text fx:id="statusText" strokeType="OUTSIDE" strokeWidth="0.0" text="Please sign in to start using the software!" textAlignment="CENTER" wrappingWidth="217.34765625" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER">
@@ -39,11 +40,11 @@
                               <Insets right="5.0" top="25.0" />
                            </HBox.margin>
                         </FontAwesomeIconView>
-                        <TextField fx:id="passwordBox" promptText="password" style="-fx-background-radius: 30; -fx-border-radius: 30; -fx-background-color: #EDA49A; -fx-prompt-text-fill: white;">
+                        <PasswordField fx:id="passwordBox" promptText="password" style="-fx-background-radius: 30; -fx-border-radius: 30; -fx-background-color: #EDA49A; -fx-prompt-text-fill: white;">
                            <HBox.margin>
                               <Insets top="25.0" />
                            </HBox.margin>
-                        </TextField>
+                        </PasswordField>
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" layoutX="10.0" layoutY="90.0">
@@ -62,13 +63,8 @@
                   <Font name="Constantia" size="19.0" />
                </font>
             </Text>
-            <Text layoutX="110.0" layoutY="320.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Don't have an account?" textAlignment="CENTER" underline="true" wrappingWidth="125.34765625" />
+            <Text layoutX="86.0" layoutY="320.0" strokeType="OUTSIDE" strokeWidth="0.0" text="If you don't have an account yet, look for the librarian for assistance!" textAlignment="CENTER" underline="true" wrappingWidth="217.34765624999994" />
          </children>
       </Pane>
-      <Button alignment="TOP_CENTER" layoutX="243.0" layoutY="342.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Sign up" textAlignment="CENTER" textOverrun="CLIP">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font>
-      </Button>
    </children>
 </AnchorPane>

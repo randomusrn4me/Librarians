@@ -24,5 +24,10 @@
     <orderEntry type="library" name="h2-1.4.200" level="application" />
     <orderEntry type="library" name="fontawesomefx-commons-9.1.2" level="application" />
     <orderEntry type="library" name="com_jfoenix_jfoenix_9.0.8_jfoenix-9.0.8" level="application" />
+    <orderEntry type="library" name="h2-1.4.200" level="project" />
+    <orderEntry type="library" name="Maven: com.h2database:h2:1.4.200" level="project" />
+    <orderEntry type="library" name="Maven: com.jfoenix:jfoenix:9.0.8" level="project" />
+    <orderEntry type="library" name="Maven: de.jensd:fontawesomefx-fontawesome:4.7.0-9.1.2" level="project" />
+    <orderEntry type="library" name="Maven: de.jensd:fontawesomefx-commons:9.1.2" level="project" />
   </component>
 </module>

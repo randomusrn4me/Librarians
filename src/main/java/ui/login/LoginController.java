@@ -49,9 +49,8 @@ public class LoginController implements Initializable {
         String username = usernameBox.getText();
         String password = hashing(passwordBox.getText());
 
-        if(!loginFileAccess.mapOfUsers.containsKey(username)
-           ||
-           !loginFileAccess.mapOfUsers.get(username).equals(password)){
+        if(loginFileAccess.getMapOfUsers().containsKey(username) &&
+           loginFileAccess.getMapOfUsers().get(username).equals(password)){
                 statusText.setText("Invalid user");
                 statusText.setFill(Color.RED);
         } else {
@@ -67,9 +66,7 @@ public class LoginController implements Initializable {
             byte[] messageDigest = md.digest(pw.getBytes());
             BigInteger no = new BigInteger(1, messageDigest);
             String hashtext = no.toString(16);
-            while (hashtext.length() < 32) {
-                hashtext = "0" + hashtext;
-            }
+            while (hashtext.length() < 32) hashtext = "0" + hashtext;
             return hashtext;
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
@@ -81,5 +78,6 @@ public class LoginController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loginFileAccess = new LoginFileAccess();
         statusText.setText("Please sign in to start using the software");
+        //loginFileAccess.addUser("asd989", hashing("bookworm"));
     }
 }

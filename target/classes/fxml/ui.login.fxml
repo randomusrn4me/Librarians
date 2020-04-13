@@ -20,7 +20,7 @@
                <children>
                   <HBox alignment="TOP_CENTER" prefHeight="55.0" prefWidth="377.0">
                      <children>
-                        <Text fx:id="statusText" strokeType="OUTSIDE" strokeWidth="0.0" text="Please sign in to start using the software" textAlignment="CENTER" wrappingWidth="217.34765625" />
+                        <Text fx:id="statusText" strokeType="OUTSIDE" strokeWidth="0.0" text="Please sign in to start using the software!" textAlignment="CENTER" wrappingWidth="217.34765625" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER">

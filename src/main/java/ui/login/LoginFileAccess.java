@@ -46,6 +46,15 @@ public final class LoginFileAccess {
         }
     }
 
+    public void addUser(String username, String passwordHash, String type){
+        if(mapOfUsers.containsKey(username)){
+            System.out.println("User is already registered!");
+            return;
+        }
+        mapOfUsers.put(username, new String[] {passwordHash, type});
+        writeFile();
+    }
+
     public void modifyUser(String username, String passwordHash, String type){
         if(mapOfUsers.containsKey(username)){
             mapOfUsers.put(username, new String[] {passwordHash, type});
@@ -63,6 +72,7 @@ public final class LoginFileAccess {
         mapOfUsers.remove(username);
         writeFile();
     }
+
 /*
     public void setMapOfUsers(TreeMap<String, String> mapOfUsers) {
             LoginFileAccess.mapOfUsers = mapOfUsers;

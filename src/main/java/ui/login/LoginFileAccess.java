@@ -26,15 +26,6 @@ public final class LoginFileAccess {
 
     public TreeMap<String, String[]> getMapOfUsers(){ return mapOfUsers; }
 
-    public void addUser(String username, String passwordHash, String type){
-        if(mapOfUsers.containsKey(username)){
-            System.out.println("User is already registered!");
-            return;
-        }
-        mapOfUsers.put(username, new String[] {passwordHash, type});
-        writeFile();
-    }
-
     private void createMap(){
         if(mapOfUsers != null){
             System.out.println("Map already exists!");
@@ -55,6 +46,15 @@ public final class LoginFileAccess {
         }
     }
 
+    public void addUser(String username, String passwordHash, String type){
+        if(mapOfUsers.containsKey(username)){
+            System.out.println("User is already registered!");
+            return;
+        }
+        mapOfUsers.put(username, new String[] {passwordHash, type});
+        writeFile();
+    }
+
     public void modifyUser(String username, String passwordHash, String type){
         if(mapOfUsers.containsKey(username)){
             mapOfUsers.put(username, new String[] {passwordHash, type});
@@ -63,6 +63,16 @@ public final class LoginFileAccess {
             System.out.println("This user is not registered!");
         }
     }
+
+    public void removeUser(String username){
+        if(!mapOfUsers.containsKey(username)){
+            System.out.println("No such user!");
+            return;
+        }
+        mapOfUsers.remove(username);
+        writeFile();
+    }
+
 /*
     public void setMapOfUsers(TreeMap<String, String> mapOfUsers) {
             LoginFileAccess.mapOfUsers = mapOfUsers;

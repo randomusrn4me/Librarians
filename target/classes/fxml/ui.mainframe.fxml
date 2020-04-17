@@ -25,23 +25,23 @@
       <BorderPane prefHeight="200.0" prefWidth="200.0">
          <top>
             <MenuBar BorderPane.alignment="CENTER">
-              <menus>
-                <Menu mnemonicParsing="false" text="File">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="Close" />
-                  </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Edit">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="Delete" />
-                  </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Help">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="About" />
-                  </items>
-                </Menu>
-              </menus>
+               <menus>
+                  <Menu mnemonicParsing="false" text="File">
+                     <items>
+                        <MenuItem mnemonicParsing="false" text="Close" />
+                     </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Edit">
+                     <items>
+                        <MenuItem mnemonicParsing="false" text="Delete" />
+                     </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Help">
+                     <items>
+                        <MenuItem mnemonicParsing="false" text="About" />
+                     </items>
+                  </Menu>
+               </menus>
             </MenuBar>
          </top>
          <right>
@@ -97,28 +97,33 @@
          </right>
          <center>
             <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
-              <tabs>
-                <Tab text="Issue Book">
-                  <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="418.0" prefWidth="573.0">
+               <tabs>
+                  <Tab text="Issue Book">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="418.0" prefWidth="573.0">
                            <children>
-                              <VBox prefHeight="418.0" prefWidth="551.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <VBox prefHeight="418.0" prefWidth="551.0" style="-fx-background-color: #cfcfcfcf;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
-                                    <HBox alignment="CENTER" prefHeight="159.0" prefWidth="551.0">
+                                    <HBox alignment="CENTER" prefHeight="159.0" prefWidth="551.0" style="-fx-background-color: #c3d4d1;">
                                        <children>
-                                          <TextField promptText="Enter Book ID">
+                                          <TextField fx:id="bookIDInput" onAction="#loadBookInfo" promptText="Book ID">
                                              <HBox.margin>
                                                 <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                                              </HBox.margin>
                                           </TextField>
                                           <VBox alignment="CENTER" prefHeight="159.0" prefWidth="409.0">
                                              <children>
-                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Title" textAlignment="CENTER" wrappingWidth="385.88671875">
+                                                <Text fx:id="bookTitle" strokeType="OUTSIDE" strokeWidth="0.0" text="Title" textAlignment="CENTER" wrappingWidth="385.88671875">
                                                    <VBox.margin>
                                                       <Insets top="10.0" />
                                                    </VBox.margin>
                                                 </Text>
-                                                <Text layoutX="10.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Author" textAlignment="CENTER" wrappingWidth="385.88671875">
+                                                <Text fx:id="bookAuthor" layoutX="10.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Author" textAlignment="CENTER" wrappingWidth="385.88671875">
+                                                   <VBox.margin>
+                                                      <Insets top="10.0" />
+                                                   </VBox.margin>
+                                                </Text>
+                                                <Text fx:id="bookStatus" layoutX="10.0" layoutY="106.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Status" textAlignment="CENTER" wrappingWidth="385.88671875">
                                                    <VBox.margin>
                                                       <Insets top="10.0" />
                                                    </VBox.margin>
@@ -126,22 +131,25 @@
                                              </children>
                                           </VBox>
                                        </children>
+                                       <VBox.margin>
+                                          <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                       </VBox.margin>
                                     </HBox>
-                                    <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="159.0" prefWidth="551.0">
+                                    <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="159.0" prefWidth="551.0" style="-fx-background-color: #c3d4d1;">
                                        <children>
-                                          <TextField promptText="Enter Username">
+                                          <TextField fx:id="usernameInput" onAction="#loadUserInfo" prefWidth="134.0" promptText="Username">
                                              <HBox.margin>
                                                 <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                                              </HBox.margin>
                                           </TextField>
                                           <VBox alignment="CENTER" prefHeight="159.0" prefWidth="409.0">
                                              <children>
-                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Name of User" textAlignment="CENTER" wrappingWidth="385.88671875">
+                                                <Text fx:id="nameOfUser" strokeType="OUTSIDE" strokeWidth="0.0" text="Name of User" textAlignment="CENTER" wrappingWidth="385.88671875">
                                                    <VBox.margin>
                                                       <Insets top="10.0" />
                                                    </VBox.margin>
                                                 </Text>
-                                                <Text layoutX="10.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Contact Information" textAlignment="CENTER" wrappingWidth="385.88671875">
+                                                <Text fx:id="emailOfUser" layoutX="10.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Contact Information" textAlignment="CENTER" wrappingWidth="385.88671875">
                                                    <VBox.margin>
                                                       <Insets top="10.0" />
                                                    </VBox.margin>
@@ -149,6 +157,9 @@
                                              </children>
                                           </VBox>
                                        </children>
+                                       <VBox.margin>
+                                          <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                       </VBox.margin>
                                     </HBox>
                                     <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                                        <children>
@@ -158,11 +169,11 @@
                                  </children>
                               </VBox>
                            </children></AnchorPane>
-                  </content>
-                </Tab>
-                <Tab text="Renew/Return Book">
-                  <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     </content>
+                  </Tab>
+                  <Tab text="Renew/Return Book">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
                               <BorderPane layoutX="14.0" layoutY="14.0" prefHeight="418.0" prefWidth="551.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <top>
@@ -195,9 +206,9 @@
                                  </bottom>
                               </BorderPane>
                            </children></AnchorPane>
-                  </content>
-                </Tab>
-              </tabs>
+                     </content>
+                  </Tab>
+               </tabs>
             </TabPane>
          </center>
       </BorderPane>

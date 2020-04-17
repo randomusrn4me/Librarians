@@ -15,11 +15,16 @@ import java.util.ResourceBundle;
 
 public class UserpanelController implements Initializable {
 
-    DatabaseHandler databaseHandler;
+    private DatabaseHandler databaseHandler;
 
     @FXML
     void loadListBooksWindow() {
         windowLoader("/fxml/ui.list_books.fxml", "All Books");
+    }
+
+    @FXML
+    void loadSearchWindow() {
+        windowLoader("/fxml/ui.search.fxml", "Search Books");
     }
 
     void windowLoader(String location, String title){

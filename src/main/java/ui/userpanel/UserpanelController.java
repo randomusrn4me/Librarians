@@ -27,6 +27,11 @@ public class UserpanelController implements Initializable {
         windowLoader("/fxml/ui.search.fxml", "Search Books");
     }
 
+    @FXML
+    void loadIssueList() {
+        windowLoader("/fxml/ui.list_issued.fxml", "My Issued Books");
+    }
+
     void windowLoader(String location, String title){
         try {
             Parent parent = FXMLLoader.load(getClass().getResource(location));

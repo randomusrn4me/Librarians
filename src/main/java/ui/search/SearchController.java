@@ -128,9 +128,16 @@ public class SearchController implements Initializable {
 
         for(Map.Entry<String, String> entry : notEmp.entrySet()) {
             if (entry.getKey().equals(notEmp.lastKey())) {
-                qu.append(entry.getKey()).append(" = '").append(entry.getValue()).append("'");
-
-            } else {
+                if(entry.getKey().equals("title") || entry.getKey().equals("author") || entry.getKey().equals("publisher")){
+                    qu.append(entry.getKey()).append(" LIKE '%").append(entry.getValue()).append("%'");
+                }else{
+                    qu.append(entry.getKey()).append(" = '").append(entry.getValue()).append("'");
+                }
+            }else if(entry.getKey().equals("title") || entry.getKey().equals("author") || entry.getKey().equals("publisher")){
+                qu.append(entry.getKey()).append(" LIKE '%").append(entry.getValue()).append("%'");
+                qu.append(" AND ");
+            }
+            else {
                 qu.append(entry.getKey()).append(" = '").append(entry.getValue()).append("'");
                 qu.append(" AND ");
             }

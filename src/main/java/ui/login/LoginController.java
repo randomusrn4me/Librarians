@@ -76,11 +76,11 @@ public class LoginController implements Initializable {
             if(loginFileAccess.getMapOfUsers().get(username)[1].equals("user")){
                 System.out.println("A user (\"" + username +"\") has logged in!");
                 closeStage();
-                userpanelLoader();
+                windowLoader("/fxml/ui.userpanel.fxml", "Personal Library Manager");
             } else if(loginFileAccess.getMapOfUsers().get(username)[1].equals("admin")){
                 System.out.println("An admin (\"" + username +"\") has logged in!");
                 closeStage();
-                mainframeLoader();
+                windowLoader("/fxml/ui.mainframe.fxml", "General Library Manager");
             }
         } else {
             statusText.setText("Invalid user");
@@ -112,26 +112,14 @@ public class LoginController implements Initializable {
         ((Stage) usernameBox.getScene().getWindow()).close();
     }
 
-    private void mainframeLoader(){
+    private void windowLoader(String location, String title){
         try {
-            Parent parent = FXMLLoader.load(getClass().getResource("/fxml/ui.mainframe.fxml"));
+            Parent parent = FXMLLoader.load(getClass().getResource(location));
             Stage stage = new Stage(StageStyle.DECORATED);
-            stage.setTitle("Library Manager");
+            stage.setTitle(title);
             stage.setScene(new Scene(parent));
             stage.show();
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void userpanelLoader(){
-        try {
-            Parent parent = FXMLLoader.load(getClass().getResource("/fxml/ui.userpanel.fxml"));
-            Stage stage = new Stage(StageStyle.DECORATED);
-            stage.setTitle("Personal Library Manager");
-            stage.setScene(new Scene(parent));
-            stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }

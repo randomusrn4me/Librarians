@@ -45,7 +45,7 @@
             <right>
                 <VBox prefHeight="447.0" prefWidth="153.0" BorderPane.alignment="CENTER">
                     <children>
-                  <Button contentDisplay="TOP" layoutX="10.0" layoutY="192.0" mnemonicParsing="false" prefHeight="91.0" prefWidth="153.0" text="My Issued Books">
+                  <Button contentDisplay="TOP" layoutX="10.0" layoutY="192.0" mnemonicParsing="false" onAction="#loadIssueList" prefHeight="91.0" prefWidth="153.0" text="My Issued Books">
                      <graphic>
                         <ImageView fitHeight="27.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                            <image>

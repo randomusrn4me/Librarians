@@ -51,7 +51,12 @@
                      <children>
                         <Button fx:id="loginButton" mnemonicParsing="false" onAction="#loginButtonPushed" style="-fx-background-radius: 100; -fx-background-color: #171B2A; -fx-text-fill: white;" text="Login" textAlignment="CENTER">
                            <HBox.margin>
-                              <Insets top="15.0" />
+                              <Insets right="5.0" top="15.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#cancelButtonPushed" style="-fx-background-radius: 100; -fx-background-color: #171B2A; -fx-text-fill: white;" text="Cancel" textAlignment="CENTER">
+                           <HBox.margin>
+                              <Insets left="5.0" top="15.0" />
                            </HBox.margin>
                         </Button>
                      </children>
@@ -63,7 +68,7 @@
                   <Font name="Constantia" size="19.0" />
                </font>
             </Text>
-            <Text layoutX="86.0" layoutY="320.0" strokeType="OUTSIDE" strokeWidth="0.0" text="If you don't have an account yet, look for the librarian for assistance!" textAlignment="CENTER" underline="true" wrappingWidth="217.34765624999994" />
+            <Text layoutX="86.0" layoutY="320.0" strokeType="OUTSIDE" strokeWidth="0.0" text="If you don't have an account yet, please find a librarian for assistance!" textAlignment="CENTER" underline="true" wrappingWidth="217.34765624999994" />
          </children>
       </Pane>
    </children>

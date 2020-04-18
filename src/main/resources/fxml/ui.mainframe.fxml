@@ -83,6 +83,15 @@
                         </ImageView>
                      </graphic>
                   </Button>
+                  <Button contentDisplay="TOP" layoutX="10.0" layoutY="367.0" mnemonicParsing="false" onAction="#loadSearchWindow" prefHeight="91.0" prefWidth="153.0" text="Search Books">
+                     <graphic>
+                        <ImageView fitHeight="27.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@/icons/searchbook.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
                   <Button contentDisplay="TOP" layoutX="10.0" layoutY="192.0" mnemonicParsing="false" prefHeight="91.0" prefWidth="153.0" text="Settings">
                      <graphic>
                         <ImageView fitHeight="27.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
@@ -163,7 +172,7 @@
                                     </HBox>
                                     <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                                        <children>
-                                          <JFXButton styleClass="setup-button" stylesheets="@ui.mainframe.css" text="Issue" />
+                                          <JFXButton onAction="#loadIssueBook" styleClass="setup-button" stylesheets="@ui.mainframe.css" text="Issue" />
                                        </children>
                                     </HBox>
                                  </children>
@@ -177,14 +186,14 @@
                            <children>
                               <BorderPane layoutX="14.0" layoutY="14.0" prefHeight="418.0" prefWidth="551.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <top>
-                                    <JFXTextField labelFloat="true" prefHeight="25.0" prefWidth="287.0" promptText="Enter Book ID" BorderPane.alignment="CENTER">
+                                    <JFXTextField fx:id="bookIDToReturn" labelFloat="true" onAction="#loadBookInfoForReturn" prefHeight="25.0" prefWidth="287.0" promptText="Enter Book ID" BorderPane.alignment="CENTER">
                                        <BorderPane.margin>
                                           <Insets left="100.0" right="100.0" top="10.0" />
                                        </BorderPane.margin>
                                     </JFXTextField>
                                  </top>
                                  <center>
-                                    <ListView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                    <ListView fx:id="issueDataList" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                                        <padding>
                                           <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
                                        </padding>

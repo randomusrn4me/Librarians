@@ -14,6 +14,7 @@ public final class DatabaseHandler {
         createConnection();
         setupBookTable();
         setupUserTable();
+        setupIssueTable();
     }
 
     public static DatabaseHandler getInstance(){
@@ -56,7 +57,7 @@ public final class DatabaseHandler {
             stmt.execute(qu);
             return true;
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error:" + e.getMessage(), "Error Occured", JOptionPane.ERROR_MESSAGE);
+            //JOptionPane.showMessageDialog(null, "Error:" + e.getMessage(), "Error Occured", JOptionPane.ERROR_MESSAGE);
             System.out.println("Exception at execAction:dataHandler" + e.getLocalizedMessage());
             return false;
         }
@@ -65,7 +66,7 @@ public final class DatabaseHandler {
     public void setupBookTable(){
         String TABLE_NAME = "BOOK";
         try{
-            stmt = conn.createStatement();  //creates statement object from databse to exec commands
+            stmt = conn.createStatement();  //creates statement object from database to exec commands
 
             DatabaseMetaData dbm = conn.getMetaData();
             ResultSet tables = dbm.getTables(null, null, TABLE_NAME.toUpperCase(), null);
@@ -83,15 +84,13 @@ public final class DatabaseHandler {
             }
         } catch(SQLException e){
             System.err.println(e.getMessage() + " --- setupDatabase");
-        } finally{
-
         }
     }
 
     private void setupUserTable() {
         String TABLE_NAME = "USER";
         try{
-            stmt = conn.createStatement();  //creates statement object from databse to exec commands
+            stmt = conn.createStatement();
 
             DatabaseMetaData dbm = conn.getMetaData();
             ResultSet tables = dbm.getTables(null, null, TABLE_NAME.toUpperCase(), null);
@@ -108,8 +107,30 @@ public final class DatabaseHandler {
             }
         } catch(SQLException e){
             System.err.println(e.getMessage() + " --- setupDatabase");
-        } finally{
+        }
+    }
 
+    private void setupIssueTable() {
+        String TABLE_NAME = "ISSUE";
+        try{
+            stmt = conn.createStatement();
+
+            DatabaseMetaData dbm = conn.getMetaData();
+            ResultSet tables = dbm.getTables(null, null, TABLE_NAME.toUpperCase(), null);
+            if(tables.next()){
+                System.out.println("Table " + TABLE_NAME + "already exists. Ready to go!");
+            } else{
+                stmt.execute("CREATE TABLE " + TABLE_NAME + "("
+                        + "     bookID varchar(200) primary key,\n"
+                        + "     username varchar(200),\n"
+                        + "     issueDate timestamp default CURRENT_TIMESTAMP,\n"
+                        + "     renewCount integer default 0,\n"
+                        + "     FOREIGN KEY (bookID) REFERENCES BOOK(id),\n"
+                        + "     FOREIGN KEY (username) REFERENCES USER(username)\n"
+                        + " )");
+            }
+        } catch(SQLException e){
+            System.err.println(e.getMessage() + " --- setupDatabase");
         }
     }
 

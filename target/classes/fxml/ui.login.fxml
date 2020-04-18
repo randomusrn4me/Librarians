@@ -51,12 +51,12 @@
                      <children>
                         <Button fx:id="loginButton" mnemonicParsing="false" onAction="#loginButtonPushed" style="-fx-background-radius: 100; -fx-background-color: #171B2A; -fx-text-fill: white;" text="Login" textAlignment="CENTER">
                            <HBox.margin>
-                              <Insets top="15.0" />
+                              <Insets right="5.0" top="15.0" />
                            </HBox.margin>
                         </Button>
                         <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#cancelButtonPushed" style="-fx-background-radius: 100; -fx-background-color: #171B2A; -fx-text-fill: white;" text="Cancel" textAlignment="CENTER">
                            <HBox.margin>
-                              <Insets top="15.0" />
+                              <Insets left="5.0" top="15.0" />
                            </HBox.margin>
                         </Button>
                      </children>

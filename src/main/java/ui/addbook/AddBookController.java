@@ -56,48 +56,45 @@ public class AddBookController implements Initializable {
         String bookPublisher = publisher.getText();
         String bookID = id.getText();
 
-        if(bookTitle.isEmpty() || bookAuthor.isEmpty() || bookYear.isEmpty() || bookPublisher.isEmpty() || bookID.isEmpty()){
+        if (bookTitle.isEmpty() || bookAuthor.isEmpty() || bookYear.isEmpty() || bookPublisher.isEmpty() || bookID.isEmpty()) {
             Alert emptyAlert = new Alert(Alert.AlertType.ERROR);
             emptyAlert.setHeaderText(null);
             emptyAlert.setContentText("Please fill out all fields.");
             emptyAlert.showAndWait();
             return;
-        }
-        else if(!Character.isDigit(bookYear.charAt(0))){
+        } else if (!Character.isDigit(bookYear.charAt(0))) {
             Alert numberAlert = new Alert(Alert.AlertType.ERROR);
             numberAlert.setHeaderText("Incorrect Year");
             numberAlert.setContentText("Please enter a valid year.");
             numberAlert.showAndWait();
-        }
-        else if(Integer.parseInt(bookYear) > Calendar.getInstance().get(Calendar.YEAR)){
+        } else if (Integer.parseInt(bookYear) > Calendar.getInstance().get(Calendar.YEAR)) {
             Alert numberAlert = new Alert(Alert.AlertType.ERROR);
             numberAlert.setHeaderText("Incorrect Year");
             numberAlert.setContentText("Please enter a valid year.");
             numberAlert.showAndWait();
-        }
+        } else {
+            String qu = "INSERT INTO BOOK VALUES ("
+                    + "'" + bookID + "',"
+                    + "'" + bookTitle + "',"
+                    + "'" + bookAuthor + "',"
+                    + "'" + bookPublisher + "',"
+                    + "'" + bookYear + "',"
+                    + "" + true + "" +
+                    ")";
+            System.out.println(qu);
+            if (databaseHandler.execAction(qu)) {
+                Alert emptyAlert = new Alert(Alert.AlertType.INFORMATION);
+                emptyAlert.setHeaderText(null);
+                emptyAlert.setContentText("Successfully added the book to database.");
+                emptyAlert.showAndWait();
+            } else {
+                Alert emptyAlert = new Alert(Alert.AlertType.ERROR);
+                emptyAlert.setHeaderText(null);
+                emptyAlert.setContentText("Failed to add the book to the database.");
+                emptyAlert.showAndWait();
+            }
 
-        String qu = "INSERT INTO BOOK VALUES ("
-                + "'" + bookID + "',"
-                + "'" + bookTitle + "',"
-                + "'" + bookAuthor + "',"
-                + "'" + bookPublisher + "',"
-                + "'" + bookYear + "',"
-                + "" + true + "" +
-                ")";
-        System.out.println(qu);
-        if(databaseHandler.execAction(qu)){
-            Alert emptyAlert = new Alert(Alert.AlertType.INFORMATION);
-            emptyAlert.setHeaderText(null);
-            emptyAlert.setContentText("Successfully added the book to database.");
-            emptyAlert.showAndWait();
         }
-        else{
-            Alert emptyAlert = new Alert(Alert.AlertType.ERROR);
-            emptyAlert.setHeaderText(null);
-            emptyAlert.setContentText("Failed to add the book to the database.");
-            emptyAlert.showAndWait();
-        }
-
     }
 
     @FXML

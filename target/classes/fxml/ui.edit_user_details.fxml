@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.userpanel.EditUserDetailsController">
+   <children>
+      <TabPane layoutX="200.0" layoutY="82.0" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <tabs>
+          <Tab text="Username">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <JFXTextField fx:id="usernameBox" layoutX="50.0" layoutY="41.0" promptText="New username" />
+                        <JFXButton layoutX="229.0" layoutY="54.0" onAction="#usernameSaveButtonPushed" text="Save" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Password">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <JFXButton layoutX="229.0" layoutY="172.0" onAction="#pwSaveButtonPushed" text="Save" />
+                        <JFXPasswordField fx:id="curPw" layoutX="45.0" layoutY="39.0" promptText="Current password" />
+                        <JFXPasswordField fx:id="npw1" layoutX="45.0" layoutY="116.0" promptText="New password" />
+                        <JFXPasswordField fx:id="npw2" layoutX="45.0" layoutY="172.0" promptText="New password again" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>

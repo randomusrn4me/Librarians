@@ -68,12 +68,14 @@ public class AddBookController implements Initializable {
             numberAlert.setHeaderText("Incorrect Year");
             numberAlert.setContentText("Please enter a valid year.");
             numberAlert.showAndWait();
+            return;
         }
         else if(Integer.parseInt(bookYear) > Calendar.getInstance().get(Calendar.YEAR)){
             Alert numberAlert = new Alert(Alert.AlertType.ERROR);
             numberAlert.setHeaderText("Incorrect Year");
             numberAlert.setContentText("Please enter a valid year.");
             numberAlert.showAndWait();
+            return;
         }
 
         String qu = "INSERT INTO BOOK VALUES ("
@@ -110,31 +112,8 @@ public class AddBookController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         databaseHandler = DatabaseHandler.getInstance();
 
-        /*
-        try {
-            checkData();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        */
     }
 
-    /*
-    private void checkData() throws SQLException {
-        String qu = "SELECT title FROM BOOK";
-        ResultSet rs = databaseHandler.execQuery(qu);
-        while(true){
-            try {
-                assert rs != null;
-                if (!rs.next()) break;
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-
-    }
-
-    */
 
 
 }

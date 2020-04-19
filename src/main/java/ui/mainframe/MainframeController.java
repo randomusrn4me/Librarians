@@ -5,15 +5,13 @@ import com.jfoenix.controls.JFXTextField;
 import database.DatabaseHandler;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -27,6 +25,12 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class MainframeController implements Initializable {
+
+    public String receivedUser;
+
+    public void setReceivedUser(String receivedUser) {
+        this.receivedUser = receivedUser;
+    }
 
     @FXML
     private TextField bookIDInput;
@@ -239,6 +243,12 @@ public class MainframeController implements Initializable {
         windowLoader("/fxml/ui.search.fxml", "Search Books");
     }
 
+    @FXML
+    public void logoutButtonPushed(ActionEvent event) {
+        ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
+        windowLoader("/fxml/ui.login.fxml", "Login");
+    }
+
     void windowLoader(String location, String title){
         try {
             Parent parent = FXMLLoader.load(getClass().getResource(location));
@@ -251,6 +261,7 @@ public class MainframeController implements Initializable {
             e.printStackTrace();
         }
     }
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

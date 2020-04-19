@@ -20,6 +20,14 @@ import java.util.ResourceBundle;
 
 public class ListIssuedController implements Initializable {
 
+    private DatabaseHandler databaseHandler;
+
+    public String receivedUser;
+
+    public void setReceivedUser(String receivedUser) {
+        this.receivedUser = receivedUser;
+    }
+
     ObservableList<Issue> list = FXCollections.observableArrayList();
 
     @FXML
@@ -39,8 +47,6 @@ public class ListIssuedController implements Initializable {
 
     @FXML
     private TableColumn<Issue, Integer> renewCol;
-
-    DatabaseHandler databaseHandler;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

@@ -29,12 +29,8 @@ public final class DatabaseHandler {
         try{
             Class.forName("org.h2.Driver");
             conn = DriverManager.getConnection(DB_URL);
-            //Statement st = conn.createStatement();
-            //st.execute("create table test(name varchar(20))");
 
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
+        } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
     }

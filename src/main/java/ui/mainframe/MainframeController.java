@@ -28,6 +28,12 @@ import java.util.ResourceBundle;
 
 public class MainframeController implements Initializable {
 
+    public String receivedUser;
+
+    public void setReceivedUser(String receivedUser) {
+        this.receivedUser = receivedUser;
+    }
+
     @FXML
     private TextField bookIDInput;
 
@@ -251,6 +257,7 @@ public class MainframeController implements Initializable {
             e.printStackTrace();
         }
     }
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

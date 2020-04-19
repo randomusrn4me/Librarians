@@ -7,41 +7,22 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ResourceBundle;
 
-import javafx.application.Application;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import database.DatabaseHandler;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.Node;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import ui.listbooks.ListBooksController;
-import ui.mainframe.MainframeLauncher;
-import ui.mainframe.MainframeMain;
-
-import javax.swing.*;
-import java.net.URL;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ResourceBundle;
+import ui.mainframe.MainframeController;
+import ui.userpanel.UserpanelController;
 
 public class LoginController implements Initializable {
 
@@ -76,11 +57,11 @@ public class LoginController implements Initializable {
             if(loginFileAccess.getMapOfUsers().get(username)[1].equals("user")){
                 System.out.println("A user (\"" + username +"\") has logged in!");
                 closeStage();
-                windowLoader("/fxml/ui.userpanel.fxml", "Personal Library Manager");
+                windowLoader("/fxml/ui.userpanel.fxml", "Personal Library Manager", username);
             } else if(loginFileAccess.getMapOfUsers().get(username)[1].equals("admin")){
                 System.out.println("An admin (\"" + username +"\") has logged in!");
                 closeStage();
-                windowLoader("/fxml/ui.mainframe.fxml", "General Library Manager");
+                windowLoader("/fxml/ui.mainframe.fxml", "General Library Manager", username);
             }
         } else {
             statusText.setText("Invalid user");
@@ -112,9 +93,20 @@ public class LoginController implements Initializable {
         ((Stage) usernameBox.getScene().getWindow()).close();
     }
 
-    private void windowLoader(String location, String title){
+    private void windowLoader(String location, String title, String username){
         try {
-            Parent parent = FXMLLoader.load(getClass().getResource(location));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(location));
+            Parent parent = loader.load();
+
+            if(loginFileAccess.getMapOfUsers().get(username)[1].equals("user")){
+                UserpanelController controller = loader.getController();
+                controller.setReceivedUser(username);
+            }
+            if(loginFileAccess.getMapOfUsers().get(username)[1].equals("admin")){
+                MainframeController controller = loader.getController();
+                controller.setReceivedUser(username);
+            }
+
             Stage stage = new Stage(StageStyle.DECORATED);
             stage.setTitle(title);
             stage.setScene(new Scene(parent));

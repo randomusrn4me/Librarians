@@ -61,7 +61,6 @@ public class AddBookController implements Initializable {
             emptyAlert.setHeaderText(null);
             emptyAlert.setContentText("Please fill out all fields.");
             emptyAlert.showAndWait();
-            return;
         } else if (!Character.isDigit(bookYear.charAt(0))) {
             Alert numberAlert = new Alert(Alert.AlertType.ERROR);
             numberAlert.setHeaderText("Incorrect Year");
@@ -93,7 +92,6 @@ public class AddBookController implements Initializable {
                 emptyAlert.setContentText("Failed to add the book to the database.");
                 emptyAlert.showAndWait();
             }
-
         }
     }
 

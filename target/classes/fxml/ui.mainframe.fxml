@@ -149,7 +149,7 @@
                                     </HBox>
                                     <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="159.0" prefWidth="551.0" style="-fx-border-color: #171B2A; -fx-border-radius: 30; -fx-border-width: 2; -fx-background-color: #171B2A; -fx-background-radius: 35;">
                                        <children>
-                                          <TextField fx:id="usernameInput" onAction="#loadUserInfo" prefWidth="134.0" promptText="Username" style="-fx-background-radius: 10; -fx-border-radius: 10; -fx-background-color: #EDA49A; -fx-prompt-text-fill: #171B2A;" text="peti">
+                                          <TextField fx:id="usernameInput" onAction="#loadUserInfo" prefWidth="134.0" promptText="Username" style="-fx-background-radius: 10; -fx-border-radius: 10; -fx-background-color: #EDA49A; -fx-prompt-text-fill: #171B2A;">
                                              <HBox.margin>
                                                 <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                                              </HBox.margin>
@@ -184,10 +184,13 @@
                                     </HBox>
                                     <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                                        <children>
-                                          <JFXButton onAction="#loadIssueBook" style="-fx-background-color: #171B2A; -fx-background-radius: 100; -fx-text-fill: white;" styleClass="issue-button" text="Issue" textAlignment="CENTER">
+                                          <JFXButton onAction="#loadIssueBook" prefHeight="33.0" prefWidth="69.0" style="-fx-background-color: #171B2A; -fx-background-radius: 100; -fx-text-fill: white;" styleClass="issue-button" text="Issue" textAlignment="CENTER">
                                              <cursor>
                                                 <Cursor fx:constant="HAND" />
-                                             </cursor></JFXButton>
+                                             </cursor>
+                                             <font>
+                                                <Font size="15.0" />
+                                             </font></JFXButton>
                                        </children>
                                     </HBox>
                                  </children>
@@ -201,10 +204,13 @@
                            <children>
                               <BorderPane layoutX="14.0" layoutY="14.0" prefHeight="418.0" prefWidth="551.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <top>
-                                    <JFXTextField fx:id="bookIDToReturn" labelFloat="true" onAction="#loadBookInfoForReturn" prefHeight="25.0" prefWidth="287.0" promptText="Enter Book ID" BorderPane.alignment="CENTER">
+                                    <JFXTextField fx:id="bookIDToReturn" labelFloat="true" onAction="#loadBookInfoForReturn" prefHeight="25.0" prefWidth="287.0" promptText="Enter Book ID" style="-fx-background-color: #EDA49A; -fx-background-radius: 5; -fx-border-color: #171B2A; -fx-border-radius: 5;" BorderPane.alignment="CENTER">
                                        <BorderPane.margin>
                                           <Insets left="100.0" right="100.0" top="10.0" />
                                        </BorderPane.margin>
+                                       <cursor>
+                                          <Cursor fx:constant="TEXT" />
+                                       </cursor>
                                     </JFXTextField>
                                  </top>
                                  <center>
@@ -215,22 +221,28 @@
                                     </ListView>
                                  </center>
                                  <bottom>
-                                    <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                    <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: d9dddc;" BorderPane.alignment="CENTER">
                                        <children>
-                                          <JFXButton style="-fx-background-color: #171B2A; -fx-background-radius: 100; -fx-text-fill: white;" styleClass="setup-button" text="Renew">
+                                          <JFXButton prefHeight="33.0" prefWidth="70.0" style="-fx-background-color: #171B2A; -fx-background-radius: 100; -fx-text-fill: white;" styleClass="setup-button" text="Renew">
                                              <HBox.margin>
                                                 <Insets right="20.0" />
                                              </HBox.margin>
                                              <cursor>
                                                 <Cursor fx:constant="HAND" />
-                                             </cursor></JFXButton>
-                                          <JFXButton layoutX="260.0" layoutY="48.0" style="-fx-background-color: #171B2A; -fx-background-radius: 100; -fx-text-fill: white;" styleClass="setup-button" stylesheets="@ui.mainframe.css" text="Return">
+                                             </cursor>
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font></JFXButton>
+                                          <JFXButton layoutX="260.0" layoutY="48.0" prefHeight="33.0" prefWidth="70.0" style="-fx-background-color: #171B2A; -fx-background-radius: 100; -fx-text-fill: white;" styleClass="setup-button" stylesheets="@ui.mainframe.css" text="Return">
                                              <HBox.margin>
                                                 <Insets right="20.0" />
                                              </HBox.margin>
                                              <cursor>
                                                 <Cursor fx:constant="HAND" />
-                                             </cursor></JFXButton>
+                                             </cursor>
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font></JFXButton>
                                        </children>
                                     </HBox>
                                  </bottom>

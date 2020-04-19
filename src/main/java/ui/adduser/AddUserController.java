@@ -43,7 +43,7 @@ public class AddUserController implements Initializable {
     @FXML
     void handleAddUserButtonPushed() {
         String nName = fullname.getText();
-        String nUser = username.getText();
+        String nUser = username.getText().toLowerCase();
         String nEmail = email.getText();
         String nAddress = address.getText();
         String nPhone = phonenumber.getText();

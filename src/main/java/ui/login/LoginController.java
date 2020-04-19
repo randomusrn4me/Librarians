@@ -61,7 +61,7 @@ public class LoginController implements Initializable {
 
     @FXML
     void loginButtonPushed() {
-        String username = usernameBox.getText();
+        String username = usernameBox.getText().toLowerCase();
         String password = hashing(passwordBox.getText());
         statusText.setStyle("-fx-font-weight:bold");
 

@@ -5,15 +5,13 @@ import com.jfoenix.controls.JFXTextField;
 import database.DatabaseHandler;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -237,6 +235,12 @@ public class MainframeController implements Initializable {
     @FXML
     void loadSearchWindow() {
         windowLoader("/fxml/ui.search.fxml", "Search Books");
+    }
+
+    @FXML
+    public void logoutButtonPushed(ActionEvent event) {
+        ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
+        windowLoader("/fxml/ui.login.fxml", "Login");
     }
 
     void windowLoader(String location, String title){

@@ -1,71 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXTextField?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Text?>
+<?import com.jfoenix.controls.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="472.0" prefWidth="704.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.mainframe.MainframeController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="472.0" prefWidth="704.0" stylesheets="@ui.mainframe.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.mainframe.MainframeController">
    <children>
       <BorderPane prefHeight="200.0" prefWidth="200.0">
-         <top>
-            <MenuBar BorderPane.alignment="CENTER">
-               <menus>
-                  <Menu mnemonicParsing="false" text="File">
-                     <items>
-                        <MenuItem mnemonicParsing="false" text="Close" />
-                     </items>
-                  </Menu>
-                  <Menu mnemonicParsing="false" text="Edit">
-                     <items>
-                        <MenuItem mnemonicParsing="false" text="Delete" />
-                     </items>
-                  </Menu>
-                  <Menu mnemonicParsing="false" text="Help">
-                     <items>
-                        <MenuItem mnemonicParsing="false" text="About" />
-                     </items>
-                  </Menu>
-               </menus>
-            </MenuBar>
-         </top>
          <right>
-            <VBox prefHeight="447.0" prefWidth="153.0" BorderPane.alignment="CENTER">
+            <VBox prefHeight="420.0" prefWidth="153.0" style="-fx-background-radius: 30;" BorderPane.alignment="CENTER">
                <children>
-                  <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#loadAddUserWindow" prefHeight="91.0" prefWidth="153.0" text="Add User">
+                  <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#loadAddUserWindow" prefHeight="91.0" prefWidth="153.0" style="-fx-background-color: #171B2A; -fx-border-color: white;" styleClass="addUser-button" stylesheets="@ui.mainframe.css" text="Add User" textFill="WHITE">
                      <graphic>
-                        <ImageView fitHeight="27.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="27.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true" style="-fx-opacity: 30;">
                            <image>
                               <Image url="@/icons/add-user-button.png" />
                            </image>
                         </ImageView>
                      </graphic>
+                     <opaqueInsets>
+                        <Insets bottom="10.0" top="10.0" />
+                     </opaqueInsets>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
-                  <Button contentDisplay="TOP" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#loadAddBookWindow" prefHeight="91.0" prefWidth="153.0" text="Add Book">
+                  <Button contentDisplay="TOP" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#loadAddBookWindow" prefHeight="91.0" prefWidth="153.0" style="-fx-background-color: #171B2A; -fx-text-fill: white; -fx-border-color: white;" text="Add Book">
                      <graphic>
-                        <ImageView fitHeight="27.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="27.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true" style="-fx-text-fill: white;">
                            <image>
                               <Image url="@/icons/textbook.png" />
                            </image>
                         </ImageView>
                      </graphic>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
-                  <Button contentDisplay="TOP" layoutX="10.0" layoutY="101.0" mnemonicParsing="false" onAction="#loadListUsersWindow" prefHeight="91.0" prefWidth="153.0" text="List Users">
+                  <Button contentDisplay="TOP" layoutX="10.0" layoutY="101.0" mnemonicParsing="false" onAction="#loadListUsersWindow" prefHeight="91.0" prefWidth="153.0" style="-fx-background-color: #171B2A; -fx-text-fill: white; -fx-border-color: white;" text="List Users">
                      <graphic>
                         <ImageView fitHeight="27.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -73,8 +52,11 @@
                            </image>
                         </ImageView>
                      </graphic>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
-                  <Button contentDisplay="TOP" layoutX="10.0" layoutY="101.0" mnemonicParsing="false" onAction="#loadListBooksWindow" prefHeight="91.0" prefWidth="153.0" text="List Books">
+                  <Button contentDisplay="TOP" layoutX="10.0" layoutY="101.0" mnemonicParsing="false" onAction="#loadListBooksWindow" prefHeight="91.0" prefWidth="153.0" style="-fx-background-color: #171B2A; -fx-text-fill: white; -fx-border-color: white;" text="List Books">
                      <graphic>
                         <ImageView fitHeight="27.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -82,8 +64,11 @@
                            </image>
                         </ImageView>
                      </graphic>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
-                  <Button contentDisplay="TOP" layoutX="10.0" layoutY="367.0" mnemonicParsing="false" onAction="#loadSearchWindow" prefHeight="91.0" prefWidth="153.0" text="Search Books">
+                  <Button contentDisplay="TOP" layoutX="10.0" layoutY="367.0" mnemonicParsing="false" onAction="#loadSearchWindow" prefHeight="91.0" prefWidth="153.0" style="-fx-background-color: #171B2A; -fx-text-fill: white; -fx-border-color: white;" text="Search Books">
                      <graphic>
                         <ImageView fitHeight="27.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -91,8 +76,11 @@
                            </image>
                         </ImageView>
                      </graphic>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
-                  <Button contentDisplay="TOP" layoutX="10.0" layoutY="192.0" mnemonicParsing="false" prefHeight="91.0" prefWidth="153.0" text="Settings">
+                  <Button contentDisplay="TOP" layoutX="10.0" layoutY="192.0" mnemonicParsing="false" prefHeight="91.0" prefWidth="153.0" style="-fx-background-color: #171B2A; -fx-text-fill: white; -fx-border-color: white;" text="Settings">
                      <graphic>
                         <ImageView fitHeight="27.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -100,42 +88,57 @@
                            </image>
                         </ImageView>
                      </graphic>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
                </children>
             </VBox>
          </right>
          <center>
-            <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+            <TabPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white;" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
                <tabs>
                   <Tab text="Issue Book">
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="418.0" prefWidth="573.0">
                            <children>
-                              <VBox prefHeight="418.0" prefWidth="551.0" style="-fx-background-color: #cfcfcfcf;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <VBox prefHeight="418.0" prefWidth="551.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
-                                    <HBox alignment="CENTER" prefHeight="159.0" prefWidth="551.0" style="-fx-background-color: #c3d4d1;">
+                                    <HBox alignment="CENTER" prefHeight="159.0" prefWidth="551.0" style="-fx-border-radius: 30; -fx-border-color: #171B2A; -fx-border-width: 2; -fx-background-color: #171B2A; -fx-background-radius: 35;">
                                        <children>
-                                          <TextField fx:id="bookIDInput" onAction="#loadBookInfo" promptText="Book ID">
+                                          <TextField fx:id="bookIDInput" onAction="#loadBookInfo" promptText="Book ID" style="-fx-background-radius: 10; -fx-border-radius: 10; -fx-background-color: #EDA49A; -fx-prompt-text-fill: #171B2A;">
                                              <HBox.margin>
                                                 <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                                              </HBox.margin>
+                                             <cursor>
+                                                <Cursor fx:constant="TEXT" />
+                                             </cursor>
                                           </TextField>
-                                          <VBox alignment="CENTER" prefHeight="159.0" prefWidth="409.0">
+                                          <VBox alignment="CENTER" prefHeight="159.0" prefWidth="409.0" style="-fx-background-color: #EDA49A; -fx-background-radius: 30;">
                                              <children>
-                                                <Text fx:id="bookTitle" strokeType="OUTSIDE" strokeWidth="0.0" text="Title" textAlignment="CENTER" wrappingWidth="385.88671875">
+                                                <Text fx:id="bookTitle" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #171B2A;" text="Title" textAlignment="CENTER" wrappingWidth="385.88671875">
                                                    <VBox.margin>
                                                       <Insets top="10.0" />
                                                    </VBox.margin>
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
                                                 </Text>
-                                                <Text fx:id="bookAuthor" layoutX="10.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Author" textAlignment="CENTER" wrappingWidth="385.88671875">
+                                                <Text fx:id="bookAuthor" fill="WHITE" layoutX="10.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #171B2A;" text="Author" textAlignment="CENTER" wrappingWidth="385.88671875">
                                                    <VBox.margin>
                                                       <Insets top="10.0" />
                                                    </VBox.margin>
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
                                                 </Text>
-                                                <Text fx:id="bookStatus" layoutX="10.0" layoutY="106.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Status" textAlignment="CENTER" wrappingWidth="385.88671875">
+                                                <Text fx:id="bookStatus" fill="WHITE" layoutX="10.0" layoutY="106.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #171B2A;" text="Status" textAlignment="CENTER" wrappingWidth="385.88671875">
                                                    <VBox.margin>
                                                       <Insets top="10.0" />
                                                    </VBox.margin>
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
                                                 </Text>
                                              </children>
                                           </VBox>
@@ -144,24 +147,33 @@
                                           <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                                        </VBox.margin>
                                     </HBox>
-                                    <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="159.0" prefWidth="551.0" style="-fx-background-color: #c3d4d1;">
+                                    <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="159.0" prefWidth="551.0" style="-fx-border-color: #171B2A; -fx-border-radius: 30; -fx-border-width: 2; -fx-background-color: #171B2A; -fx-background-radius: 35;">
                                        <children>
-                                          <TextField fx:id="usernameInput" onAction="#loadUserInfo" prefWidth="134.0" promptText="Username">
+                                          <TextField fx:id="usernameInput" onAction="#loadUserInfo" prefWidth="134.0" promptText="Username" style="-fx-background-radius: 10; -fx-border-radius: 10; -fx-background-color: #EDA49A; -fx-prompt-text-fill: #171B2A;">
                                              <HBox.margin>
                                                 <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                                              </HBox.margin>
+                                             <cursor>
+                                                <Cursor fx:constant="TEXT" />
+                                             </cursor>
                                           </TextField>
-                                          <VBox alignment="CENTER" prefHeight="159.0" prefWidth="409.0">
+                                          <VBox alignment="CENTER" prefHeight="130.0" prefWidth="331.0" style="-fx-background-radius: 30; -fx-background-color: #EDA49A;">
                                              <children>
-                                                <Text fx:id="nameOfUser" strokeType="OUTSIDE" strokeWidth="0.0" text="Name of User" textAlignment="CENTER" wrappingWidth="385.88671875">
+                                                <Text fx:id="nameOfUser" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #171B2A;" text="Name of User" textAlignment="CENTER" wrappingWidth="385.88671875">
                                                    <VBox.margin>
                                                       <Insets top="10.0" />
                                                    </VBox.margin>
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
                                                 </Text>
-                                                <Text fx:id="emailOfUser" layoutX="10.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Contact Information" textAlignment="CENTER" wrappingWidth="385.88671875">
+                                                <Text fx:id="emailOfUser" fill="WHITE" layoutX="10.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #171B2A;" text="Contact Information" textAlignment="CENTER" wrappingWidth="385.88671875">
                                                    <VBox.margin>
                                                       <Insets top="10.0" />
                                                    </VBox.margin>
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
                                                 </Text>
                                              </children>
                                           </VBox>
@@ -172,7 +184,10 @@
                                     </HBox>
                                     <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                                        <children>
-                                          <JFXButton onAction="#loadIssueBook" styleClass="setup-button" stylesheets="@ui.mainframe.css" text="Issue" />
+                                          <JFXButton onAction="#loadIssueBook" style="-fx-background-color: #171B2A; -fx-background-radius: 100; -fx-text-fill: white;" styleClass="issue-button" text="Issue" textAlignment="CENTER">
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor></JFXButton>
                                        </children>
                                     </HBox>
                                  </children>
@@ -202,14 +217,20 @@
                                  <bottom>
                                     <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                                        <children>
-                                          <JFXButton styleClass="setup-button" stylesheets="@ui.mainframe.css" text="Renew">
+                                          <JFXButton style="-fx-background-color: #171B2A; -fx-background-radius: 100; -fx-text-fill: white;" styleClass="setup-button" text="Renew">
                                              <HBox.margin>
                                                 <Insets right="20.0" />
-                                             </HBox.margin></JFXButton>
-                                          <JFXButton layoutX="260.0" layoutY="48.0" styleClass="setup-button" stylesheets="@ui.mainframe.css" text="Return">
+                                             </HBox.margin>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor></JFXButton>
+                                          <JFXButton layoutX="260.0" layoutY="48.0" style="-fx-background-color: #171B2A; -fx-background-radius: 100; -fx-text-fill: white;" styleClass="setup-button" stylesheets="@ui.mainframe.css" text="Return">
                                              <HBox.margin>
                                                 <Insets right="20.0" />
-                                             </HBox.margin></JFXButton>
+                                             </HBox.margin>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor></JFXButton>
                                        </children>
                                     </HBox>
                                  </bottom>

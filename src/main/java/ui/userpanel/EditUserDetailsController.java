@@ -14,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.InputEvent;
 import javafx.scene.control.Button;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
@@ -34,9 +35,6 @@ public class EditUserDetailsController implements Initializable {
     }
 
     @FXML
-    private JFXTextField usernameBox;
-
-    @FXML
     private JFXPasswordField curPw;
 
     @FXML
@@ -51,13 +49,10 @@ public class EditUserDetailsController implements Initializable {
     }
 
     @FXML
-    void usernameSaveButtonPushed() {
+    private Text infoBox;
 
-    }
-
-    public void initByHand(String ur){
-        usernameBox.setText(ur);
-        System.out.println(":" + receivedUser);
+    public void initializeByHand(String ur){
+        System.out.println("Editing user: " + receivedUser);
     }
 
     @Override

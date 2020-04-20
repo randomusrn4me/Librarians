@@ -16,6 +16,7 @@ import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import ui.listissued.ListIssuedController;
 import ui.listissued.ListIssuedController;
+import ui.mainframe.MainframeController;
 
 import java.io.IOException;
 import java.net.URL;
@@ -78,6 +79,22 @@ public class UserpanelController implements Initializable {
         databaseHandler = DatabaseHandler.getInstance();
     }
 
-    public void userDetailsButtonPushed(ActionEvent actionEvent) {
+    public void userDetailsButtonPushed() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ui.edit_user_details.fxml"));
+            Parent parent = loader.load();
+            EditUserDetailsController controller = loader.getController();
+
+
+            Stage stage = new Stage(StageStyle.DECORATED);
+            stage.setTitle("Edit User Details");
+            stage.setScene(new Scene(parent));
+            stage.show();
+            controller.setReceivedUser(receivedUser);
+            controller.initializeByHand("");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

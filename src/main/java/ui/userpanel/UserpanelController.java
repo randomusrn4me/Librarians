@@ -78,7 +78,6 @@ public class UserpanelController implements Initializable {
         databaseHandler = DatabaseHandler.getInstance();
     }
 
-    //ez mi?
-    public void userDetailsButtonPushed() {
+    public void userDetailsButtonPushed(ActionEvent actionEvent) {
     }
 }

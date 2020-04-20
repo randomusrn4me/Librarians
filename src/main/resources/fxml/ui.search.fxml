@@ -10,7 +10,7 @@
     <children>
         <TableView fx:id="tableView" layoutX="7.0" layoutY="303.0" prefHeight="350.0" prefWidth="704.0" style="-fx-background-color: d9dddc;" AnchorPane.bottomAnchor="-3.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="303.0">
             <columns>
-                <TableColumn fx:id="titleCol" prefWidth="134.0" style="-fx-background-color: #EDA49A; -fx-border-width: 2; -fx-border-color: white;" text="Title" />
+                <TableColumn fx:id="titleCol" prefWidth="135.0" style="-fx-background-color: #EDA49A; -fx-border-width: 2; -fx-border-color: white;" text="Title" />
                 <TableColumn fx:id="authorCol" prefWidth="75.0" style="-fx-background-color: #EDA49A; -fx-border-color: white; -fx-border-width: 2;" text="Author" />
                 <TableColumn fx:id="yearCol" prefWidth="75.0" style="-fx-background-color: #EDA49A; -fx-border-color: white; -fx-border-width: 2;" text="Year" />
                 <TableColumn fx:id="publisherCol" prefWidth="75.0" style="-fx-background-color: #EDA49A; -fx-border-color: white; -fx-border-width: 2;" text="Publisher" />

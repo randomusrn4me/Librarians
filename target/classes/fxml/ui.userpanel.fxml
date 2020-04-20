@@ -14,9 +14,9 @@
             <top>
                 <MenuBar style="-fx-background-color: #171B2A;" BorderPane.alignment="CENTER">
                     <menus>
-                        <Menu mnemonicParsing="false" text="File">
+                        <Menu mnemonicParsing="false" text="Preferences">
                             <items>
-                                <MenuItem mnemonicParsing="false" text="Close" />
+                                <MenuItem mnemonicParsing="false" onAction="#userDetailsButtonPushed" text="Edit user details..." />
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="Edit">

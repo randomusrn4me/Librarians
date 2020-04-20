@@ -26,6 +26,11 @@ public class ListIssuedController implements Initializable {
 
     public void setReceivedUser(String receivedUser) {
         this.receivedUser = receivedUser;
+        try {
+            loadData();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     ObservableList<Issue> list = FXCollections.observableArrayList();
@@ -52,17 +57,13 @@ public class ListIssuedController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initCol();
 
-        try {
-            loadData();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
     }
 
     private void loadData() throws SQLException {
         DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
-        /*
-        String qu = "SELECT * FROM ISSUE WHERE username = '" + username + "'";
+
+        String qu = "SELECT * FROM ISSUE WHERE username = '" + receivedUser + "'";
         ResultSet rs = databaseHandler.execQuery(qu);
         while(true){
             try {
@@ -83,7 +84,7 @@ public class ListIssuedController implements Initializable {
 
         tableView.getItems().setAll(list);
 
-         */
+
     }
 
     private void initCol() {

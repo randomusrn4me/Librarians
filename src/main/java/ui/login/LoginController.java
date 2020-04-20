@@ -21,6 +21,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import org.apache.commons.lang3.RandomStringUtils;
 import ui.mainframe.MainframeController;
 import ui.userpanel.UserpanelController;
 
@@ -120,8 +121,10 @@ public class LoginController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loginFileAccess = new LoginFileAccess();
         statusText.setText("Please sign in to start using the software!");
-        loginFileAccess.addUser("admin2", hashing("administrator"), "admin");
-        loginFileAccess.addUser("test", hashing("testing"), "user");
+        //System.out.println(RandomStringUtils.randomAlphanumeric(8));
+        //loginFileAccess.addUser("admin2", hashing("administrator"), "admin");
+        //loginFileAccess.addUser("test", hashing("testing"), "user");
+        //loginFileAccess.modifyUser("usr", hashing("usr"), "user");
 
         passwordBox.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override

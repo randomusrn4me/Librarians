@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.InputEvent;
 import javafx.scene.control.Button;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
@@ -36,7 +37,11 @@ public class UserpanelController implements Initializable {
 
     public void setReceivedUser(String receivedUser) {
         this.receivedUser = receivedUser;
+        userInfoBox.setText("Current user: " + receivedUser);
     }
+
+    @FXML
+    private Text userInfoBox;
 
     @FXML
     void loadListBooksWindow() {
@@ -87,7 +92,7 @@ public class UserpanelController implements Initializable {
 
 
             Stage stage = new Stage(StageStyle.DECORATED);
-            stage.setTitle("Edit User Details");
+            stage.setTitle("Change password");
             stage.setScene(new Scene(parent));
             stage.show();
             controller.setReceivedUser(receivedUser);

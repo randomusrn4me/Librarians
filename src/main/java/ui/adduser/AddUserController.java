@@ -6,15 +6,23 @@ import database.DatabaseHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import org.apache.commons.lang3.RandomStringUtils;
+import ui.login.LoginController;
+import ui.login.LoginFileAccess;
 
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class AddUserController implements Initializable {
 
     private DatabaseHandler handler;
+
+    private LoginFileAccess loginFileAccess;
 
     @FXML
     private AnchorPane rootPane;
@@ -70,9 +78,15 @@ public class AddUserController implements Initializable {
 
         if(handler.execAction(st)){
             Alert emptyAlert = new Alert(Alert.AlertType.INFORMATION);
-            emptyAlert.setHeaderText(null);
+            emptyAlert.setHeaderText("User added");
             emptyAlert.setContentText("Successfully added user " + "'" + nUser + "'" + " to the database.");
             emptyAlert.showAndWait();
+            String pw = RandomStringUtils.randomAlphanumeric(8);
+            emptyAlert.setHeaderText("User password");
+            emptyAlert.setContentText("The user's password is: \"" + pw + "\"\nPlease ask the user to make a note of it\nand change it as soon as possible!");
+            loginFileAccess.addUser(nUser, LoginController.hashing(pw), "user");
+            emptyAlert.showAndWait();
+
         }
         else{
             Alert emptyAlert = new Alert(Alert.AlertType.ERROR);
@@ -91,6 +105,7 @@ public class AddUserController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        loginFileAccess = new LoginFileAccess();
         handler = DatabaseHandler.getInstance();
     }
 }

@@ -11,7 +11,8 @@
                 <TableColumn fx:id="titleCol" prefWidth="75.0" text="Title" />
                 <TableColumn fx:id="authorCol" prefWidth="75.0" text="Author" />
                 <TableColumn fx:id="idCol" prefWidth="75.0" text="Book ID" />
-                <TableColumn fx:id="dateCol" prefWidth="75.0" text="Date Issued" />
+                <TableColumn fx:id="dateCol" prefWidth="75.0" text="Date of Issue" />
+            <TableColumn fx:id="dueDateCol" prefWidth="75.0" text="Date Due" />
                 <TableColumn fx:id="renewCol" prefWidth="75.0" text="Times Renewed" />
             </columns>
             <columnResizePolicy>

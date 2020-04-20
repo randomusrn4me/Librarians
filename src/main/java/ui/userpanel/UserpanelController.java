@@ -77,4 +77,8 @@ public class UserpanelController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         databaseHandler = DatabaseHandler.getInstance();
     }
+
+    //ez mi?
+    public void userDetailsButtonPushed() {
+    }
 }

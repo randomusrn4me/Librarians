@@ -149,8 +149,10 @@ public class MainframeController implements Initializable {
 
             String update = "UPDATE BOOK SET isAvail = false WHERE id = '" + bookID + "'";
 
+            String setDueDate = "UPDATE ISSUE SET dueDate = DATEADD('week', 3, dueDate) WHERE bookID = '" + bookID + "'";
 
-            if(databaseHandler.execAction(add) && databaseHandler.execAction(update)){
+
+            if(databaseHandler.execAction(add) && databaseHandler.execAction(update) && databaseHandler.execAction(setDueDate)){
                     Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
                     alert2.setTitle("Success");
                     alert2.setHeaderText(null);
@@ -179,10 +181,10 @@ public class MainframeController implements Initializable {
                 assert rs != null;
                 if (!rs.next()) break;
                 String tUsername = rs.getString("username");
-                Timestamp tIssueTime = rs.getTimestamp("issueDate");
+                //Timestamp tIssueTime = rs.getTimestamp("issueDate");
                 int tRenewCount = rs.getInt("renewCount");
 
-                list.add("Issue Date and Time: " + tIssueTime.toString());
+                //list.add("Issue Date and Time: " + tIssueTime.toString());
                 list.add("Renew Count: " + tRenewCount);
                 list.add("Book Information:- ");
 

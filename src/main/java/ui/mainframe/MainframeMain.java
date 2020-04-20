@@ -14,7 +14,7 @@ public class MainframeMain extends Application {
         Scene scene = new Scene(root);
         stage.setTitle("General Library Manager");
         stage.setScene(scene);
-        stage.show();
+        stage.show();;
 
         new Thread(DatabaseHandler::getInstance).start();
     }

@@ -27,13 +27,13 @@ import ui.mainframe.MainframeController;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class EditUserDetailsController implements Initializable {
-
-    private LoginFileAccess loginFileAccess;
 
     private String receivedUser;
 
@@ -55,6 +55,7 @@ public class EditUserDetailsController implements Initializable {
 
     @FXML
     void pwSaveButtonPushed() {
+        DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
         if(receivedUser == null){
             infoBox.setText("Error! The general user\ndoes not have a password!");
             return;
@@ -66,11 +67,26 @@ public class EditUserDetailsController implements Initializable {
         String check2 = npw2.getText();
         String new1 = LoginController.hashing(npw1.getText());
         String new2 = LoginController.hashing(npw2.getText());
-        if (!current.equals(loginFileAccess.getMapOfUsers().get(receivedUser)[0])) {
+
+        String qu = "SELECT pass FROM USER WHERE username = '" + receivedUser + "'";
+        String passDb = null;
+        ResultSet rs = databaseHandler.execQuery(qu);
+        while(true){
+            try {
+                assert rs != null;
+                if (!rs.next()) break;
+                passDb = rs.getString("pass");
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if(!current.equals(passDb)){
             infoBox.setText("Current password is incorrect!");
             stringBuilder.append("• Current password is incorrect!\n");
             isError = true;
         }
+
         if (!new1.equals(new2)) {
             infoBox.setText("Passwords don't match!");
             stringBuilder.append("• Passwords don't match!\n");
@@ -94,23 +110,25 @@ public class EditUserDetailsController implements Initializable {
             stringBuilder.append("• Your password has special characters in it!\n");
             isError = true;;
         }
+
         if(!isError) {
-            loginFileAccess.modifyUser(receivedUser, new1, "user");
+            databaseHandler.modifyUser(receivedUser, new1);
             infoBox.setFill(Color.MEDIUMSEAGREEN);
             infoBox.setText("Password updated!\nNext time you can log in\nwith your new password.");
             return;
         }
         System.out.println(stringBuilder);
         infoBox.setText(stringBuilder.toString());
+
     }
 
-    public void initializeByHand(String ur){
+    public void initializeByHand(){
         System.out.println("Editing user: " + receivedUser);
         if(receivedUser == null) System.out.println("**Warning! You are editing the general user \"null\"!");
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        loginFileAccess = new LoginFileAccess();
+
     }
 }

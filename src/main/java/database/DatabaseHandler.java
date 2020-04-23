@@ -1,6 +1,7 @@
 package database;
 
-import javax.swing.*;
+import javafx.scene.control.Alert;
+
 import java.sql.*;
 
 public final class DatabaseHandler {
@@ -95,6 +96,9 @@ public final class DatabaseHandler {
             } else{
                 stmt.execute("CREATE TABLE " + TABLE_NAME + "("
                         + "     username varchar(200) primary key,\n"
+                        + "     pass varchar(255),\n"
+                        + "     isUser boolean default true,\n"
+                        + "     firstLog boolean default true,\n"
                         + "     fullname varchar(200),\n"
                         + "     email varchar(200),\n"
                         + "     address varchar(100),\n"
@@ -128,6 +132,32 @@ public final class DatabaseHandler {
             }
         } catch(SQLException e){
             System.err.println(e.getMessage() + " --- setupDatabase");
+        }
+    }
+
+    public void modifyUser(String username, String passwordHash){
+
+        String act = "UPDATE USER SET pass = '" + passwordHash +"' WHERE username = '" + username + "'";
+        execAction(act);
+
+    }
+
+    public void removeUser(String username){
+        String act = "DELETE FROM USER WHERE username = '" + username + "'";
+
+        if(execAction(act)){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Success");
+            alert.setHeaderText(null);
+            alert.setContentText("Successfully removed user: + " + username + " from the database.");
+            alert.showAndWait();
+        }
+        else{
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("User not found in the database!");
+            alert.showAndWait();
         }
     }
 

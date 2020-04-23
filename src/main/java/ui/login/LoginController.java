@@ -5,14 +5,18 @@ import java.math.BigInteger;
 import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+import database.DatabaseHandler;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -26,8 +30,6 @@ import ui.mainframe.MainframeController;
 import ui.userpanel.UserpanelController;
 
 public class LoginController implements Initializable {
-
-    private LoginFileAccess loginFileAccess;
 
     @FXML
     private TextField usernameBox;
@@ -43,6 +45,7 @@ public class LoginController implements Initializable {
 
     @FXML
     void loginButtonPushed() {
+        DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
         String username = usernameBox.getText().toLowerCase();
         String password = hashing(passwordBox.getText());
         statusText.setStyle("-fx-font-weight:bold");
@@ -52,23 +55,56 @@ public class LoginController implements Initializable {
             statusText.setFill(Color.BLACK);
             return;
         }
-        if(loginFileAccess.getMapOfUsers().containsKey(username) && loginFileAccess.getMapOfUsers().get(username)[0].equals(password)){
-            statusText.setText("You are a valid user");
-            statusText.setFill(Color.MEDIUMSEAGREEN);
-            if(loginFileAccess.getMapOfUsers().get(username)[1].equals("user")){
-                System.out.println("A user (\"" + username +"\") has logged in!");
-                closeStage();
-                windowLoader("/fxml/ui.userpanel.fxml", "Personal Library Manager", username);
-            } else if(loginFileAccess.getMapOfUsers().get(username)[1].equals("admin")){
-                System.out.println("An admin (\"" + username +"\") has logged in!");
-                closeStage();
-                windowLoader("/fxml/ui.mainframe.fxml", "General Library Manager", username);
-            }
-        } else {
-            statusText.setText("Invalid user");
+
+        String qu = "SELECT * FROM USER WHERE username = '" + username + "'";
+        String pw = null;
+        boolean firstLog = false;
+        boolean isUser = true;
+        ResultSet rs = databaseHandler.execQuery(qu);
+        if(rs == null){
+            statusText.setText("Invalid username");
             statusText.setFill(Color.RED);
             System.out.println("An invalid (\"" + username + "\") user has attempted login!");
+            return;
         }
+        else{
+            while (true) {
+                try {
+                    if (!rs.next()) break;
+                    isUser = rs.getBoolean("isUser");
+                    firstLog = rs.getBoolean("firstLog");
+                    pw = rs.getString("pass");
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        assert pw != null;
+        if(isUser && pw.equals(password)){
+            closeStage();
+            windowLoader("/fxml/ui.userpanel.fxml", "Personal Library Manager", username, true);
+            if(firstLog){
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("First login password warning");
+                alert.setHeaderText(null);
+                alert.setContentText("We highly recommend you to change the generated password you received from us.");
+                alert.showAndWait();
+                String act = "UPDATE USER SET firstLog = false WHERE username = '" + username + "'";
+                databaseHandler.execAction(act);
+            }
+
+        }
+        else if(!isUser && pw.equals(password)){
+            System.out.println("An admin (\"" + username +"\") has logged in!");
+            closeStage();
+            windowLoader("/fxml/ui.mainframe.fxml", "General Library Manager", username, false);
+        }
+        else{
+            statusText.setText("Incorrect password.");
+            statusText.setFill(Color.RED);
+        }
+
     }
 
     public void cancelButtonPushed() {
@@ -94,16 +130,16 @@ public class LoginController implements Initializable {
         ((Stage) usernameBox.getScene().getWindow()).close();
     }
 
-    private void windowLoader(String location, String title, String username){
+    private void windowLoader(String location, String title, String username, boolean isUser){
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(location));
             Parent parent = loader.load();
 
-            if(loginFileAccess.getMapOfUsers().get(username)[1].equals("user")){
+            if(isUser){
                 UserpanelController controller = loader.getController();
                 controller.setReceivedUser(username);
             }
-            if(loginFileAccess.getMapOfUsers().get(username)[1].equals("admin")){
+            else{
                 MainframeController controller = loader.getController();
                 controller.setReceivedUser(username);
             }
@@ -119,12 +155,7 @@ public class LoginController implements Initializable {
     }
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        loginFileAccess = new LoginFileAccess();
         statusText.setText("Please sign in to start using the software!");
-        //System.out.println(RandomStringUtils.randomAlphanumeric(8));
-        //loginFileAccess.addUser("admin2", hashing("administrator"), "admin");
-        //loginFileAccess.addUser("test", hashing("testing"), "user");
-        //loginFileAccess.modifyUser("usr", hashing("usr"), "user");
 
         passwordBox.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override

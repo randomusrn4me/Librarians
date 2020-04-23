@@ -22,8 +22,6 @@ public class AddUserController implements Initializable {
 
     private DatabaseHandler handler;
 
-    private LoginFileAccess loginFileAccess;
-
     @FXML
     private AnchorPane rootPane;
 
@@ -66,25 +64,44 @@ public class AddUserController implements Initializable {
         //
         //Add correct email + phone number entry check
         //
-
-        String st = "INSERT INTO USER VALUES ("
-                + "'" + nUser + "',"
-                + "'" + nName + "',"
-                + "'" + nEmail + "',"
-                + "'" + nAddress + "',"
-                + "'" + nPhone +  "'"
-                + ")";
-        System.out.println(st);
+        String pw = RandomStringUtils.randomAlphanumeric(8);
+        String pwDB = LoginController.hashing(pw);
+        String st = null;
+        if(nUser.contains("admin")){
+            st = "INSERT INTO USER VALUES ("
+                    + "'" + nUser + "',"
+                    + "'" + pwDB + "',"
+                    + "'" + false + "',"
+                    + "'" + false + "',"
+                    + "'" + nName + "',"
+                    + "'" + nEmail + "',"
+                    + "'" + nAddress + "',"
+                    + "'" + nPhone +  "'"
+                    + ")";
+        }
+        else{
+            st = "INSERT INTO USER VALUES ("
+                    + "'" + nUser + "',"
+                    + "'" + pwDB + "',"
+                    + "'" + true + "',"
+                    + "'" + true + "',"
+                    + "'" + nName + "',"
+                    + "'" + nEmail + "',"
+                    + "'" + nAddress + "',"
+                    + "'" + nPhone +  "'"
+                    + ")";
+        }
+        //System.out.println(st);
 
         if(handler.execAction(st)){
             Alert emptyAlert = new Alert(Alert.AlertType.INFORMATION);
             emptyAlert.setHeaderText("User added");
             emptyAlert.setContentText("Successfully added user " + "'" + nUser + "'" + " to the database.");
             emptyAlert.showAndWait();
-            String pw = RandomStringUtils.randomAlphanumeric(8);
+            //String pw = RandomStringUtils.randomAlphanumeric(8);
             emptyAlert.setHeaderText("User password");
             emptyAlert.setContentText("The user's password is: \"" + pw + "\"\nPlease ask the user to make a note of it\nand change it as soon as possible!");
-            loginFileAccess.addUser(nUser, LoginController.hashing(pw), "user");
+            //loginFileAccess.addUser(nUser, LoginController.hashing(pw), "user");
             emptyAlert.showAndWait();
 
         }
@@ -105,7 +122,6 @@ public class AddUserController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        loginFileAccess = new LoginFileAccess();
         handler = DatabaseHandler.getInstance();
     }
 }

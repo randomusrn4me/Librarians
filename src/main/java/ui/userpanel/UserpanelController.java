@@ -16,8 +16,6 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import ui.listissued.ListIssuedController;
-import ui.listissued.ListIssuedController;
-import ui.mainframe.MainframeController;
 
 import java.io.IOException;
 import java.net.URL;
@@ -25,15 +23,13 @@ import java.util.ResourceBundle;
 
 public class UserpanelController implements Initializable {
 
-    private DatabaseHandler databaseHandler;
-
     @FXML
     public void logoutButtonPushed(ActionEvent event) {
         ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
         windowLoader("/fxml/ui.login.fxml", "Login");
     }
 
-    public String receivedUser;
+    private String receivedUser;
 
     public void setReceivedUser(String receivedUser) {
         this.receivedUser = receivedUser;
@@ -81,25 +77,28 @@ public class UserpanelController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        databaseHandler = DatabaseHandler.getInstance();
+
     }
+
 
     public void userDetailsButtonPushed() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ui.edit_user_details.fxml"));
             Parent parent = loader.load();
             EditUserDetailsController controller = loader.getController();
-
+            controller.setReceivedUser(receivedUser);
 
             Stage stage = new Stage(StageStyle.DECORATED);
             stage.setTitle("Change password");
             stage.setScene(new Scene(parent));
             stage.show();
-            controller.setReceivedUser(receivedUser);
-            controller.initializeByHand("");
+
+            controller.initializeByHand();
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+
 }

@@ -1,10 +1,7 @@
 package ui.mainframe;
 
 
-import com.jfoenix.controls.JFXTextField;
 import database.DatabaseHandler;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,15 +9,16 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import ui.listissued.ListIssuedAdminController;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -31,6 +29,9 @@ public class MainframeController implements Initializable {
     public void setReceivedUser(String receivedUser) {
         this.receivedUser = receivedUser;
     }
+
+    @FXML
+    private Text toolTip;
 
     @FXML
     private TextField bookIDInput;
@@ -53,14 +54,8 @@ public class MainframeController implements Initializable {
     @FXML
     private Text emailOfUser;
 
-    @FXML
-    private JFXTextField bookIDToReturn;
 
-    @FXML
-    private ListView<String> issueDataList;
-
-
-    DatabaseHandler databaseHandler;
+    private DatabaseHandler databaseHandler;
 
     @FXML
     void loadBookInfo() {
@@ -125,13 +120,12 @@ public class MainframeController implements Initializable {
     void loadIssueBook() {
         String username = usernameInput.getText();
         String bookID = bookIDInput.getText();
+        toolTip.setText("");
+        toolTip.setStyle("-fx-font-weight:bold");
 
         if(username.isEmpty() || bookID.isEmpty()){
-            Alert empty = new Alert(Alert.AlertType.ERROR);
-            empty.setTitle("Input error");
-            empty.setHeaderText(null);
-            empty.setContentText("Please enter a Book ID and Username to issue a book.");
-            empty.showAndWait();
+            toolTip.setFill(Color.RED);
+            toolTip.setText("Please enter a Book ID and Username to issue a book.");
             return;
         }
 
@@ -139,7 +133,6 @@ public class MainframeController implements Initializable {
         alert.setTitle("Confirm Book Issue");
         alert.setHeaderText(null);
         alert.setContentText("Are you sure you want to issue that book to " + usernameInput.getText() + "?");
-        //alert.showAndWait();
 
         Optional<ButtonType> response = alert.showAndWait();
         if(response.get() == ButtonType.OK){
@@ -170,57 +163,6 @@ public class MainframeController implements Initializable {
     }
 
     @FXML
-    void loadBookInfoForReturn() {
-        ObservableList<String> list = FXCollections.observableArrayList();
-
-        String bookID = bookIDToReturn.getText();
-        String qu = "SELECT * FROM ISSUE WHERE bookID = '" + bookID + "'";
-        ResultSet rs = databaseHandler.execQuery(qu);
-        while(true){
-            try {
-                assert rs != null;
-                if (!rs.next()) break;
-                String tUsername = rs.getString("username");
-                //Timestamp tIssueTime = rs.getTimestamp("issueDate");
-                int tRenewCount = rs.getInt("renewCount");
-
-                //list.add("Issue Date and Time: " + tIssueTime.toString());
-                list.add("Renew Count: " + tRenewCount);
-                list.add("Book Information:- ");
-
-                qu = "SELECT * FROM BOOK WHERE id = '" + bookID + "'";
-                ResultSet rsBook = databaseHandler.execQuery(qu);
-                assert rsBook != null;
-                while(rsBook.next()){
-                    list.add("\tTitle: " + rsBook.getString("title"));
-                    list.add("\tAuthor: " + rsBook.getString("author"));
-                    list.add("\tPublisher: " + rsBook.getString("publisher"));
-                    list.add("\tYear: " + rsBook.getString("year"));
-                    list.add("\tID: " + rsBook.getString("id"));
-                }
-
-                list.add("User Information:- ");
-                qu = "SELECT * FROM USER WHERE username = '" + tUsername + "'";
-                ResultSet rsUser = databaseHandler.execQuery(qu);
-                assert rsUser != null;
-                while(rsUser.next()){
-                    list.add("\tUsername: " + rsUser.getString("username"));
-                    list.add("\tName: " + rsUser.getString("fullname"));
-                    list.add("\tEmail address: " + rsUser.getString("email"));
-                    list.add("\tPhone number: " + rsUser.getString("phone"));
-                }
-
-
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-
-            issueDataList.getItems().setAll(list);
-
-        }
-    }
-
-    @FXML
     void loadAddBookWindow() {
         windowLoader("/fxml/ui.add_book.fxml", "Add New Book");
     }
@@ -246,6 +188,29 @@ public class MainframeController implements Initializable {
     }
 
     @FXML
+    void loadUserIssueList() throws SQLException {
+        String username = usernameInput.getText();
+        toolTip.setText("");
+        toolTip.setStyle("-fx-font-weight:bold");
+
+        if(username.isEmpty()){
+            toolTip.setFill(Color.RED);
+            toolTip.setText("Please enter a Username to Renew/Return a book.");
+            return;
+        }
+        String qu = "SELECT * FROM USER WHERE username = '" + username + "'";
+        ResultSet rs = databaseHandler.execQuery(qu);
+        assert rs != null;
+        if(!rs.next()){
+            toolTip.setFill(Color.RED);
+            toolTip.setText("Please enter a valid Username.");
+            return;
+        }
+
+        windowLoader("/fxml/ui.list_issued_admin.fxml", "Books issued to: " + username);
+    }
+
+    @FXML
     public void logoutButtonPushed(ActionEvent event) {
         ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
         windowLoader("/fxml/ui.login.fxml", "Login");
@@ -253,12 +218,18 @@ public class MainframeController implements Initializable {
 
     void windowLoader(String location, String title){
         try {
-            Parent parent = FXMLLoader.load(getClass().getResource(location));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(location));
+            Parent parent = loader.load();
+
+            if(location.contains("issue")){
+                ListIssuedAdminController controller = loader.getController();
+                controller.setReceivedUser(usernameInput.getText());
+            }
+
             Stage stage = new Stage(StageStyle.DECORATED);
             stage.setTitle(title);
             stage.setScene(new Scene(parent));
             stage.show();
-
         } catch (IOException e) {
             e.printStackTrace();
         }

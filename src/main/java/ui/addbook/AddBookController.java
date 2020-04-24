@@ -92,6 +92,7 @@ public class AddBookController implements Initializable {
             emptyAlert.setHeaderText(null);
             emptyAlert.setContentText("Successfully added the book to database.");
             emptyAlert.showAndWait();
+            clear();
         }
         else{
             Alert emptyAlert = new Alert(Alert.AlertType.ERROR);
@@ -106,6 +107,14 @@ public class AddBookController implements Initializable {
     void handleCancelButtonPushed() {
         Stage stage = (Stage) rootPane.getScene().getWindow();
         stage.close();
+    }
+
+    void clear(){
+        title.setText("");
+        author.setText("");
+        publisher.setText("");
+        id.setText("");
+        year.setText("");
     }
 
     @Override

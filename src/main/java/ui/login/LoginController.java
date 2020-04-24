@@ -99,6 +99,10 @@ public class LoginController implements Initializable {
             System.out.println("An admin (\"" + username +"\") has logged in!");
             closeStage();
             windowLoader("/fxml/ui.mainframe.fxml", "General Library Manager", username, false);
+            if(firstLog) {
+                String act = "UPDATE USER SET firstLog = false WHERE username = '" + username + "'";
+                databaseHandler.execAction(act);
+            }
         }
         else{
             statusText.setText("Incorrect password.");

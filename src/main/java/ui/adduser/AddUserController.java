@@ -6,6 +6,7 @@ import database.DatabaseHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.AnchorPane;
@@ -47,6 +48,9 @@ public class AddUserController implements Initializable {
     private JFXButton cancel;
 
     @FXML
+    private CheckBox userCheckBox;
+
+    @FXML
     void handleAddUserButtonPushed() {
         String nName = fullname.getText();
         String nUser = username.getText().toLowerCase();
@@ -67,19 +71,19 @@ public class AddUserController implements Initializable {
         String pw = RandomStringUtils.randomAlphanumeric(8);
         String pwDB = LoginController.hashing(pw);
         String st = null;
-        if(nUser.contains("admin")){
+        if(!userCheckBox.isSelected()){ //If admin
             st = "INSERT INTO USER VALUES ("
                     + "'" + nUser + "',"
                     + "'" + pwDB + "',"
                     + "'" + false + "',"
-                    + "'" + false + "',"
+                    + "'" + true + "',"
                     + "'" + nName + "',"
                     + "'" + nEmail + "',"
                     + "'" + nAddress + "',"
                     + "'" + nPhone +  "'"
                     + ")";
         }
-        else{
+        else{ //If user
             st = "INSERT INTO USER VALUES ("
                     + "'" + nUser + "',"
                     + "'" + pwDB + "',"
@@ -103,7 +107,7 @@ public class AddUserController implements Initializable {
             emptyAlert.setContentText("The user's password is: \"" + pw + "\"\nPlease ask the user to make a note of it\nand change it as soon as possible!");
             //loginFileAccess.addUser(nUser, LoginController.hashing(pw), "user");
             emptyAlert.showAndWait();
-
+            clear();
         }
         else{
             Alert emptyAlert = new Alert(Alert.AlertType.ERROR);
@@ -119,9 +123,19 @@ public class AddUserController implements Initializable {
         stage.close();
     }
 
+    void clear(){
+        fullname.setText("");
+        username.setText("");
+        address.setText("");
+        phonenumber.setText("");
+        email.setText("");
+        userCheckBox.setSelected(true);
+    }
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         handler = DatabaseHandler.getInstance();
+        userCheckBox.setSelected(true);
     }
 }

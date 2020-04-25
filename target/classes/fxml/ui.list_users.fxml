@@ -5,6 +5,8 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ContextMenu?>
 <AnchorPane prefHeight="400.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.listusers.ListUsersController">
     <children>
         <TableView fx:id="tableView" layoutX="7.0" layoutY="30.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -20,6 +22,15 @@
             <columnResizePolicy>
                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
             </columnResizePolicy>
+            <contextMenu>
+                <ContextMenu>
+                    <items>
+                        <MenuItem fx:id="delMenu" onAction="#handleDeleteUser" mnemonicParsing="false" text="Delete user" />
+                        <MenuItem fx:id="pwMenu" onAction="#handleEditPassword" mnemonicParsing="false" text="Edit password" />
+                        <MenuItem fx:id="editMenu" onAction="#handleEditUser" mnemonicParsing="false" text="Edit user details" />
+                    </items>
+                </ContextMenu>
+            </contextMenu>
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>

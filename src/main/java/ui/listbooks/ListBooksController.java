@@ -7,6 +7,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -20,6 +21,12 @@ import java.util.ResourceBundle;
 public class ListBooksController implements Initializable {
 
     ObservableList<Book> list = FXCollections.observableArrayList();
+
+    private boolean isUser;
+
+    public void setIsUser(boolean isUser) {
+        this.isUser = isUser;
+    }
 
     @FXML
     private AnchorPane rootPane;
@@ -45,6 +52,12 @@ public class ListBooksController implements Initializable {
     @FXML
     private TableColumn<Book, Boolean> availabilityCol;
 
+    @FXML
+    private MenuItem delMenu;
+
+    @FXML
+    private MenuItem editMenu;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -55,6 +68,26 @@ public class ListBooksController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public void initByHand(){
+        if(isUser){
+            delMenu.setDisable(true);
+            editMenu.setDisable(true);
+            System.out.println("it's a user");
+        }
+    }
+
+
+
+    @FXML
+    void handleDeleteBook() {
+        System.out.println("Book deletion attempt");
+    }
+
+    @FXML
+    void handleEditBook() {
+        System.out.println("Book details edit attempt");
     }
 
     private void loadData() throws SQLException {

@@ -223,6 +223,7 @@
                                     <Insets left="40.0" right="40.0" />
                                  </HBox.margin>
                               </JFXButton>
+                              <Text fx:id="userInfoBox" strokeType="OUTSIDE" strokeWidth="0.0" text="Current admin: /null/" />
                            </children>
                         </HBox>
                      </children>

@@ -8,6 +8,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -46,6 +47,15 @@ public class ListUsersController implements Initializable {
     @FXML
     private TableColumn<User, String> loggedCol;
 
+    @FXML
+    private MenuItem delMenu;
+
+    @FXML
+    private MenuItem pwMenu;
+
+    @FXML
+    private MenuItem editMenu;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initCol();
@@ -54,6 +64,21 @@ public class ListUsersController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    void handleDeleteUser() {
+        System.out.println("User deletion attempt");
+    }
+
+    @FXML
+    void handleEditPassword() {
+        System.out.println("User password edit attempt");
+    }
+
+    @FXML
+    void handleEditUser() {
+        System.out.println("User details edit attempt");
     }
 
     private void initCol() {

@@ -15,6 +15,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
+import ui.listbooks.ListBooksController;
 import ui.listissued.ListIssuedController;
 
 import java.io.IOException;
@@ -63,12 +64,24 @@ public class UserpanelController implements Initializable {
             if(location.contains("issue")){
                 ListIssuedController controller = loader.getController();
                 controller.setReceivedUser(receivedUser);
+            } else if(location.contains("list_books")){
+                System.out.println("contains");
+                ListBooksController controller = loader.getController();
+                controller.setIsUser(true);
+
+                Stage stage = new Stage(StageStyle.DECORATED);
+                stage.setTitle(title);
+                stage.setScene(new Scene(parent));
+                stage.show();
+                controller.initByHand();
+            } else {
+                Stage stage = new Stage(StageStyle.DECORATED);
+                stage.setTitle(title);
+                stage.setScene(new Scene(parent));
+                stage.show();
             }
 
-            Stage stage = new Stage(StageStyle.DECORATED);
-            stage.setTitle(title);
-            stage.setScene(new Scene(parent));
-            stage.show();
+
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -87,6 +100,7 @@ public class UserpanelController implements Initializable {
             Parent parent = loader.load();
             EditUserDetailsController controller = loader.getController();
             controller.setReceivedUser(receivedUser);
+
 
             Stage stage = new Stage(StageStyle.DECORATED);
             stage.setTitle("Change password");

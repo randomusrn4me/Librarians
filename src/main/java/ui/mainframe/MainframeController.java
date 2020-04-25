@@ -13,6 +13,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import ui.listbooks.ListBooksController;
 import ui.listissued.ListIssuedAdminController;
 
 import java.io.IOException;
@@ -28,6 +29,7 @@ public class MainframeController implements Initializable {
 
     public void setReceivedUser(String receivedUser) {
         this.receivedUser = receivedUser;
+        userInfoBox.setText("Current admin: " + receivedUser);
     }
 
     @FXML
@@ -54,6 +56,8 @@ public class MainframeController implements Initializable {
     @FXML
     private Text emailOfUser;
 
+    @FXML
+    private Text userInfoBox;
 
     private DatabaseHandler databaseHandler;
 
@@ -224,6 +228,12 @@ public class MainframeController implements Initializable {
             if(location.contains("issue")){
                 ListIssuedAdminController controller = loader.getController();
                 controller.setReceivedUser(usernameInput.getText());
+            }
+
+            if(location.contains("list_books")){
+                System.out.println("contains");
+                ListBooksController controller = loader.getController();
+                controller.setIsUser(false);
             }
 
             Stage stage = new Stage(StageStyle.DECORATED);

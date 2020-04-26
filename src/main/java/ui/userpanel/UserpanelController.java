@@ -26,17 +26,11 @@ public class UserpanelController implements Initializable {
         windowLoader("/fxml/ui.login.fxml", "Login");
     }
 
-    private String receivedUser;
     private ListUsersController.User receivedUserClass;
 
-
-
-    public void setReceivedUser(String receivedUser, ListUsersController.User receivedUserClass) {
-        //this.receivedUser = receivedUser;
+    public void setReceivedUser(ListUsersController.User receivedUserClass) {
         this.receivedUserClass = receivedUserClass;
         userInfoBox.setText("Current user: " + receivedUserClass.getUsername());
-
-
     }
 
     @FXML
@@ -66,23 +60,17 @@ public class UserpanelController implements Initializable {
             if(location.contains("issued")){
                 ListIssuedController controller = loader.getController();
                 controller.setReceivedUser(receivedUserClass);
+                controller.initByHand();
             } else if(location.contains("list_books")){
                 System.out.println("contains");
                 ListBooksController controller = loader.getController();
                 controller.setReceivedUser(receivedUserClass);
-
-                Stage stage = new Stage(StageStyle.DECORATED);
-                stage.setTitle(title);
-                stage.setScene(new Scene(parent));
-                stage.show();
                 controller.initByHand();
             }
-                Stage stage = new Stage(StageStyle.DECORATED);
-                stage.setTitle(title);
-                stage.setScene(new Scene(parent));
-                stage.show();
-
-
+            Stage stage = new Stage(StageStyle.DECORATED);
+            stage.setTitle(title);
+            stage.setScene(new Scene(parent));
+            stage.show();
 
         } catch (IOException e) {
             e.printStackTrace();

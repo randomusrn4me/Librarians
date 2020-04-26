@@ -23,18 +23,12 @@ public class ListBooksController implements Initializable {
 
     ObservableList<Book> list = FXCollections.observableArrayList();
 
-    //private boolean isUser;
-
     private ListUsersController.User receivedUserClass;
 
     public void setReceivedUser(ListUsersController.User receivedUserClass) {
         this.receivedUserClass = receivedUserClass;
         System.out.println("Username of person listing users: " + receivedUserClass.getUsername());
     }
-
-    /*public void setIsUser(boolean isUser) {
-        this.isUser = isUser;
-    }*/
 
     @FXML
     private AnchorPane rootPane;
@@ -80,13 +74,11 @@ public class ListBooksController implements Initializable {
 
     public void initByHand(){
         if(receivedUserClass.getIsUser()){
-            delMenu.setDisable(true);
-            editMenu.setDisable(true);
+            delMenu.setVisible(false);
+            editMenu.setVisible(false);
             System.out.println("it's a user");
         }
     }
-
-
 
     @FXML
     void handleDeleteBook() {

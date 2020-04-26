@@ -25,7 +25,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import org.apache.commons.lang3.RandomStringUtils;
 import ui.listusers.ListUsersController;
 import ui.mainframe.MainframeController;
 import ui.userpanel.UserpanelController;
@@ -149,7 +148,7 @@ public class LoginController implements Initializable {
 
             if(isUser){
                 UserpanelController controller = loader.getController();
-                controller.setReceivedUser(username, userToBeSent);
+                controller.setReceivedUser(userToBeSent);
             }
             else{
                 MainframeController controller = loader.getController();

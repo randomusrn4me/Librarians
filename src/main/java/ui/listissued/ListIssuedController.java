@@ -1,14 +1,16 @@
 package ui.listissued;
 
 import database.DatabaseHandler;
-import javafx.beans.property.*;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import ui.listusers.ListUsersController;
 
@@ -17,11 +19,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ListIssuedController implements Initializable {
 
-    public String receivedUser;
+    public MenuItem renewMenu;
+    public MenuItem returnMenu;
 
     private ListUsersController.User receivedUserClass;
 
@@ -57,11 +61,6 @@ public class ListIssuedController implements Initializable {
     @FXML
     private TableColumn<Issue, Integer> renewCol;
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        configureTableView();
-    }
-
     void loadData() throws SQLException {
         DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
 
@@ -93,15 +92,12 @@ public class ListIssuedController implements Initializable {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-            tableView.getItems().setAll(list);
+            tableView.setItems(list);
         }
-
-
-
 
     }
 
-    void configureTableView(){
+    private void configureTableView(){
         titleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
         authorCol.setCellValueFactory(new PropertyValueFactory<>("author"));
         idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -128,8 +124,6 @@ public class ListIssuedController implements Initializable {
 
         dueDateCol.setCellValueFactory(cellData -> cellData.getValue().issueDateProperty());
 
-        //DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
         dueDateCol.setCellFactory(column -> {
             return new TableCell<>() {
                 @Override
@@ -150,13 +144,146 @@ public class ListIssuedController implements Initializable {
 
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        configureTableView();
+
+    }
+
+    public void initByHand(){
+        if(receivedUserClass.getIsUser()){
+            renewMenu.setVisible(false);
+            returnMenu.setVisible(false);
+            System.out.println("it's a user");
+        }
+    }
+
+    public void loadRenewBook() {
+        DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
+        Issue selectedForRenew = tableView.getSelectionModel().getSelectedItem();
+        if(selectedForRenew == null){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("No book selected.\nPlease select a book to be renewed.");
+            alert.showAndWait();
+            return;
+        }
+
+        int renewCount = 0;
+        LocalDate dueDate = null;
+        String qu = "SELECT * FROM ISSUE WHERE bookID = '" + selectedForRenew.getId() +"'";
+        ResultSet rs = databaseHandler.execQuery(qu);
+        while(true){
+            try {
+                assert rs != null;
+                if (!rs.next()) break;
+                renewCount = rs.getInt("renewCount");
+                dueDate = rs.getDate("dueDate").toLocalDate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
+        confirm.setTitle("Confirm Book Renew");
+        confirm.setHeaderText(null);
+        confirm.setContentText("Are you sure you want to renew the selected book?");
+
+        Optional<ButtonType> response = confirm.showAndWait();
+        if(response.get() != ButtonType.OK){
+            return;
+        }
+
+        if(renewCount == 3){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            assert dueDate != null;
+            alert.setContentText("This book has already been renewed 3 times!\n " +
+                    "Notify the user that it must be returned by " + dueDate.toString() + ", or they will be have to pay a fine.");
+            alert.showAndWait();
+            return;
+        }
+        if(renewCount == 2){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText(null);
+            assert dueDate != null;
+            alert.setContentText("This book can only be renewed one more time!");
+            alert.showAndWait();
+        }
+
+        String act = "UPDATE ISSUE SET dueDate = default, issueDate = default, renewCount = renewCount + 1  WHERE bookID = '" + selectedForRenew.getId() + "'";
+        String act2 = "UPDATE ISSUE SET dueDate = DATEADD('week', 2, issueDate) WHERE bookID = '" + selectedForRenew.getId() + "'";
+        //renew = +2 weeks
+        if(databaseHandler.execAction(act) && databaseHandler.execAction(act2)){
+            renewCount++;
+            selectedForRenew.setRenewCount(renewCount);
+            list.set(list.indexOf(selectedForRenew), selectedForRenew);
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Success");
+            alert.setHeaderText(null);
+            assert dueDate != null;
+            dueDate = dueDate.plusWeeks(2);
+            alert.setContentText("Successfully renewed book!\n" +
+                    "The new Due Date for return is: " + dueDate.toString()
+                    + "\nThis book may be renewed " + (3 - renewCount) + " more time(s).");
+            alert.showAndWait();
+        }
+    }
+
+    public void loadReturnBook() {
+        DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
+        Issue selectedForReturn = tableView.getSelectionModel().getSelectedItem();
+        if(selectedForReturn == null){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("No book selected.\nPlease select a book to be returned.");
+            alert.showAndWait();
+            return;
+        }
+
+        String act = "DELETE FROM ISSUE WHERE bookID = '" + selectedForReturn.getId() + "'";
+        String act2 = "UPDATE BOOK SET isAvail = true WHERE id = '" + selectedForReturn.getId() +"'";
+
+        Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
+        confirm.setTitle("Confirm Book Return");
+        confirm.setHeaderText(null);
+        confirm.setContentText("Are you sure you want to return the selected book?");
+
+        Optional<ButtonType> response = confirm.showAndWait();
+        if(response.get() != ButtonType.OK){
+            return;
+        }
+
+        if(databaseHandler.execAction(act) && databaseHandler.execAction(act2)){
+            list.remove(selectedForReturn);
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Success");
+            alert.setHeaderText(null);
+            alert.setContentText("Successfully returned book!");
+            alert.showAndWait();
+        }
+        else{
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Book could not be returned!");
+            alert.showAndWait();
+        }
+    }
+
     public static class Issue{
         private final SimpleStringProperty title;
         private final SimpleStringProperty author;
         private final SimpleStringProperty id;
         private ObjectProperty<LocalDate> issueDate;
         private ObjectProperty<LocalDate> dueDate;
-        private final SimpleIntegerProperty renewCount;
+        private SimpleIntegerProperty renewCount;
 
         public Issue(String title, String author, String id, LocalDate issueDate, LocalDate dueDate, int renewCount){
             this.title = new SimpleStringProperty(title);
@@ -205,5 +332,8 @@ public class ListIssuedController implements Initializable {
 
         public int getRenewCount() { return renewCount.get();}
 
+        public void setRenewCount(int renewCount) {
+            this.renewCount.set(renewCount);
+        }
     }
 }

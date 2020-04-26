@@ -14,7 +14,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import ui.listbooks.ListBooksController;
-import ui.listissued.ListIssuedAdminController;
+import ui.listissued.ListIssuedController;
 import ui.listusers.ListUsersController;
 
 import java.io.IOException;
@@ -117,7 +117,7 @@ public class MainframeController implements Initializable {
                 Boolean firstLog = rs.getBoolean("firstLog");
                 nameOfUser.setText("Name: " + uName);
                 emailOfUser.setText("E-mail: " + uEmail);
-                queriedUser = new ListUsersController.User(uName,fullname, uEmail, address, phone, isUser, firstLog);
+                queriedUser = new ListUsersController.User(uName.toLowerCase(),fullname, uEmail, address, phone, isUser, firstLog);
                 flag = true;
 
             } catch (SQLException e) {
@@ -204,6 +204,7 @@ public class MainframeController implements Initializable {
 
     @FXML
     void loadUserIssueList() throws SQLException {
+        loadUserInfo();
         String username = usernameInput.getText();
         toolTip.setText("");
         toolTip.setStyle("-fx-font-weight:bold");
@@ -222,7 +223,7 @@ public class MainframeController implements Initializable {
             return;
         }
 
-        windowLoader("/fxml/ui.list_issued_admin.fxml", "Books issued to: " + username);
+        windowLoader("/fxml/ui.list_issued.fxml", "Books issued to: " + username);
     }
 
     @FXML
@@ -236,9 +237,10 @@ public class MainframeController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(location));
             Parent parent = loader.load();
 
-            if(location.contains("issue")){
-                ListIssuedAdminController controller = loader.getController();
+            if(location.contains("list_issued")){
+                ListIssuedController controller = loader.getController();
                 controller.setReceivedUser(queriedUser);
+                System.out.println(queriedUser.getUsername());
             }
 
             if(location.contains("list_books")){

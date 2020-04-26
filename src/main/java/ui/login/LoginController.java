@@ -26,6 +26,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.apache.commons.lang3.RandomStringUtils;
+import ui.listusers.ListUsersController;
 import ui.mainframe.MainframeController;
 import ui.userpanel.UserpanelController;
 
@@ -42,6 +43,8 @@ public class LoginController implements Initializable {
 
     @FXML
     private Text statusText;
+
+    private ListUsersController.User userToBeSent;
 
     @FXML
     void loginButtonPushed() {
@@ -71,9 +74,14 @@ public class LoginController implements Initializable {
             while (true) {
                 try {
                     if (!rs.next()) break;
+                    String fullname = rs.getString("fullname");
+                    String email = rs.getString("email");
+                    String address = rs.getString("address");
+                    String phone = rs.getString("phone");
                     isUser = rs.getBoolean("isUser");
                     firstLog = rs.getBoolean("firstLog");
                     pw = rs.getString("pass");
+                    userToBeSent = new ListUsersController.User(username, fullname, email, address, phone, isUser, firstLog);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -141,11 +149,11 @@ public class LoginController implements Initializable {
 
             if(isUser){
                 UserpanelController controller = loader.getController();
-                controller.setReceivedUser(username);
+                controller.setReceivedUser(username, userToBeSent);
             }
             else{
                 MainframeController controller = loader.getController();
-                controller.setReceivedUser(username);
+                controller.setReceivedUser(username, userToBeSent);
             }
 
             Stage stage = new Stage(StageStyle.DECORATED);

@@ -1,22 +1,18 @@
 package ui.userpanel;
 
-import database.DatabaseHandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.input.InputEvent;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javafx.stage.Window;
 import ui.listbooks.ListBooksController;
 import ui.listissued.ListIssuedController;
+import ui.listusers.ListUsersController;
 
 import java.io.IOException;
 import java.net.URL;
@@ -31,10 +27,16 @@ public class UserpanelController implements Initializable {
     }
 
     private String receivedUser;
+    private ListUsersController.User receivedUserClass;
 
-    public void setReceivedUser(String receivedUser) {
-        this.receivedUser = receivedUser;
-        userInfoBox.setText("Current user: " + receivedUser);
+
+
+    public void setReceivedUser(String receivedUser, ListUsersController.User receivedUserClass) {
+        //this.receivedUser = receivedUser;
+        this.receivedUserClass = receivedUserClass;
+        userInfoBox.setText("Current user: " + receivedUserClass.getUsername());
+
+
     }
 
     @FXML
@@ -53,7 +55,7 @@ public class UserpanelController implements Initializable {
     @FXML
     void loadIssueList() {
         windowLoader("/fxml/ui.list_issued.fxml", "My Issued Books");
-        System.out.println(receivedUser + "opened Issue List!");
+        System.out.println(receivedUserClass.getUsername() + "opened Issue List!");
     }
 
     void windowLoader(String location, String title){
@@ -61,25 +63,24 @@ public class UserpanelController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(location));
             Parent parent = loader.load();
 
-            if(location.contains("issue")){
+            if(location.contains("issued")){
                 ListIssuedController controller = loader.getController();
-                controller.setReceivedUser(receivedUser);
+                controller.setReceivedUser(receivedUserClass);
             } else if(location.contains("list_books")){
                 System.out.println("contains");
                 ListBooksController controller = loader.getController();
-                controller.setIsUser(true);
+                controller.setReceivedUser(receivedUserClass);
 
                 Stage stage = new Stage(StageStyle.DECORATED);
                 stage.setTitle(title);
                 stage.setScene(new Scene(parent));
                 stage.show();
                 controller.initByHand();
-            } else {
+            }
                 Stage stage = new Stage(StageStyle.DECORATED);
                 stage.setTitle(title);
                 stage.setScene(new Scene(parent));
                 stage.show();
-            }
 
 
 
@@ -96,10 +97,10 @@ public class UserpanelController implements Initializable {
 
     public void userDetailsButtonPushed() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ui.edit_user_details.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ui.edit_user_password.fxml"));
             Parent parent = loader.load();
-            EditUserDetailsController controller = loader.getController();
-            controller.setReceivedUser(receivedUser);
+            EditUserPasswordController controller = loader.getController();
+            controller.setReceivedUser(receivedUserClass, receivedUserClass);
 
 
             Stage stage = new Stage(StageStyle.DECORATED);
@@ -107,7 +108,7 @@ public class UserpanelController implements Initializable {
             stage.setScene(new Scene(parent));
             stage.show();
 
-            controller.initializeByHand();
+            controller.initByHand();
 
         } catch (IOException e) {
             e.printStackTrace();

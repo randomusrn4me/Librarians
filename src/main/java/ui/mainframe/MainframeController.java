@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import ui.listbooks.ListBooksController;
 import ui.listissued.ListIssuedAdminController;
+import ui.listusers.ListUsersController;
 
 import java.io.IOException;
 import java.net.URL;
@@ -27,9 +28,14 @@ public class MainframeController implements Initializable {
 
     public String receivedUser;
 
-    public void setReceivedUser(String receivedUser) {
+    private ListUsersController.User receivedUserClass;
+
+    private ListUsersController.User queriedUser;
+
+    public void setReceivedUser(String receivedUser, ListUsersController.User receivedUserClass) {
         this.receivedUser = receivedUser;
-        userInfoBox.setText("Current admin: " + receivedUser);
+        this.receivedUserClass = receivedUserClass;
+        userInfoBox.setText("Current admin: " + receivedUserClass.getUsername());
     }
 
     @FXML
@@ -104,9 +110,14 @@ public class MainframeController implements Initializable {
                 if (!rs.next()) break;
                 String uName = rs.getString("fullname");
                 String uEmail = rs.getString("email");
+                String fullname = rs.getString("fullname");
+                String address = rs.getString("address");
+                String phone = rs.getString("phone");
+                Boolean isUser = rs.getBoolean("isUser");
+                Boolean firstLog = rs.getBoolean("firstLog");
                 nameOfUser.setText("Name: " + uName);
                 emailOfUser.setText("E-mail: " + uEmail);
-
+                queriedUser = new ListUsersController.User(uName,fullname, uEmail, address, phone, isUser, firstLog);
                 flag = true;
 
             } catch (SQLException e) {
@@ -227,13 +238,26 @@ public class MainframeController implements Initializable {
 
             if(location.contains("issue")){
                 ListIssuedAdminController controller = loader.getController();
-                controller.setReceivedUser(usernameInput.getText());
+                controller.setReceivedUser(queriedUser);
             }
 
             if(location.contains("list_books")){
                 System.out.println("contains");
                 ListBooksController controller = loader.getController();
-                controller.setIsUser(false);
+                controller.setReceivedUser(receivedUserClass);
+            }
+
+            if(location.contains("list_users")){
+                if(receivedUserClass == null){
+                    Alert emptyAlert = new Alert(Alert.AlertType.ERROR);
+                    emptyAlert.setHeaderText("Current admin is /null/");
+                    emptyAlert.setContentText("You must log in to view and edit the users!");
+                    emptyAlert.showAndWait();
+                    return;
+                }
+                System.out.println("contains users");
+                ListUsersController controller = loader.getController();
+                controller.setReceivedUser(receivedUserClass);
             }
 
             Stage stage = new Stage(StageStyle.DECORATED);

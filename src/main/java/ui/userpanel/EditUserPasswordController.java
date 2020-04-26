@@ -21,6 +21,7 @@ import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import ui.listissued.ListIssuedController;
 import ui.listissued.ListIssuedController;
+import ui.listusers.ListUsersController;
 import ui.login.LoginController;
 import ui.login.LoginFileAccess;
 import ui.mainframe.MainframeController;
@@ -33,12 +34,15 @@ import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class EditUserDetailsController implements Initializable {
+public class EditUserPasswordController implements Initializable {
 
-    private String receivedUser;
+    private ListUsersController.User receivedUserClass;
 
-    public void setReceivedUser(String receivedUser) {
-        this.receivedUser = receivedUser;
+    private ListUsersController.User editedUserClass;
+
+    public void setReceivedUser(ListUsersController.User receivedUserClass, ListUsersController.User editedUserClass) {
+        this.receivedUserClass = receivedUserClass;
+        this.editedUserClass = editedUserClass;
     }
 
     @FXML
@@ -56,10 +60,11 @@ public class EditUserDetailsController implements Initializable {
     @FXML
     void pwSaveButtonPushed() {
         DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
-        if(receivedUser == null){
+        if(receivedUserClass == null || editedUserClass == null){
             infoBox.setText("Error! The general user\ndoes not have a password!");
             return;
         }
+
         StringBuilder stringBuilder = new StringBuilder();
         boolean isError = false;
         String current = LoginController.hashing(curPw.getText());
@@ -68,7 +73,7 @@ public class EditUserDetailsController implements Initializable {
         String new1 = LoginController.hashing(npw1.getText());
         String new2 = LoginController.hashing(npw2.getText());
 
-        String qu = "SELECT pass FROM USER WHERE username = '" + receivedUser + "'";
+        String qu = "SELECT pass FROM USER WHERE username = '" + editedUserClass.getUsername() + "'";
         String passDb = null;
         ResultSet rs = databaseHandler.execQuery(qu);
         while(true){
@@ -81,7 +86,7 @@ public class EditUserDetailsController implements Initializable {
             }
         }
 
-        if(!current.equals(passDb)){
+        if(!current.equals(passDb) && receivedUserClass.getIsUser()){
             infoBox.setText("Current password is incorrect!");
             stringBuilder.append("• Current password is incorrect!\n");
             isError = true;
@@ -112,9 +117,13 @@ public class EditUserDetailsController implements Initializable {
         }
 
         if(!isError) {
-            databaseHandler.modifyUser(receivedUser, new1);
+            databaseHandler.modifyUser(editedUserClass.getUsername(), new1);
             infoBox.setFill(Color.MEDIUMSEAGREEN);
-            infoBox.setText("Password updated!\nNext time you can log in\nwith your new password.");
+            if(editedUserClass.equals(receivedUserClass)){
+                infoBox.setText("Password updated!\nNext time you can log in\nwith your new password.");
+            } else {
+                infoBox.setText("Password updated!\nNext time the user can log in\nwith their new password.");
+            }
             return;
         }
         System.out.println(stringBuilder);
@@ -122,13 +131,22 @@ public class EditUserDetailsController implements Initializable {
 
     }
 
-    public void initializeByHand(){
-        System.out.println("Editing user: " + receivedUser);
-        if(receivedUser == null) System.out.println("**Warning! You are editing the general user \"null\"!");
+    public void initByHand(){
+        if(receivedUserClass == null || editedUserClass == null){
+            System.out.println("**Warning! You are editing the general user \"null\"!");
+            curPw.setDisable(true);
+            npw1.setDisable(true);
+            npw2.setDisable(true);
+            return;
+        }
+        System.out.println(receivedUserClass.getUsername() + " is editing user: " + editedUserClass.getUsername());
+        if(!receivedUserClass.getIsUser()){
+            curPw.setDisable(true);
+        }
+
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
     }
 }

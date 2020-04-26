@@ -10,6 +10,7 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import ui.listusers.ListUsersController;
 
 import java.net.URL;
 import java.sql.ResultSet;
@@ -22,8 +23,10 @@ public class ListIssuedController implements Initializable {
 
     public String receivedUser;
 
-    public void setReceivedUser(String receivedUser) {
-        this.receivedUser = receivedUser;
+    private ListUsersController.User receivedUserClass;
+
+    public void setReceivedUser(ListUsersController.User receivedUserClass) {
+        this.receivedUserClass = receivedUserClass;
         try {
             loadData();
         } catch (SQLException e) {
@@ -62,7 +65,7 @@ public class ListIssuedController implements Initializable {
     void loadData() throws SQLException {
         DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
 
-        String qu = "SELECT * FROM ISSUE WHERE username = '" + receivedUser + "'";
+        String qu = "SELECT * FROM ISSUE WHERE username = '" + receivedUserClass.getUsername() + "'";
         ResultSet rs = databaseHandler.execQuery(qu);
         while(true){
             try {

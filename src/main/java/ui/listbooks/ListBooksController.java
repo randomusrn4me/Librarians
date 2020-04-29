@@ -6,17 +6,23 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import ui.addbook.AddBookController;
 import ui.listusers.ListUsersController;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ListBooksController implements Initializable {
@@ -80,14 +86,93 @@ public class ListBooksController implements Initializable {
         }
     }
 
+    private void alertError(String text){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText(text);
+        alert.showAndWait();
+    }
+
     @FXML
-    void handleDeleteBook() {
-        System.out.println("Book deletion attempt");
+    void handleDeleteBook() throws SQLException {
+        DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
+        Book selectedForDelete = tableView.getSelectionModel().getSelectedItem();
+        if(selectedForDelete == null){
+            alertError("No book selected.\nPlease select a book to be deleted.");
+            return;
+        }
+        String qu = "SELECT * FROM ISSUE WHERE bookID = '" + selectedForDelete.getId() + "'";
+        ResultSet rs = databaseHandler.execQuery(qu);
+        assert rs != null;
+        if(rs.next()){
+            String user = rs.getString("username");
+            alertError("Selected book cannot be deleted, it is still issued to user: '" + user + "'.");
+            return;
+        }
+
+        String act = "DELETE FROM BOOK WHERE id = '" + selectedForDelete.getId() + "'";
+        Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
+        confirm.setTitle("Confirm Book Delete");
+        confirm.setHeaderText(null);
+        confirm.setContentText("Are you sure you want to delete the selected book?");
+
+        Optional<ButtonType> response = confirm.showAndWait();
+        if(response.get() != ButtonType.OK){
+            return;
+        }
+        if(databaseHandler.execAction(act)){
+            list.remove(selectedForDelete);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Success");
+            alert.setHeaderText(null);
+            alert.setContentText("Successfully deleted book!");
+            alert.showAndWait();
+        }
+        else{
+            alertError("Book could not be deleted!");
+        }
     }
 
     @FXML
     void handleEditBook() {
-        System.out.println("Book details edit attempt");
+        DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
+        Book selectedForEdit = tableView.getSelectionModel().getSelectedItem();
+        if(selectedForEdit == null){
+            alertError("No book selected.\nPlease select a book to be edited.");
+            return;
+        }
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ui.add_book.fxml"));
+            Parent parent = loader.load();
+            AddBookController controller = loader.getController();
+            controller.inflateAddBookUI(selectedForEdit);
+            Stage stage = new Stage(StageStyle.DECORATED);
+            stage.setTitle("Edit Book Details");
+            stage.setScene(new Scene(parent));
+            stage.showAndWait();
+
+            String qu = "SELECT * FROM BOOK WHERE id = '" + selectedForEdit.getId() + "'";
+            ResultSet rs = databaseHandler.execQuery(qu);
+            assert rs != null;
+            while(true){
+                try {
+                    if (!rs.next()) break;
+                    String title = rs.getString("title");
+                    String author = rs.getString("author");
+                    String publisher = rs.getString("publisher");
+                    String year = rs.getString("year");
+
+                    list.set(list.indexOf(selectedForEdit),
+                            new Book(title, author, publisher, year, selectedForEdit.getId(), selectedForEdit.isAvailability()));
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void loadData() throws SQLException {
@@ -98,20 +183,19 @@ public class ListBooksController implements Initializable {
             try {
                 assert rs != null;
                 if (!rs.next()) break;
+                String title = rs.getString("title");
+                String author = rs.getString("author");
+                String publisher = rs.getString("publisher");
+                String year = rs.getString("year");
+                String id = rs.getString("id");
+                Boolean avail = rs.getBoolean("isAvail");
+
+                list.add(new Book(title, author, publisher, year, id, avail));
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-            String title = rs.getString("title");
-            String author = rs.getString("author");
-            String publisher = rs.getString("publisher");
-            String year = rs.getString("year");
-            String id = rs.getString("id");
-            Boolean avail = rs.getBoolean("isAvail");
-
-            list.add(new Book(title, author, publisher, year, id, avail));
+            tableView.setItems(list);
         }
-
-        tableView.getItems().setAll(list);
     }
 
     private void initCol() {

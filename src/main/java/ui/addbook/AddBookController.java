@@ -18,6 +18,7 @@ import com.jfoenix.controls.JFXButton;
 import javafx.scene.layout.AnchorPane;
 import com.jfoenix.controls.JFXTextField;
 import javafx.stage.Stage;
+import ui.listbooks.ListBooksController;
 
 public class AddBookController implements Initializable {
 
@@ -45,6 +46,8 @@ public class AddBookController implements Initializable {
     @FXML
     private JFXButton cancel;
 
+    private boolean isInEditMode = false;
+
     private DatabaseHandler databaseHandler;
 
 
@@ -55,6 +58,15 @@ public class AddBookController implements Initializable {
         String bookYear = year.getText();
         String bookPublisher = publisher.getText();
         String bookID = id.getText();
+        char[] idChars = bookID.toCharArray();
+        boolean correctID = idChars.length >= 2;
+        for(int i = 1; i < idChars.length; i++){
+            if(!Character.isDigit(idChars[i])) {
+                correctID = false;
+                System.out.println("Attempted character or too short bookID");
+                break;
+            }
+        }
 
         if(bookTitle.isEmpty() || bookAuthor.isEmpty() || bookYear.isEmpty() || bookPublisher.isEmpty() || bookID.isEmpty()){
             Alert emptyAlert = new Alert(Alert.AlertType.ERROR);
@@ -75,6 +87,19 @@ public class AddBookController implements Initializable {
             numberAlert.setHeaderText("Incorrect Year");
             numberAlert.setContentText("Please enter a valid year.");
             numberAlert.showAndWait();
+            return;
+        }
+        else if((idChars[0] != 'B') || !correctID || bookID.length() > 5){
+            Alert numberAlert = new Alert(Alert.AlertType.ERROR);
+            numberAlert.setHeaderText("Incorrect ID");
+            numberAlert.setContentText("Please enter a correct Book ID form.\nIt must begin with 'B' and be numbered from 1-9999");
+            numberAlert.showAndWait();
+            return;
+        }
+
+        if(isInEditMode){
+            handleEditBook();
+            handleCancelButtonPushed();
             return;
         }
 
@@ -103,13 +128,43 @@ public class AddBookController implements Initializable {
 
     }
 
+    private void handleEditBook() {
+        String act = "UPDATE BOOK SET title = '" + title.getText() + "', author = '" + author.getText() + "',"
+                + " publisher = '" + publisher.getText() + "', year = '" + year.getText() + "'"
+                + " WHERE id = '" + id.getText() + "'";
+        if(databaseHandler.execAction(act)){
+            Alert emptyAlert = new Alert(Alert.AlertType.INFORMATION);
+            emptyAlert.setHeaderText(null);
+            emptyAlert.setContentText("Successfully updated the book details.");
+            emptyAlert.showAndWait();
+        }
+        else{
+            Alert emptyAlert = new Alert(Alert.AlertType.ERROR);
+            emptyAlert.setHeaderText(null);
+            emptyAlert.setContentText("Failed to update the book details.");
+            emptyAlert.showAndWait();
+        }
+
+    }
+
     @FXML
     void handleCancelButtonPushed() {
         Stage stage = (Stage) rootPane.getScene().getWindow();
         stage.close();
     }
 
-    void clear(){
+    public void inflateAddBookUI(ListBooksController.Book book){
+        title.setText(book.getTitle());
+        id.setText(book.getId());
+        author.setText(book.getAuthor());
+        year.setText(book.getYear());
+        publisher.setText(book.getPublisher());
+        addBook.setText("Save");
+        id.setEditable(false);
+        isInEditMode = true;
+    }
+
+    private void clear(){
         title.setText("");
         author.setText("");
         publisher.setText("");
@@ -120,9 +175,6 @@ public class AddBookController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         databaseHandler = DatabaseHandler.getInstance();
-
     }
-
-
 
 }

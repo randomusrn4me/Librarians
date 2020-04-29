@@ -11,12 +11,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import ui.adduser.AddUserController;
 import ui.listbooks.ListBooksController;
 import ui.userpanel.EditUserPasswordController;
 
@@ -24,7 +23,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ListUsersController implements Initializable {
@@ -81,11 +82,53 @@ public class ListUsersController implements Initializable {
         }
     }
 
+    private void alertError(String text){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText(text);
+        alert.showAndWait();
+    }
+
     @FXML
-    void handleDeleteUser() {
-        User editedUser = tableView.getSelectionModel().getSelectedItem();
-        System.out.println("User deletion attempt: " + editedUser.getUsername());
-        if(editedUser == null) return;
+    void handleDeleteUser() throws SQLException {
+        DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
+        User selectedForDelete = tableView.getSelectionModel().getSelectedItem();
+        System.out.println("User deletion attempt: " + selectedForDelete.getUsername());
+        if(selectedForDelete == null){
+            alertError("No user selected.\nPlease select a user to delete.");
+            return;
+        }
+        String qu = "SELECT * FROM ISSUE WHERE username = '" + selectedForDelete.getUsername() + "'";
+
+        ResultSet rs = databaseHandler.execQuery(qu);
+        assert rs != null;
+        if(rs.next()){
+            alertError("Selected user cannot be deleted, there are still books issued to them." +
+                    "Please notify them to return all books before deletion.");
+            return;
+        }
+        String act = "DELETE FROM USER WHERE username = '" + selectedForDelete.getUsername() + "'";
+        Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
+        confirm.setTitle("Confirm User Delete");
+        confirm.setHeaderText(null);
+        confirm.setContentText("Are you sure you want to delete the selected user?");
+
+        Optional<ButtonType> response = confirm.showAndWait();
+        if(response.get() != ButtonType.OK){
+            return;
+        }
+        if(databaseHandler.execAction(act)){
+            list.remove(selectedForDelete);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Success");
+            alert.setHeaderText(null);
+            alert.setContentText("Successfully deleted user!");
+            alert.showAndWait();
+        }
+        else{
+            alertError("User could not be deleted!");
+        }
     }
 
     @FXML
@@ -93,7 +136,10 @@ public class ListUsersController implements Initializable {
 
         User editedUser = tableView.getSelectionModel().getSelectedItem();
         System.out.println("User password edit attempt: " + editedUser.getUsername());
-        if(editedUser == null) return;
+        if(editedUser == null){
+            alertError("No user selected.\nPlease select a user to delete.");
+            return;
+        }
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ui.edit_user_password.fxml"));
         Parent parent = loader.load();
         EditUserPasswordController controller = loader.getController();
@@ -110,10 +156,44 @@ public class ListUsersController implements Initializable {
 
     @FXML
     void handleEditUser() {
+        DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
+        User selectedForEdit = tableView.getSelectionModel().getSelectedItem();
+        if(selectedForEdit == null) {
+            alertError("No user selected.\nPlease select a user to edit.");
+            return;
+        }
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ui.add_user.fxml"));
+            Parent parent = loader.load();
+            AddUserController controller = loader.getController();
+            controller.inflateAddUserUI(selectedForEdit);
+            Stage stage = new Stage(StageStyle.DECORATED);
+            stage.setTitle("Edit User Details");
+            stage.setScene(new Scene(parent));
+            stage.showAndWait();
 
-        User editedUser = tableView.getSelectionModel().getSelectedItem();
-        System.out.println("User details edit attempt: " + editedUser.getUsername());
-        if(editedUser == null) return;
+            String qu = "SELECT * FROM USER WHERE username = '" + selectedForEdit.getUsername() + "'";
+            ResultSet rs = databaseHandler.execQuery(qu);
+            assert rs != null;
+            while(true){
+                try {
+                    if (!rs.next()) break;
+                    String fullname = rs.getString("fullname");
+                    String email = rs.getString("email");
+                    String address = rs.getString("address");
+                    String phone = rs.getString("phone");
+
+                    list.set(list.indexOf(selectedForEdit),
+                            new User(selectedForEdit.getUsername(), fullname, email,
+                                    address, phone, selectedForEdit.getIsUser(), selectedForEdit.getFirstLog()));
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void initCol() {
@@ -142,31 +222,30 @@ public class ListUsersController implements Initializable {
             try {
                 assert rs != null;
                 if (!rs.next()) break;
+                String username = rs.getString("username");
+                String fullname = rs.getString("fullname");
+                String email = rs.getString("email");
+                String address = rs.getString("address");
+                String phone = rs.getString("phone");
+                Boolean isUser = rs.getBoolean("isUser");
+                Boolean firstLog = rs.getBoolean("firstLog");
+
+                list.add(new User(username, fullname, email, address, phone, isUser, firstLog));
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-            String username = rs.getString("username");
-            String fullname = rs.getString("fullname");
-            String email = rs.getString("email");
-            String address = rs.getString("address");
-            String phone = rs.getString("phone");
-            Boolean isUser = rs.getBoolean("isUser");
-            Boolean firstLog = rs.getBoolean("firstLog");
-
-            list.add(new User(username, fullname, email, address, phone, isUser, firstLog));
+            tableView.setItems(list);
         }
-
-        tableView.getItems().setAll(list);
     }
 
     public static class User{
-        private final SimpleStringProperty username;
-        private final SimpleStringProperty fullname;
-        private final SimpleStringProperty email;
-        private final SimpleStringProperty address;
-        private final SimpleStringProperty phone;
-        private final SimpleBooleanProperty isUser;
-        private final SimpleBooleanProperty firstLog;
+        private SimpleStringProperty username;
+        private SimpleStringProperty fullname;
+        private SimpleStringProperty email;
+        private SimpleStringProperty address;
+        private SimpleStringProperty phone;
+        private SimpleBooleanProperty isUser;
+        private SimpleBooleanProperty firstLog;
 
         public User(String username, String fullname, String email, String address, String phone, Boolean isUser, Boolean firstLog){
             this.username = new SimpleStringProperty(username);
@@ -209,20 +288,40 @@ public class ListUsersController implements Initializable {
             return username.get();
         }
 
+        public void setUsername(String username) {
+            this.username.set(username);
+        }
+
         public String getFullname() {
             return fullname.get();
+        }
+
+        public void setFullname(String fullname) {
+            this.fullname.set(fullname);
         }
 
         public String getEmail() {
             return email.get();
         }
 
+        public void setEmail(String email) {
+            this.email.set(email);
+        }
+
         public String getAddress() {
             return address.get();
         }
 
+        public void setAddress(String address) {
+            this.address.set(address);
+        }
+
         public String getPhone() {
             return phone.get();
+        }
+
+        public void setPhone(String phone) {
+            this.phone.set(phone);
         }
 
         public Boolean getIsUser(){return isUser.get();}

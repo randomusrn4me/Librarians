@@ -142,6 +142,7 @@ public final class DatabaseHandler {
 
     }
 
+    /*
     public void removeUser(String username){
         String act = "DELETE FROM USER WHERE username = '" + username + "'";
 
@@ -160,5 +161,7 @@ public final class DatabaseHandler {
             alert.showAndWait();
         }
     }
+
+     */
 
 }

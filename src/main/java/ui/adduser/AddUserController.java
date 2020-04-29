@@ -12,12 +12,13 @@ import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import org.apache.commons.lang3.RandomStringUtils;
+import ui.listusers.ListUsersController;
 import ui.login.LoginController;
-import ui.login.LoginFileAccess;
 
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.regex.Pattern;
 
 public class AddUserController implements Initializable {
 
@@ -50,6 +51,8 @@ public class AddUserController implements Initializable {
     @FXML
     private CheckBox userCheckBox;
 
+    private boolean isInEditMode = false;
+
     @FXML
     void handleAddUserButtonPushed() {
         String nName = fullname.getText();
@@ -64,10 +67,34 @@ public class AddUserController implements Initializable {
             emptyAlert.showAndWait();
             return;
         }
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."+
+                "[a-zA-Z0-9_+&*-]+)*@" +
+                "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
+                "A-Z]{2,7}$";
 
-        //
-        //Add correct email + phone number entry check
-        //
+        Pattern emailPat = Pattern.compile(emailRegex);
+        if (!emailPat.matcher(nEmail).matches()){
+            Alert emptyAlert = new Alert(Alert.AlertType.ERROR);
+            emptyAlert.setHeaderText(null);
+            emptyAlert.setContentText("Please enter a correct email address.");
+            emptyAlert.showAndWait();
+            return;
+        }
+
+        if(!Character.isDigit(nPhone.charAt(1)) || nPhone.length() < 11){
+            Alert emptyAlert = new Alert(Alert.AlertType.ERROR);
+            emptyAlert.setHeaderText(null);
+            emptyAlert.setContentText("Please enter a correct phone number.");
+            emptyAlert.showAndWait();
+            return;
+        }
+
+        if(isInEditMode){
+            handleEditUser();
+            handleCancelButtonPushed();
+            return;
+        }
+
         String pw = RandomStringUtils.randomAlphanumeric(8);
         String pwDB = LoginController.hashing(pw);
         String st = null;
@@ -95,17 +122,14 @@ public class AddUserController implements Initializable {
                     + "'" + nPhone +  "'"
                     + ")";
         }
-        //System.out.println(st);
 
         if(handler.execAction(st)){
             Alert emptyAlert = new Alert(Alert.AlertType.INFORMATION);
             emptyAlert.setHeaderText("User added");
             emptyAlert.setContentText("Successfully added user " + "'" + nUser + "'" + " to the database.");
             emptyAlert.showAndWait();
-            //String pw = RandomStringUtils.randomAlphanumeric(8);
             emptyAlert.setHeaderText("User password");
             emptyAlert.setContentText("The user's password is: \"" + pw + "\"\nPlease ask the user to make a note of it\nand change it as soon as possible!");
-            //loginFileAccess.addUser(nUser, LoginController.hashing(pw), "user");
             emptyAlert.showAndWait();
             clear();
         }
@@ -117,13 +141,41 @@ public class AddUserController implements Initializable {
         }
     }
 
+    private void handleEditUser() {
+        String act = "UPDATE USER SET fullname = '" + fullname.getText() + "', email = '" + email.getText() + "',"
+                + " address = '" + address.getText() + "', phone = '" + phonenumber.getText() + "'"
+                + " WHERE username = '" + username.getText() + "'";
+        if(handler.execAction(act)){
+            Alert emptyAlert = new Alert(Alert.AlertType.INFORMATION);
+            emptyAlert.setHeaderText(null);
+            emptyAlert.setContentText("Successfully updated the user details.");
+            emptyAlert.showAndWait();
+        }
+        else{
+            Alert emptyAlert = new Alert(Alert.AlertType.ERROR);
+            emptyAlert.setHeaderText(null);
+            emptyAlert.setContentText("Failed to update the user details.");
+            emptyAlert.showAndWait();
+        }
+    }
+
+    public void inflateAddUserUI(ListUsersController.User user){
+        fullname.setText(user.getFullname());
+        username.setText(user.getUsername());
+        address.setText(user.getAddress());
+        phonenumber.setText(user.getPhone());
+        username.setEditable(false);
+        addUser.setText("Save");
+        isInEditMode = true;
+    }
+
     @FXML
     void handleCancelButtonPushed() {
         Stage stage = (Stage) rootPane.getScene().getWindow();
         stage.close();
     }
 
-    void clear(){
+    private void clear(){
         fullname.setText("");
         username.setText("");
         address.setText("");

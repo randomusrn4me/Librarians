@@ -19,8 +19,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 public class ListIssuedController implements Initializable {
 
@@ -95,6 +97,9 @@ public class ListIssuedController implements Initializable {
             tableView.setItems(list);
         }
 
+        tableView.getSelectionModel().setSelectionMode(
+                SelectionMode.MULTIPLE
+        );
     }
 
     private void configureTableView(){
@@ -157,123 +162,125 @@ public class ListIssuedController implements Initializable {
             System.out.println("it's a user");
         }
     }
+    private void alertError(String text){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText(text);
+        alert.showAndWait();
+    }
 
     public void loadRenewBook() {
         DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
-        Issue selectedForRenew = tableView.getSelectionModel().getSelectedItem();
+        ObservableList<Issue> selectedForRenew = tableView.getSelectionModel().getSelectedItems();
         if(selectedForRenew == null){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText(null);
-            alert.setContentText("No book selected.\nPlease select a book to be renewed.");
-            alert.showAndWait();
+            alertError("No book selected.\nPlease select a book to be renewed.");
             return;
         }
 
-        int renewCount = 0;
-        LocalDate dueDate = null;
-        String qu = "SELECT * FROM ISSUE WHERE bookID = '" + selectedForRenew.getId() +"'";
-        ResultSet rs = databaseHandler.execQuery(qu);
-        while(true){
-            try {
-                assert rs != null;
-                if (!rs.next()) break;
-                renewCount = rs.getInt("renewCount");
-                dueDate = rs.getDate("dueDate").toLocalDate();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-
         Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
-        confirm.setTitle("Confirm Book Renew");
+        confirm.setTitle("Confirm Renew");
         confirm.setHeaderText(null);
-        confirm.setContentText("Are you sure you want to renew the selected book?");
+        confirm.setContentText("Are you sure you want to renew the selected book(s)?");
 
         Optional<ButtonType> response = confirm.showAndWait();
         if(response.get() != ButtonType.OK){
             return;
         }
 
-        if(renewCount == 3){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText(null);
-            assert dueDate != null;
-            alert.setContentText("This book has already been renewed 3 times!\n " +
-                    "Notify the user that it must be returned by " + dueDate.toString() + ", or they will be have to pay a fine.");
-            alert.showAndWait();
+        StringBuilder in = new StringBuilder();
+        List<String> ids = selectedForRenew.stream().map(Issue::getId).collect(Collectors.toList());
+
+        for(String s : ids){
+            in.append("'").append(s).append("'");
+            if(ids.lastIndexOf(s) < ids.size() - 1){
+                in.append(", ");
+            }
+            else{
+                in.append(")");
+            }
+        }
+        StringBuilder toAlert = new StringBuilder();
+        toAlert.append("The following book(s) have already been renewed 3 times " +
+                "and must be returned before their due date: \n");
+        boolean flag = false;
+        for(Issue i : selectedForRenew){
+            if(i.getRenewCount() == 3){
+                flag = true;
+                toAlert.append(i.getId()).append("\n");
+            }
+        }
+        if(flag){
+            alertError(toAlert.toString());
             return;
         }
-        if(renewCount == 2){
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Warning");
-            alert.setHeaderText(null);
-            assert dueDate != null;
-            alert.setContentText("This book can only be renewed one more time!");
-            alert.showAndWait();
-        }
 
-        String act = "UPDATE ISSUE SET dueDate = default, issueDate = default, renewCount = renewCount + 1  WHERE bookID = '" + selectedForRenew.getId() + "'";
-        String act2 = "UPDATE ISSUE SET dueDate = DATEADD('week', 2, issueDate) WHERE bookID = '" + selectedForRenew.getId() + "'";
-        //renew = +2 weeks
+        String act = "UPDATE ISSUE SET dueDate = default, issueDate = default, " +
+                "renewCount = renewCount + 1  WHERE bookID IN (" + in.toString();
+        String act2 = "UPDATE ISSUE SET dueDate = DATEADD('week', 2, issueDate) WHERE bookID IN (" + in.toString();
+
         if(databaseHandler.execAction(act) && databaseHandler.execAction(act2)){
-            renewCount++;
-            selectedForRenew.setRenewCount(renewCount);
-            list.set(list.indexOf(selectedForRenew), selectedForRenew);
+            for(Issue li : list){
+                for(Issue issue : selectedForRenew){
+                    if(issue.getId().equals(li.getId())){
+                        li.setRenewCount(li.getRenewCount() + 1);
+                    }
+                }
+            }
+            tableView.refresh();
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Success");
             alert.setHeaderText(null);
-            assert dueDate != null;
-            dueDate = dueDate.plusWeeks(2);
-            alert.setContentText("Successfully renewed book!\n" +
-                    "The new Due Date for return is: " + dueDate.toString()
-                    + "\nThis book may be renewed " + (3 - renewCount) + " more time(s).");
+            alert.setContentText("Successfully renewed selected book(s)!");
             alert.showAndWait();
         }
     }
 
     public void loadReturnBook() {
         DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
-        Issue selectedForReturn = tableView.getSelectionModel().getSelectedItem();
+        ObservableList<Issue> selectedForReturn = tableView.getSelectionModel().getSelectedItems();
+
         if(selectedForReturn == null){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText(null);
-            alert.setContentText("No book selected.\nPlease select a book to be returned.");
-            alert.showAndWait();
+            alertError("No book(s) selected.");
             return;
         }
-
-        String act = "DELETE FROM ISSUE WHERE bookID = '" + selectedForReturn.getId() + "'";
-        String act2 = "UPDATE BOOK SET isAvail = true WHERE id = '" + selectedForReturn.getId() +"'";
-
         Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
-        confirm.setTitle("Confirm Book Return");
+        confirm.setTitle("Confirm Return");
         confirm.setHeaderText(null);
-        confirm.setContentText("Are you sure you want to return the selected book?");
+        confirm.setContentText("Are you sure you want to return the selected book(s)?");
 
         Optional<ButtonType> response = confirm.showAndWait();
         if(response.get() != ButtonType.OK){
             return;
         }
 
+        StringBuilder in = new StringBuilder();
+        List<String> ids = selectedForReturn.stream().map(Issue::getId).collect(Collectors.toList());
+
+        for(String s : ids){
+            in.append("'").append(s).append("'");
+            if(ids.lastIndexOf(s) < ids.size() - 1){
+                in.append(", ");
+            }
+            else{
+                in.append(")");
+            }
+        }
+        String act = "DELETE FROM ISSUE WHERE bookID IN (" + in.toString();
+        String act2 = "UPDATE BOOK SET isAvail = true WHERE id IN (" + in.toString();
+
         if(databaseHandler.execAction(act) && databaseHandler.execAction(act2)){
-            list.remove(selectedForReturn);
+            list.removeAll(selectedForReturn);
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Success");
             alert.setHeaderText(null);
-            alert.setContentText("Successfully returned book!");
+            alert.setContentText("Successfully returned the selected book(s)!");
             alert.showAndWait();
         }
         else{
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText(null);
-            alert.setContentText("Book could not be returned!");
-            alert.showAndWait();
+            alertError("Selected book(s) could not be returned!");
         }
     }
 

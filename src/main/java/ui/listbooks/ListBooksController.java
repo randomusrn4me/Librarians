@@ -22,8 +22,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class ListBooksController implements Initializable {
 
@@ -97,40 +97,53 @@ public class ListBooksController implements Initializable {
     @FXML
     void handleDeleteBook() throws SQLException {
         DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
-        Book selectedForDelete = tableView.getSelectionModel().getSelectedItem();
-        if(selectedForDelete == null){
+        ObservableList<Book> selectedBooks = tableView.getSelectionModel().getSelectedItems();
+        if(selectedBooks == null){
             alertError("No book selected.\nPlease select a book to be deleted.");
             return;
         }
-        String qu = "SELECT * FROM ISSUE WHERE bookID = '" + selectedForDelete.getId() + "'";
+        StringBuilder in = new StringBuilder();
+        List<String> ids = selectedBooks.stream().map(Book::getId).collect(Collectors.toList());
+
+        for(String s : ids){
+            in.append("'").append(s).append("'");
+            if(ids.lastIndexOf(s) < ids.size() - 1){
+                in.append(", ");
+            }
+            else{
+                in.append(")");
+            }
+        }
+
+        String qu = "SELECT * FROM ISSUE WHERE bookID IN (" + in.toString();
         ResultSet rs = databaseHandler.execQuery(qu);
         assert rs != null;
         if(rs.next()){
-            String user = rs.getString("username");
-            alertError("Selected book cannot be deleted, it is still issued to user: '" + user + "'.");
+            alertError("Selected book(s) cannot be deleted while issued to a user.");
             return;
         }
 
-        String act = "DELETE FROM BOOK WHERE id = '" + selectedForDelete.getId() + "'";
+        String act = "DELETE FROM BOOK WHERE id IN (" + in.toString();
+
         Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
         confirm.setTitle("Confirm Book Delete");
         confirm.setHeaderText(null);
-        confirm.setContentText("Are you sure you want to delete the selected book?");
+        confirm.setContentText("Are you sure you want to delete the selected book(s)?");
 
         Optional<ButtonType> response = confirm.showAndWait();
         if(response.get() != ButtonType.OK){
             return;
         }
         if(databaseHandler.execAction(act)){
-            list.remove(selectedForDelete);
+            list.removeAll(selectedBooks);
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Success");
             alert.setHeaderText(null);
-            alert.setContentText("Successfully deleted book!");
+            alert.setContentText("Successfully deleted book(s)!");
             alert.showAndWait();
         }
         else{
-            alertError("Book could not be deleted!");
+            alertError("Book(s) could not be deleted!");
         }
     }
 
@@ -196,6 +209,11 @@ public class ListBooksController implements Initializable {
             }
             tableView.setItems(list);
         }
+
+        tableView.getSelectionModel().setSelectionMode(
+                SelectionMode.MULTIPLE
+        );
+
     }
 
     private void initCol() {

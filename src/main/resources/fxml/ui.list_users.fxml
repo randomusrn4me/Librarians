@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.control.ContextMenu?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.ContextMenu?>
-<AnchorPane prefHeight="400.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.listusers.ListUsersController">
+<AnchorPane fx:id="rootPane" prefHeight="400.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.listusers.ListUsersController">
     <children>
         <TableView fx:id="tableView" layoutX="7.0" layoutY="30.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <columns>
@@ -25,9 +25,9 @@
             <contextMenu>
                 <ContextMenu>
                     <items>
-                        <MenuItem fx:id="delMenu" onAction="#handleDeleteUser" mnemonicParsing="false" text="Delete user" />
-                        <MenuItem fx:id="pwMenu" onAction="#handleEditPassword" mnemonicParsing="false" text="Edit password" />
-                        <MenuItem fx:id="editMenu" onAction="#handleEditUser" mnemonicParsing="false" text="Edit user details" />
+                        <MenuItem fx:id="delMenu" mnemonicParsing="false" onAction="#handleDeleteUser" text="Delete user" />
+                        <MenuItem fx:id="pwMenu" mnemonicParsing="false" onAction="#handleEditPassword" text="Edit password" />
+                        <MenuItem fx:id="editMenu" mnemonicParsing="false" onAction="#handleEditUser" text="Edit user details" />
                     </items>
                 </ContextMenu>
             </contextMenu>

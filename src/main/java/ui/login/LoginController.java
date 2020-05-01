@@ -21,6 +21,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -30,6 +31,9 @@ import ui.mainframe.MainframeController;
 import ui.userpanel.UserpanelController;
 
 public class LoginController implements Initializable {
+
+    @FXML
+    private AnchorPane rootPane;
 
     @FXML
     private TextField usernameBox;
@@ -182,6 +186,16 @@ public class LoginController implements Initializable {
             public void handle(KeyEvent keyEvent) {
                 if (keyEvent.getCode() == KeyCode.ENTER)  {
                     loginButtonPushed();
+                }
+            }
+        });
+
+        rootPane.setFocusTraversable(true);
+        rootPane.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                if (keyEvent.getCode() == KeyCode.ESCAPE)  {
+                    ((Stage) rootPane.getScene().getWindow()).close();
                 }
             }
         });

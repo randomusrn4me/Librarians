@@ -8,10 +8,15 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import ui.listusers.ListUsersController;
 
 import java.net.URL;
@@ -62,6 +67,9 @@ public class ListIssuedController implements Initializable {
 
     @FXML
     private TableColumn<Issue, Integer> renewCol;
+
+    @FXML
+    private AnchorPane rootPane;
 
     void loadData() throws SQLException {
         DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
@@ -152,6 +160,15 @@ public class ListIssuedController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         configureTableView();
+        rootPane.setFocusTraversable(true);
+        rootPane.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                if (keyEvent.getCode() == KeyCode.ESCAPE)  {
+                    ((Stage) rootPane.getScene().getWindow()).close();
+                }
+            }
+        });
 
     }
 

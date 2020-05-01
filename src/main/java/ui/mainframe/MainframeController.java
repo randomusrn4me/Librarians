@@ -3,12 +3,16 @@ package ui.mainframe;
 
 import database.DatabaseHandler;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -37,6 +41,9 @@ public class MainframeController implements Initializable {
         this.receivedUserClass = receivedUserClass;
         userInfoBox.setText("Current admin: " + receivedUserClass.getUsername());
     }
+
+    @FXML
+    private StackPane rootPane;
 
     @FXML
     private Text toolTip;
@@ -178,6 +185,11 @@ public class MainframeController implements Initializable {
     }
 
     @FXML
+    void handleAboutPushed() {
+        windowLoader("/fxml/about.fxml", "About");
+    }
+
+    @FXML
     void loadAddBookWindow() {
         windowLoader("/fxml/ui.add_book.fxml", "Add New Book");
     }
@@ -227,8 +239,9 @@ public class MainframeController implements Initializable {
     }
 
     @FXML
-    public void logoutButtonPushed(ActionEvent event) {
-        ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
+    public void logoutButtonPushed(/*ActionEvent event*/) {
+        //((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
+        ((Stage) rootPane.getScene().getWindow()).close();
         windowLoader("/fxml/ui.login.fxml", "Login");
     }
 
@@ -275,5 +288,15 @@ public class MainframeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         databaseHandler = DatabaseHandler.getInstance();
+
+        rootPane.setFocusTraversable(true);
+        rootPane.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                if (keyEvent.getCode() == KeyCode.ESCAPE)  {
+                    logoutButtonPushed();
+                }
+            }
+        });
     }
 }

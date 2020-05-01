@@ -1,12 +1,16 @@
 package ui.userpanel;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -21,8 +25,9 @@ import java.util.ResourceBundle;
 public class UserpanelController implements Initializable {
 
     @FXML
-    public void logoutButtonPushed(ActionEvent event) {
-        ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
+    public void logoutButtonPushed(/*ActionEvent event*/) {
+        //((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
+        ((Stage) rootPane.getScene().getWindow()).close();
         windowLoader("/fxml/ui.login.fxml", "Login");
     }
 
@@ -35,6 +40,9 @@ public class UserpanelController implements Initializable {
 
     @FXML
     private Text userInfoBox;
+
+    @FXML
+    private StackPane rootPane;
 
     @FXML
     void loadListBooksWindow() {
@@ -79,7 +87,21 @@ public class UserpanelController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        rootPane.setFocusTraversable(true);
+        rootPane.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                if (keyEvent.getCode() == KeyCode.ESCAPE)  {
+                    logoutButtonPushed();
+                }
+            }
+        });
+    }
 
+
+    @FXML
+    void handleAboutPushed() {
+        windowLoader("/fxml/about.fxml", "About");
     }
 
 

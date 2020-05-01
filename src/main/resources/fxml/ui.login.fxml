@@ -68,7 +68,7 @@
                   <Font name="Constantia" size="19.0" />
                </font>
             </Text>
-            <Text layoutX="86.0" layoutY="320.0" strokeType="OUTSIDE" strokeWidth="0.0" text="If you don't have an account yet, please find a librarian for assistance!" textAlignment="CENTER" underline="true" wrappingWidth="217.34765624999994" />
+            <Text layoutX="86.0" layoutY="320.0" strokeType="OUTSIDE" strokeWidth="0.0" text="If you don't have an account yet or have forgotten your password, please find a librarian for assistance!" textAlignment="CENTER" underline="true" wrappingWidth="217.34765624999994" />
          </children>
       </Pane>
    </children>

@@ -58,6 +58,9 @@ public class EditUserPasswordController implements Initializable {
     private Text infoBox;
 
     @FXML
+    private Text instructionsBox;
+
+    @FXML
     void pwSaveButtonPushed() {
         DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
         if(receivedUserClass == null || editedUserClass == null){
@@ -111,8 +114,8 @@ public class EditUserPasswordController implements Initializable {
         Matcher matcher1 = pattern.matcher(check1);
         Matcher matcher2 = pattern.matcher(check2);
         if(!matcher1.matches() || !matcher2.matches()){
-            infoBox.setText("Your password has special characters in it!");
-            stringBuilder.append("• Your password has special characters in it!\n");
+            infoBox.setText("The new password has special characters in it!");
+            stringBuilder.append("• The new password has special characters in it!\n");
             isError = true;;
         }
 
@@ -141,6 +144,8 @@ public class EditUserPasswordController implements Initializable {
         }
         System.out.println(receivedUserClass.getUsername() + " is editing user: " + editedUserClass.getUsername());
         if(!receivedUserClass.getIsUser()){
+            instructionsBox.setText("• Passwords should be at least 4 characters long!\n" +
+                    "• They cannot contain special characters!");
             curPw.setDisable(true);
         }
 

@@ -18,6 +18,7 @@ import ui.login.LoginController;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class AddUserController implements Initializable {
@@ -67,6 +68,17 @@ public class AddUserController implements Initializable {
             emptyAlert.showAndWait();
             return;
         }
+
+        Pattern pattern = Pattern.compile("[a-zA-Z0-9]*");
+        Matcher matcher1 = pattern.matcher(nUser);
+        if (nUser.length() < 3 || !matcher1.matches()){
+            Alert emptyAlert = new Alert(Alert.AlertType.ERROR);
+            emptyAlert.setHeaderText(null);
+            emptyAlert.setContentText("Please enter a correct username.");
+            emptyAlert.showAndWait();
+            return;
+        }
+
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."+
                 "[a-zA-Z0-9_+&*-]+)*@" +
                 "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
@@ -164,7 +176,9 @@ public class AddUserController implements Initializable {
         username.setText(user.getUsername());
         address.setText(user.getAddress());
         phonenumber.setText(user.getPhone());
+        email.setText(user.getEmail());
         username.setEditable(false);
+        userCheckBox.setDisable(true);
         addUser.setText("Save");
         isInEditMode = true;
     }

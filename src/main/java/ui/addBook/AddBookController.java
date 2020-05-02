@@ -1,15 +1,10 @@
-package ui.addbook;
+package ui.addBook;
 
 import database.DatabaseHandler;
+import utils.*;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Random;
 import java.net.URL;
 import java.util.Calendar;
 import java.util.ResourceBundle;
@@ -21,7 +16,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import com.jfoenix.controls.JFXTextField;
 import javafx.stage.Stage;
-import ui.listbooks.ListBooksController;
 
 public class AddBookController implements Initializable {
 
@@ -156,7 +150,7 @@ public class AddBookController implements Initializable {
         stage.close();
     }
 
-    public void inflateAddBookUI(ListBooksController.Book book){
+    public void inflateAddBookUI(Book book){
         title.setText(book.getTitle());
         id.setText(book.getId());
         author.setText(book.getAuthor());

@@ -1,13 +1,12 @@
-package ui.userpanel;
+package ui.userPanel;
 
-import javafx.event.ActionEvent;
+import utils.*;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -15,9 +14,10 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import ui.listbooks.ListBooksController;
-import ui.listissued.ListIssuedController;
-import ui.listusers.ListUsersController;
+import ui.editUserPassword.EditUserPasswordController;
+import ui.listBooks.ListBooksController;
+import ui.listIssued.ListIssuedController;
+import ui.listUsers.ListUsersController;
 
 import java.io.IOException;
 import java.net.URL;

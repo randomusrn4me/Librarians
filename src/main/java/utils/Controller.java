@@ -1,10 +1,18 @@
 package utils;
 
-import ui.listusers.ListUsersController;
+import database.DatabaseHandler;
+import javafx.fxml.FXML;
+import javafx.scene.layout.Pane;
 
-public interface Controller {
-    public User receivedUserClass = null;
-    public void setReceivedUser(User receivedUserClass);
-    public void initByHand();
-    public void closeWindow();
+public abstract class Controller {
+    private User receivedUserClass = null;
+
+    private DatabaseHandler databaseHandler;
+
+    @FXML
+    private Pane rootPane;
+
+    public abstract void setReceivedUser(User receivedUserClass);
+    public abstract void initByHand();
+    public abstract void closeWindow();
 }

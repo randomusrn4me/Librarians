@@ -1,4 +1,4 @@
-package ui.listusers;
+package ui.listUsers;
 
 import javafx.application.Application;
 

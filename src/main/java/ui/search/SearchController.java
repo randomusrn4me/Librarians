@@ -1,5 +1,6 @@
 package ui.search;
 
+import utils.*;
 import com.jfoenix.controls.JFXTextField;
 import database.DatabaseHandler;
 import javafx.beans.property.SimpleBooleanProperty;

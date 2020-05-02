@@ -1,4 +1,4 @@
-package ui.userpanel;
+package ui.userPanel;
 
 import database.DatabaseHandler;
 import javafx.application.Application;

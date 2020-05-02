@@ -1,4 +1,4 @@
-package ui.adduser;
+package ui.addUser;
 
 import javafx.application.Application;
 

@@ -1,8 +1,7 @@
-package ui.listbooks;
+package ui.listBooks;
 
 import database.DatabaseHandler;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleStringProperty;
+import utils.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -18,8 +17,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import ui.addbook.AddBookController;
-import ui.listusers.ListUsersController;
+import ui.addBook.AddBookController;
+import ui.listUsers.ListUsersController;
 
 import java.io.IOException;
 import java.net.URL;
@@ -237,7 +236,7 @@ public class ListBooksController implements Initializable {
         idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         availabilityCol.setCellValueFactory(new PropertyValueFactory<>("availability"));
     }
-
+/*
     public static class Book{
         private final SimpleStringProperty title;
         private final SimpleStringProperty author;
@@ -279,5 +278,5 @@ public class ListBooksController implements Initializable {
             return availability.get();
         }
 
-    }
+    }*/
 }

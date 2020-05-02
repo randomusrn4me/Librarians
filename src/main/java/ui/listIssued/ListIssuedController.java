@@ -1,13 +1,9 @@
-package ui.listissued;
+package ui.listIssued;
 
 import database.DatabaseHandler;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
+import utils.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -17,7 +13,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import ui.listusers.ListUsersController;
+import ui.listUsers.ListUsersController;
 
 import java.net.URL;
 import java.sql.ResultSet;
@@ -300,7 +296,7 @@ public class ListIssuedController implements Initializable {
             alertError("Selected book(s) could not be returned!");
         }
     }
-
+/*
     public static class Issue{
         private final SimpleStringProperty title;
         private final SimpleStringProperty author;
@@ -359,5 +355,5 @@ public class ListIssuedController implements Initializable {
         public void setRenewCount(int renewCount) {
             this.renewCount.set(renewCount);
         }
-    }
+    }*/
 }

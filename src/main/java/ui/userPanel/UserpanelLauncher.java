@@ -1,4 +1,4 @@
-package ui.userpanel;
+package ui.userPanel;
 
 import javafx.application.Application;
 

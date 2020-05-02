@@ -1,4 +1,4 @@
-package ui.addbook;
+package ui.addBook;
 
 import javafx.application.Application;
 

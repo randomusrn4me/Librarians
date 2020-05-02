@@ -1,15 +1,12 @@
 package utils;
 
 import java.io.IOException;
-import javafx.application.Application;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import ui.listbooks.ListBooksController;
-import ui.listissued.ListIssuedController;
-import ui.listusers.ListUsersController;
 
 public class WindowLoadUtils {
     public static void windowLoader(String location, String title, Class gottenClass, User workingUser, User editedUser, Controller controller) throws IOException {

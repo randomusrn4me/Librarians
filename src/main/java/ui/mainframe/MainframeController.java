@@ -1,8 +1,7 @@
 package ui.mainframe;
 
-
+import utils.*;
 import database.DatabaseHandler;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,9 +16,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import ui.listbooks.ListBooksController;
-import ui.listissued.ListIssuedController;
-import ui.listusers.ListUsersController;
+import ui.listBooks.ListBooksController;
+import ui.listIssued.ListIssuedController;
+import ui.listUsers.ListUsersController;
 
 import java.io.IOException;
 import java.net.URL;
@@ -158,7 +157,7 @@ public class MainframeController implements Initializable {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirm Book Issue");
         alert.setHeaderText(null);
-        alert.setContentText("Are you sure you want to issue that book to " + usernameInput.getText() + "?");
+        alert.setContentText("Are you sure you want to issue that book to \"" + usernameInput.getText() + "\"?");
 
         Optional<ButtonType> response = alert.showAndWait();
         if(response.get() == ButtonType.OK){

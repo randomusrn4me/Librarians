@@ -1,5 +1,6 @@
-package ui.listusers;
+package ui.listUsers;
 
+import utils.*;
 import database.DatabaseHandler;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -19,15 +20,13 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import ui.adduser.AddUserController;
-import ui.listbooks.ListBooksController;
-import ui.userpanel.EditUserPasswordController;
+import ui.addUser.AddUserController;
+import ui.editUserPassword.EditUserPasswordController;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;

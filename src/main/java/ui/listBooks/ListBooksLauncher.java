@@ -1,4 +1,4 @@
-package ui.listbooks;
+package ui.listBooks;
 
 import javafx.application.Application;
 

@@ -1,5 +1,6 @@
 package ui.login;
 
+import utils.*;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.net.URL;
@@ -26,9 +27,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import ui.listusers.ListUsersController;
+import ui.listUsers.ListUsersController;
 import ui.mainframe.MainframeController;
-import ui.userpanel.UserpanelController;
+import ui.userPanel.UserpanelController;
 
 public class LoginController implements Initializable {
 

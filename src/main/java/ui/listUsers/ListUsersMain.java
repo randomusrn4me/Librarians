@@ -1,4 +1,4 @@
-package ui.listbooks;
+package ui.listUsers;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -6,12 +6,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class ListBooksMain extends Application {
+public class ListUsersMain extends Application {
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/ui.list_books.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/ui.list_users.fxml"));
         Scene scene = new Scene(root);
-        stage.setTitle("List of Books");
+        stage.setTitle("List of Users");
         stage.setScene(scene);
         stage.show();
     }

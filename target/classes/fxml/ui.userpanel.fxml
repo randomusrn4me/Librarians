@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<StackPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="472.0" prefWidth="704.0" stylesheets="@ui.userpanel.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.userpanel.UserpanelController">
+<StackPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="472.0" prefWidth="704.0" stylesheets="@ui.userpanel.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.userPanel.UserpanelController">
     <children>
         <BorderPane prefHeight="200.0" prefWidth="704.0">
             <top>
@@ -119,13 +119,16 @@
                               <VBox alignment="CENTER" prefHeight="159.0" prefWidth="409.0" style="-fx-background-color: #EDA49A; -fx-background-radius: 25; -fx-border-color: #171B2A; -fx-border-radius: 25;" />
                            </children>
                            <VBox.margin>
-                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                              <Insets left="20.0" right="20.0" />
                            </VBox.margin>
                         </HBox>
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                        <HBox alignment="CENTER" prefHeight="68.0" prefWidth="550.0">
                            <children>
                               <Text fx:id="userInfoBox" strokeType="OUTSIDE" strokeWidth="0.0" text="Current user: General User /null/" textAlignment="CENTER" />
                            </children>
+                           <VBox.margin>
+                              <Insets top="20.0" />
+                           </VBox.margin>
                         </HBox>
                      </children>
                   </VBox>

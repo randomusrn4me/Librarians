@@ -124,7 +124,7 @@
                                  <children>
                                     <Text fx:id="bookTitle" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #171B2A;" text="Title" textAlignment="CENTER" wrappingWidth="385.88671875">
                                        <VBox.margin>
-                                          <Insets top="10.0" />
+                                          <Insets />
                                        </VBox.margin>
                                        <font>
                                           <Font size="14.0" />
@@ -178,7 +178,7 @@
                                  <children>
                                     <Text fx:id="nameOfUser" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #171B2A;" text="Name of User" textAlignment="CENTER" wrappingWidth="385.88671875">
                                        <VBox.margin>
-                                          <Insets top="10.0" />
+                                          <Insets />
                                        </VBox.margin>
                                        <font>
                                           <Font size="14.0" />

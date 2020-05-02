@@ -27,9 +27,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import ui.listUsers.ListUsersController;
 import ui.mainframe.MainframeController;
-import ui.userPanel.UserpanelController;
+import ui.userPanel.UserPanelController;
 
 public class LoginController implements Initializable {
 
@@ -48,7 +47,7 @@ public class LoginController implements Initializable {
     @FXML
     private Text statusText;
 
-    private ListUsersController.User userToBeSent;
+    private User userToBeSent;
 
     @FXML
     void loginButtonPushed() {
@@ -85,7 +84,7 @@ public class LoginController implements Initializable {
                     isUser = rs.getBoolean("isUser");
                     firstLog = rs.getBoolean("firstLog");
                     pw = rs.getString("pass");
-                    userToBeSent = new ListUsersController.User(username, fullname, email, address, phone, isUser, firstLog);
+                    userToBeSent = new User(username, fullname, email, address, phone, isUser, firstLog);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -152,7 +151,7 @@ public class LoginController implements Initializable {
             Parent parent = loader.load();
 
             if(isUser){
-                UserpanelController controller = loader.getController();
+                UserPanelController controller = loader.getController();
                 controller.setReceivedUser(userToBeSent);
             }
             else{

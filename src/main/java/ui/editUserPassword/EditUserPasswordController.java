@@ -31,11 +31,11 @@ import java.util.regex.Pattern;
 
 public class EditUserPasswordController implements Initializable {
 
-    private ListUsersController.User receivedUserClass;
+    private User receivedUserClass;
 
-    private ListUsersController.User editedUserClass;
+    private User editedUserClass;
 
-    public void setReceivedUser(ListUsersController.User receivedUserClass, ListUsersController.User editedUserClass) {
+    public void setReceivedUser(User receivedUserClass, User editedUserClass) {
         this.receivedUserClass = receivedUserClass;
         this.editedUserClass = editedUserClass;
     }

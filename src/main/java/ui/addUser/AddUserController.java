@@ -172,7 +172,7 @@ public class AddUserController implements Initializable {
         }
     }
 
-    public void inflateAddUserUI(ListUsersController.User user){
+    public void inflateAddUserUI(User user){
         fullname.setText(user.getFullname());
         username.setText(user.getUsername());
         address.setText(user.getAddress());

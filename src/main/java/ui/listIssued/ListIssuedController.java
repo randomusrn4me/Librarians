@@ -30,9 +30,9 @@ public class ListIssuedController implements Initializable {
     public MenuItem renewMenu;
     public MenuItem returnMenu;
 
-    private ListUsersController.User receivedUserClass;
+    private User receivedUserClass;
 
-    public void setReceivedUser(ListUsersController.User receivedUserClass) {
+    public void setReceivedUser(User receivedUserClass) {
         this.receivedUserClass = receivedUserClass;
         try {
             loadData();

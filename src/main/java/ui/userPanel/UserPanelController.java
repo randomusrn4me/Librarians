@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class UserpanelController implements Initializable {
+public class UserPanelController implements Initializable {
 
     @FXML
     public void logoutButtonPushed(/*ActionEvent event*/) {
@@ -32,9 +32,9 @@ public class UserpanelController implements Initializable {
         windowLoader("/fxml/ui.login.fxml", "Login");
     }
 
-    private ListUsersController.User receivedUserClass;
+    private User receivedUserClass;
 
-    public void setReceivedUser(ListUsersController.User receivedUserClass) {
+    public void setReceivedUser(User receivedUserClass) {
         this.receivedUserClass = receivedUserClass;
         loggedInUser.setText("User: " + receivedUserClass.getUsername());
     }

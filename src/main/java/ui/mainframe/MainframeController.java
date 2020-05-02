@@ -31,11 +31,11 @@ public class MainframeController implements Initializable {
 
     public String receivedUser;
 
-    private ListUsersController.User receivedUserClass;
+    private User receivedUserClass;
 
-    private ListUsersController.User queriedUser;
+    private User queriedUser;
 
-    public void setReceivedUser(String receivedUser, ListUsersController.User receivedUserClass) {
+    public void setReceivedUser(String receivedUser, User receivedUserClass) {
         this.receivedUser = receivedUser;
         this.receivedUserClass = receivedUserClass;
         loggedInUser.setText("Admin: " + receivedUserClass.getUsername());
@@ -127,7 +127,7 @@ public class MainframeController implements Initializable {
                 Boolean firstLog = rs.getBoolean("firstLog");
                 nameOfUser.setText("Name: " + uName);
                 emailOfUser.setText("E-mail: " + uEmail);
-                queriedUser = new ListUsersController.User(uName.toLowerCase(),fullname, uEmail, address, phone, isUser, firstLog);
+                queriedUser = new User(uName.toLowerCase(),fullname, uEmail, address, phone, isUser, firstLog);
                 flag = true;
 
             } catch (SQLException e) {

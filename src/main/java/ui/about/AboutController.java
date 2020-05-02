@@ -13,18 +13,16 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class AboutController implements Initializable {
+public class AboutController extends Controller {
 
     @FXML
     private AnchorPane rootPane;
 
     @FXML
-    private JFXButton okButton;
-
-    @FXML
     void handleOK() {
-        ((Stage) rootPane.getScene().getWindow()).close();
+        closeWindow();
     }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         rootPane.setFocusTraversable(true);
@@ -38,4 +36,8 @@ public class AboutController implements Initializable {
         });
     }
 
+    @Override
+    public void initByHand() {
+
+    }
 }

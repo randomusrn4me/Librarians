@@ -2,17 +2,24 @@ package utils;
 
 import database.DatabaseHandler;
 import javafx.fxml.FXML;
-import javafx.scene.layout.Pane;
+import javafx.fxml.Initializable;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
-public abstract class Controller {
-    private User receivedUserClass = null;
-
+public abstract class Controller implements Initializable {
+    private User receivedUserClass;
     private DatabaseHandler databaseHandler;
 
     @FXML
-    private Pane rootPane;
+    private AnchorPane rootPane;
 
-    public abstract void setReceivedUser(User receivedUserClass);
     public abstract void initByHand();
-    public abstract void closeWindow();
+
+    public void setReceivedUser(User receivedUserClass){
+        this.receivedUserClass = receivedUserClass;
+    };
+
+    public void closeWindow(){
+        ((Stage) rootPane.getScene().getWindow()).close();
+    };
 }

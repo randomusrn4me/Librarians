@@ -31,9 +31,9 @@ public class ListBooksController implements Initializable {
 
     ObservableList<Book> list = FXCollections.observableArrayList();
 
-    private ListUsersController.User receivedUserClass;
+    private User receivedUserClass;
 
-    public void setReceivedUser(ListUsersController.User receivedUserClass) {
+    public void setReceivedUser(User receivedUserClass) {
         this.receivedUserClass = receivedUserClass;
         System.out.println("Username of person listing users: " + receivedUserClass.getUsername());
     }

@@ -35,9 +35,9 @@ public class ListUsersController implements Initializable {
 
     ObservableList<User> list = FXCollections.observableArrayList();
 
-    private ListUsersController.User receivedUserClass;
+    private User receivedUserClass;
 
-    public void setReceivedUser(ListUsersController.User receivedUserClass) {
+    public void setReceivedUser(User receivedUserClass) {
         this.receivedUserClass = receivedUserClass;
         System.out.println("Username of admin listing users: " + receivedUserClass.getUsername());
     }
@@ -253,7 +253,7 @@ public class ListUsersController implements Initializable {
             tableView.setItems(list);
         }
     }
-
+/*
     public static class User{
         private SimpleStringProperty username;
         private SimpleStringProperty fullname;
@@ -344,5 +344,5 @@ public class ListUsersController implements Initializable {
 
         public Boolean getFirstLog(){return firstLog.get();}
 
-    }
+    }*/
 }

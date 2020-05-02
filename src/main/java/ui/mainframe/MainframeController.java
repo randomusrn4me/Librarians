@@ -39,7 +39,7 @@ public class MainframeController implements Initializable {
     public void setReceivedUser(String receivedUser, ListUsersController.User receivedUserClass) {
         this.receivedUser = receivedUser;
         this.receivedUserClass = receivedUserClass;
-        userInfoBox.setText("Current admin: " + receivedUserClass.getUsername());
+        loggedInUser.setText("Admin: " + receivedUserClass.getUsername());
     }
 
     @FXML
@@ -73,6 +73,10 @@ public class MainframeController implements Initializable {
     private Text userInfoBox;
 
     private DatabaseHandler databaseHandler;
+
+
+    @FXML
+    private Menu loggedInUser;
 
     @FXML
     void loadBookInfo() {
@@ -285,9 +289,18 @@ public class MainframeController implements Initializable {
     }
 
 
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         databaseHandler = DatabaseHandler.getInstance();
+
+        bookTitle.setText("Enter Book ID then press ENTER!");
+        bookAuthor.setText("");
+        bookStatus.setText("");
+
+        nameOfUser.setText("Enter Username then press ENTER!");
+        emailOfUser.setText("");
 
         rootPane.setFocusTraversable(true);
         rootPane.setOnKeyPressed(new EventHandler<KeyEvent>() {

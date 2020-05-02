@@ -21,14 +21,10 @@
             <top>
                 <MenuBar style="-fx-background-color: #171B2A;" BorderPane.alignment="CENTER">
                     <menus>
+                        <Menu fx:id="loggedInUser" mnemonicParsing="false" style="-fx-font-weight: bold; -fx-font-size: 12;" text="User: /null/" />
                         <Menu mnemonicParsing="false" text="Preferences">
                             <items>
                                 <MenuItem mnemonicParsing="false" onAction="#userDetailsButtonPushed" text="Change password" />
-                            </items>
-                        </Menu>
-                        <Menu mnemonicParsing="false" text="Edit">
-                            <items>
-                                <MenuItem mnemonicParsing="false" text="Delete" />
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="Help">
@@ -78,7 +74,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                         </Button>
-                  <Button contentDisplay="TOP" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="91.0" prefWidth="153.0" style="-fx-background-color: #171B2A; -fx-border-color: white; -fx-text-fill: white;" text="User Information">
+                  <Button contentDisplay="TOP" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#editUserInfoPushed" prefHeight="91.0" prefWidth="153.0" style="-fx-background-color: #171B2A; -fx-border-color: white; -fx-text-fill: white;" text="Edit user Information">
                      <graphic>
                         <ImageView fitHeight="27.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -112,7 +108,7 @@
                      <children>
                         <HBox alignment="CENTER" prefHeight="159.0" prefWidth="551.0" style="-fx-background-color: white; -fx-background-radius: 10;">
                            <children>
-                              <VBox alignment="CENTER" prefHeight="159.0" prefWidth="409.0" style="-fx-background-color: #EDA49A; -fx-background-radius: 30; -fx-border-color: #171B2A; -fx-border-radius: 30; -fx-border-image-width: 3;" />
+                              <VBox alignment="CENTER" prefHeight="159.0" prefWidth="409.0" style="-fx-background-color: #EDA49A; -fx-background-radius: 25; -fx-border-color: #171B2A; -fx-border-radius: 25; -fx-border-image-width: 3;" />
                            </children>
                            <VBox.margin>
                               <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
@@ -120,7 +116,7 @@
                         </HBox>
                         <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="159.0" prefWidth="551.0" style="-fx-background-color: white; -fx-background-radius: 10;">
                            <children>
-                              <VBox alignment="CENTER" prefHeight="159.0" prefWidth="409.0" style="-fx-background-color: #EDA49A; -fx-background-radius: 30; -fx-border-color: #171B2A; -fx-border-radius: 30;" />
+                              <VBox alignment="CENTER" prefHeight="159.0" prefWidth="409.0" style="-fx-background-color: #EDA49A; -fx-background-radius: 25; -fx-border-color: #171B2A; -fx-border-radius: 25;" />
                            </children>
                            <VBox.margin>
                               <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />

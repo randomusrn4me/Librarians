@@ -8,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Menu;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
@@ -35,14 +36,18 @@ public class UserpanelController implements Initializable {
 
     public void setReceivedUser(ListUsersController.User receivedUserClass) {
         this.receivedUserClass = receivedUserClass;
-        userInfoBox.setText("Current user: " + receivedUserClass.getUsername());
+        loggedInUser.setText("User: " + receivedUserClass.getUsername());
     }
+
+    @FXML
+    private Menu loggedInUser;
 
     @FXML
     private Text userInfoBox;
 
     @FXML
     private StackPane rootPane;
+
 
     @FXML
     void loadListBooksWindow() {
@@ -98,6 +103,10 @@ public class UserpanelController implements Initializable {
         });
     }
 
+    @FXML
+    void editUserInfoPushed() {
+        userDetailsButtonPushed();
+    }
 
     @FXML
     void handleAboutPushed() {

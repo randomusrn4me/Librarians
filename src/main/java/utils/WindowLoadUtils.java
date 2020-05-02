@@ -12,7 +12,7 @@ import ui.listissued.ListIssuedController;
 import ui.listusers.ListUsersController;
 
 public class WindowLoadUtils {
-    public static void windowLoader(String location, String title, Class gottenClass, ListUsersController.User workingUser, ListUsersController.User editedUser, Controller controller) throws IOException {
+    public static void windowLoader(String location, String title, Class gottenClass, User workingUser, User editedUser, Controller controller) throws IOException {
         try {
             FXMLLoader loader = new FXMLLoader(gottenClass.getResource(location));
             Parent parent = loader.load();

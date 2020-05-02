@@ -1,5 +1,6 @@
 package ui.userpanel;
 
+import com.jfoenix.controls.JFXButton;
 import database.DatabaseHandler;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
@@ -23,6 +24,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
+import ui.adduser.AddUserController;
 import ui.listissued.ListIssuedController;
 import ui.listissued.ListIssuedController;
 import ui.listusers.ListUsersController;
@@ -66,6 +68,27 @@ public class EditUserPasswordController implements Initializable {
 
     @FXML
     private AnchorPane rootPane;
+
+    @FXML
+    private JFXButton detailsButton;
+
+    @FXML
+    void detailsButtonPushed() {
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ui.add_user.fxml"));
+            Parent parent = loader.load();
+            AddUserController controller = loader.getController();
+            controller.inflateAddUserUI(receivedUserClass);
+            Stage stage = new Stage(StageStyle.DECORATED);
+            stage.setTitle("Edit Own User Details");
+            stage.setScene(new Scene(parent));
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 
     @FXML
     void pwSaveButtonPushed() {
@@ -154,6 +177,7 @@ public class EditUserPasswordController implements Initializable {
             instructionsBox.setText("• Passwords should be at least 4 characters long!\n" +
                     "• They cannot contain special characters!");
             curPw.setDisable(true);
+            detailsButton.setDisable(true);
         }
 
     }

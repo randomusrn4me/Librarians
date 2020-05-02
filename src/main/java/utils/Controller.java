@@ -3,6 +3,8 @@ package utils;
 import ui.listusers.ListUsersController;
 
 public interface Controller {
-    public void setReceivedUser(ListUsersController.User receivedUserClass);
+    public User receivedUserClass = null;
+    public void setReceivedUser(User receivedUserClass);
     public void initByHand();
+    public void closeWindow();
 }

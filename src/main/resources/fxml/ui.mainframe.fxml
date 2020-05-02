@@ -110,7 +110,7 @@
                <children>
                   <VBox layoutX="14.0" prefHeight="418.0" prefWidth="559.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <HBox alignment="CENTER" prefHeight="159.0" prefWidth="551.0" style="-fx-border-radius: 30; -fx-border-color: #171B2A; -fx-border-width: 2; -fx-background-color: #171B2A; -fx-background-radius: 35;">
+                        <HBox alignment="CENTER" prefHeight="159.0" prefWidth="551.0" style="-fx-border-radius: 30; -fx-border-color: #171B2A; -fx-border-width: 2; -fx-background-color: #171B2A; -fx-background-radius: 25;">
                            <children>
                               <TextField fx:id="bookIDInput" onAction="#loadBookInfo" promptText="Book ID" style="-fx-background-radius: 10; -fx-border-radius: 10; -fx-background-color: #EDA49A; -fx-prompt-text-fill: #171B2A;">
                                  <HBox.margin>
@@ -120,11 +120,11 @@
                                     <Cursor fx:constant="TEXT" />
                                  </cursor>
                               </TextField>
-                              <VBox alignment="CENTER" prefHeight="159.0" prefWidth="409.0" style="-fx-background-color: #EDA49A; -fx-background-radius: 30;">
+                              <VBox alignment="CENTER" prefHeight="159.0" prefWidth="409.0" style="-fx-background-color: #EDA49A; -fx-background-radius: 25;">
                                  <children>
                                     <Text fx:id="bookTitle" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #171B2A;" text="Title" textAlignment="CENTER" wrappingWidth="385.88671875">
                                        <VBox.margin>
-                                          <Insets top="10.0" />
+                                          <Insets />
                                        </VBox.margin>
                                        <font>
                                           <Font size="14.0" />
@@ -164,7 +164,7 @@
                               <Font size="14.0" />
                            </font>
                         </Text>
-                        <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="159.0" prefWidth="551.0" style="-fx-border-color: #171B2A; -fx-border-radius: 30; -fx-border-width: 2; -fx-background-color: #171B2A; -fx-background-radius: 35;">
+                        <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="159.0" prefWidth="551.0" style="-fx-border-color: #171B2A; -fx-border-radius: 30; -fx-border-width: 2; -fx-background-color: #171B2A; -fx-background-radius: 25;">
                            <children>
                               <TextField fx:id="usernameInput" onAction="#loadUserInfo" prefWidth="134.0" promptText="Username" style="-fx-background-radius: 10; -fx-border-radius: 10; -fx-background-color: #EDA49A; -fx-prompt-text-fill: #171B2A;">
                                  <HBox.margin>
@@ -174,11 +174,11 @@
                                     <Cursor fx:constant="TEXT" />
                                  </cursor>
                               </TextField>
-                              <VBox alignment="CENTER" prefHeight="130.0" prefWidth="331.0" style="-fx-background-radius: 30; -fx-background-color: #EDA49A;">
+                              <VBox alignment="CENTER" prefHeight="130.0" prefWidth="331.0" style="-fx-background-radius: 25; -fx-background-color: #EDA49A;">
                                  <children>
                                     <Text fx:id="nameOfUser" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #171B2A;" text="Name of User" textAlignment="CENTER" wrappingWidth="385.88671875">
                                        <VBox.margin>
-                                          <Insets top="10.0" />
+                                          <Insets />
                                        </VBox.margin>
                                        <font>
                                           <Font size="14.0" />
@@ -234,12 +234,8 @@
          <top>
             <MenuBar prefHeight="26.0" prefWidth="568.0" style="-fx-background-color: #171B2A;" BorderPane.alignment="CENTER">
               <menus>
-                <Menu mnemonicParsing="false" text="File">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="Close" />
-                  </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Edit">
+                <Menu fx:id="loggedInUser" mnemonicParsing="false" style="-fx-font-weight: bold; -fx-font-size: 12;" text="Admin: /null/" />
+                <Menu mnemonicParsing="false" text="Preferences">
                   <items>
                     <MenuItem mnemonicParsing="false" text="Delete" />
                   </items>

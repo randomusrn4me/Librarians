@@ -48,30 +48,30 @@
             <right>
                 <VBox prefHeight="447.0" prefWidth="153.0" BorderPane.alignment="CENTER">
                     <children>
-                        <Button contentDisplay="TOP" layoutX="10.0" layoutY="192.0" mnemonicParsing="false" onAction="#loadIssueList" prefHeight="91.0" prefWidth="153.0" style="-fx-background-color: #171B2A; -fx-border-color: white; -fx-text-fill: white;" text="My Issued Books">
-                            <graphic>
-                                <ImageView fitHeight="27.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@/icons/textbook.png" />
-                                    </image>
-                                </ImageView>
-                            </graphic>
-                            <cursor>
-                                <Cursor fx:constant="HAND" />
-                            </cursor>
-                        </Button>
-                        <Button contentDisplay="TOP" layoutX="10.0" layoutY="101.0" mnemonicParsing="false" onAction="#loadSearchWindow" prefHeight="91.0" prefWidth="153.0" style="-fx-background-color: #171B2A; -fx-border-color: white; -fx-text-fill: white;" text="Search Books">
-                            <graphic>
-                                <ImageView fitHeight="27.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@/icons/searchbook.png" />
-                                    </image>
-                                </ImageView>
-                            </graphic>
-                            <cursor>
-                                <Cursor fx:constant="HAND" />
-                            </cursor>
-                        </Button>
+                  <Button contentDisplay="TOP" layoutX="10.0" layoutY="192.0" mnemonicParsing="false" onAction="#loadIssueList" prefHeight="91.0" prefWidth="153.0" style="-fx-background-color: #171B2A; -fx-border-color: white; -fx-text-fill: white;" text="My Issued Books">
+                     <graphic>
+                        <ImageView fitHeight="27.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@/icons/textbook.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button contentDisplay="TOP" layoutX="10.0" layoutY="101.0" mnemonicParsing="false" onAction="#loadSearchWindow" prefHeight="91.0" prefWidth="153.0" style="-fx-background-color: #171B2A; -fx-border-color: white; -fx-text-fill: white;" text="Search Books">
+                     <graphic>
+                        <ImageView fitHeight="27.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@/icons/searchbook.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
                         <Button contentDisplay="TOP" layoutX="10.0" layoutY="101.0" mnemonicParsing="false" onAction="#loadListBooksWindow" prefHeight="91.0" prefWidth="153.0" style="-fx-background-color: #171B2A; -fx-border-color: white; -fx-text-fill: white;" text="All Books">
                             <graphic>
                                 <ImageView fitHeight="27.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
@@ -80,22 +80,22 @@
                                     </image>
                                 </ImageView>
                             </graphic>
-                            <cursor>
-                                <Cursor fx:constant="HAND" />
-                            </cursor>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                         </Button>
-                        <Button contentDisplay="TOP" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="91.0" prefWidth="153.0" style="-fx-background-color: #171B2A; -fx-border-color: white; -fx-text-fill: white;" text="User Information">
-                            <graphic>
-                                <ImageView fitHeight="27.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@/icons/baseline_assignment_ind_black_18dp.png" />
-                                    </image>
-                                </ImageView>
-                            </graphic>
-                            <cursor>
-                                <Cursor fx:constant="HAND" />
-                            </cursor>
-                        </Button>
+                  <Button contentDisplay="TOP" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="91.0" prefWidth="153.0" style="-fx-background-color: #171B2A; -fx-border-color: white; -fx-text-fill: white;" text="User Information">
+                     <graphic>
+                        <ImageView fitHeight="27.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@/icons/baseline_assignment_ind_black_18dp.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
                         <Button contentDisplay="TOP" layoutX="10.0" layoutY="192.0" mnemonicParsing="false" onAction="#logoutButtonPushed" prefHeight="91.0" prefWidth="153.0" style="-fx-background-color: #171B2A; -fx-border-color: white; -fx-text-fill: white;" text="Logout">
                             <graphic>
                                 <ImageView fitHeight="27.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
@@ -104,9 +104,9 @@
                                     </image>
                                 </ImageView>
                             </graphic>
-                            <cursor>
-                                <Cursor fx:constant="HAND" />
-                            </cursor>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                         </Button>
                     </children>
                 </VBox>
@@ -137,9 +137,9 @@
                                                     </VBox.margin>
                                                 </HBox>
                                                 <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-                                                    <children>
-                                                        <Text fx:id="userInfoBox" strokeType="OUTSIDE" strokeWidth="0.0" text="Current user: General User /null/" textAlignment="CENTER" />
-                                                    </children></HBox>
+                                       <children>
+                                          <Text fx:id="userInfoBox" strokeType="OUTSIDE" strokeWidth="0.0" text="Current user: General User /null/" textAlignment="CENTER" />
+                                       </children></HBox>
                                             </children>
                                         </VBox>
                                     </children></AnchorPane>
@@ -155,9 +155,9 @@
                                                     <BorderPane.margin>
                                                         <Insets left="100.0" right="100.0" top="10.0" />
                                                     </BorderPane.margin>
-                                                    <cursor>
-                                                        <Cursor fx:constant="TEXT" />
-                                                    </cursor>
+                                       <cursor>
+                                          <Cursor fx:constant="TEXT" />
+                                       </cursor>
                                                 </JFXTextField>
                                             </top>
                                             <center>
@@ -174,12 +174,12 @@
                                                             <HBox.margin>
                                                                 <Insets right="20.0" />
                                                             </HBox.margin>
-                                                            <cursor>
-                                                                <Cursor fx:constant="HAND" />
-                                                            </cursor>
-                                                            <font>
-                                                                <Font size="14.0" />
-                                                            </font></JFXButton>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font></JFXButton>
                                                     </children>
                                                 </HBox>
                                             </bottom>

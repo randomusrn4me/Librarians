@@ -70,6 +70,14 @@ public class SearchController implements Initializable {
 
     private DatabaseHandler databaseHandler;
 
+    private void alertError(String text){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText(text);
+        alert.showAndWait();
+    }
+
     @FXML
     void handleCancelButtonPushed() {
         Stage stage = (Stage) rootPane.getScene().getWindow();
@@ -107,43 +115,36 @@ public class SearchController implements Initializable {
         }
 
         if(notEmp.size() < 1){
-            Alert emptyAlert = new Alert(Alert.AlertType.ERROR);
-            emptyAlert.setHeaderText(null);
-            emptyAlert.setContentText("Please fill out one or more fields to search!");
-            emptyAlert.showAndWait();
+            alertError("Please fill out one or more fields to search!");
             return;
         }
         else if(!bookYear.isEmpty() && !Character.isDigit(bookYear.charAt(0))){
-            Alert numberAlert = new Alert(Alert.AlertType.ERROR);
-            numberAlert.setHeaderText("Incorrect Year");
-            numberAlert.setContentText("Please enter a valid year.");
-            numberAlert.showAndWait();
+            alertError("Please enter a valid year.");
+            return;
         }
         else if(!bookYear.isEmpty() && Integer.parseInt(bookYear) > Calendar.getInstance().get(Calendar.YEAR)){
-            Alert numberAlert = new Alert(Alert.AlertType.ERROR);
-            numberAlert.setHeaderText("Incorrect Year");
-            numberAlert.setContentText("Please enter a valid year.");
-            numberAlert.showAndWait();
+            alertError("Please enter a valid year.");
+            return;
         }
 
-        StringBuilder qu = new StringBuilder("SELECT * FROM BOOK WHERE ");
+        StringBuilder qu = new StringBuilder("SELECT * FROM BOOK WHERE LOWER(");
         ResultSet rs;
         boolean flag;
 
         for(Map.Entry<String, String> entry : notEmp.entrySet()) {
             if (entry.getKey().equals(notEmp.lastKey())) {
                 if(entry.getKey().equals("title") || entry.getKey().equals("author") || entry.getKey().equals("publisher")){
-                    qu.append(entry.getKey()).append(" LIKE '%").append(entry.getValue()).append("%'");
+                    qu.append(entry.getKey()).append(") LIKE '%").append(entry.getValue().toLowerCase()).append("%'");
                 }else{
-                    qu.append(entry.getKey()).append(" = '").append(entry.getValue()).append("'");
+                    qu.append(entry.getKey()).append(") = '").append(entry.getValue().toLowerCase()).append("'");
                 }
             }else if(entry.getKey().equals("title") || entry.getKey().equals("author") || entry.getKey().equals("publisher")){
-                qu.append(entry.getKey()).append(" LIKE '%").append(entry.getValue()).append("%'");
-                qu.append(" AND ");
+                qu.append(entry.getKey()).append(") LIKE '%").append(entry.getValue().toLowerCase()).append("%'");
+                qu.append(" AND LOWER(");
             }
             else {
-                qu.append(entry.getKey()).append(" = '").append(entry.getValue()).append("'");
-                qu.append(" AND ");
+                qu.append(entry.getKey()).append(") = '").append(entry.getValue().toLowerCase()).append("'");
+                qu.append(" AND LOWER(");
             }
         }
 
@@ -167,11 +168,8 @@ public class SearchController implements Initializable {
             list.add(new Book(tmpTitle, tmpAuthor, tmpPublisher, tmpYear, tmpID, tmpAvail));
         }
         if(!flag){
-            Alert noneAlert = new Alert(Alert.AlertType.ERROR);
-            noneAlert.setTitle("Unknown Search Term");
-            noneAlert.setHeaderText(null);
-            noneAlert.setContentText("No such book with those parameters" + ". \nPlease enter one or all valid search terms.");
-            noneAlert.showAndWait();
+            alertError("No such book with those parameters. \nPlease enter valid search terms.");
+            return;
         }
 
         tableView.getItems().setAll(list);

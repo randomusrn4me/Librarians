@@ -47,6 +47,13 @@ public class AddBookController implements Initializable {
 
     private DatabaseHandler databaseHandler;
 
+    private void alertError(String text){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText(text);
+        alert.showAndWait();
+    }
 
     @FXML
     void handleAddBookButtonPushed() {
@@ -66,31 +73,19 @@ public class AddBookController implements Initializable {
         }
 
         if(bookTitle.isEmpty() || bookAuthor.isEmpty() || bookYear.isEmpty() || bookPublisher.isEmpty() || bookID.isEmpty()){
-            Alert emptyAlert = new Alert(Alert.AlertType.ERROR);
-            emptyAlert.setHeaderText(null);
-            emptyAlert.setContentText("Please fill out all fields.");
-            emptyAlert.showAndWait();
+            alertError("Please fill out all fields.");
             return;
         }
         else if(!Character.isDigit(bookYear.charAt(0))){
-            Alert numberAlert = new Alert(Alert.AlertType.ERROR);
-            numberAlert.setHeaderText("Incorrect Year");
-            numberAlert.setContentText("Please enter a valid year.");
-            numberAlert.showAndWait();
+            alertError("Please enter a valid year.");
             return;
         }
         else if(Integer.parseInt(bookYear) > Calendar.getInstance().get(Calendar.YEAR)){
-            Alert numberAlert = new Alert(Alert.AlertType.ERROR);
-            numberAlert.setHeaderText("Incorrect Year");
-            numberAlert.setContentText("Please enter a valid year.");
-            numberAlert.showAndWait();
+            alertError("Please enter a valid year.");
             return;
         }
         else if((idChars[0] != 'B') || !correctID || bookID.length() > 5){
-            Alert numberAlert = new Alert(Alert.AlertType.ERROR);
-            numberAlert.setHeaderText("Incorrect ID");
-            numberAlert.setContentText("Please enter a correct Book ID form.\nIt must begin with 'B' and be numbered from 1-9999");
-            numberAlert.showAndWait();
+            alertError("Please enter a correct Book ID form.\nIt must begin with 'B' and be numbered from 1-9999");
             return;
         }
 
@@ -117,10 +112,7 @@ public class AddBookController implements Initializable {
             clear();
         }
         else{
-            Alert emptyAlert = new Alert(Alert.AlertType.ERROR);
-            emptyAlert.setHeaderText(null);
-            emptyAlert.setContentText("Failed to add the book to the database.");
-            emptyAlert.showAndWait();
+            alertError("Failed to add the book to the database.");
         }
 
     }
@@ -136,10 +128,7 @@ public class AddBookController implements Initializable {
             emptyAlert.showAndWait();
         }
         else{
-            Alert emptyAlert = new Alert(Alert.AlertType.ERROR);
-            emptyAlert.setHeaderText(null);
-            emptyAlert.setContentText("Failed to update the book details.");
-            emptyAlert.showAndWait();
+            alertError("Failed to update the book details.");
         }
 
     }

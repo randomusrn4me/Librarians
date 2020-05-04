@@ -58,6 +58,14 @@ public class AddUserController implements Initializable {
 
     private boolean isInEditMode = false;
 
+    private void alertError(String text){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText(text);
+        alert.showAndWait();
+    }
+
     @FXML
     void handleAddUserButtonPushed() {
         String nName = fullname.getText();
@@ -66,20 +74,14 @@ public class AddUserController implements Initializable {
         String nAddress = address.getText();
         String nPhone = phonenumber.getText();
         if(nName.isEmpty() || nUser.isEmpty() || nEmail.isEmpty() || nAddress.isEmpty() || nPhone.isEmpty()){
-            Alert emptyAlert = new Alert(Alert.AlertType.ERROR);
-            emptyAlert.setHeaderText(null);
-            emptyAlert.setContentText("Please fill out all fields.");
-            emptyAlert.showAndWait();
+            alertError("Please fill out all fields.");
             return;
         }
 
         Pattern pattern = Pattern.compile("[a-zA-Z0-9]*");
         Matcher matcher1 = pattern.matcher(nUser);
         if (nUser.length() < 3 || !matcher1.matches()){
-            Alert emptyAlert = new Alert(Alert.AlertType.ERROR);
-            emptyAlert.setHeaderText(null);
-            emptyAlert.setContentText("Please enter a correct username.");
-            emptyAlert.showAndWait();
+            alertError("Please enter a correct username.");
             return;
         }
 
@@ -90,18 +92,19 @@ public class AddUserController implements Initializable {
 
         Pattern emailPat = Pattern.compile(emailRegex);
         if (!emailPat.matcher(nEmail).matches()){
-            Alert emptyAlert = new Alert(Alert.AlertType.ERROR);
-            emptyAlert.setHeaderText(null);
-            emptyAlert.setContentText("Please enter a correct email address.");
-            emptyAlert.showAndWait();
+            alertError("Please enter a correct email address.");
             return;
         }
 
         if(!Character.isDigit(nPhone.charAt(1)) || nPhone.length() < 11){
-            Alert emptyAlert = new Alert(Alert.AlertType.ERROR);
-            emptyAlert.setHeaderText(null);
-            emptyAlert.setContentText("Please enter a correct phone number.");
-            emptyAlert.showAndWait();
+            alertError("Please enter a correct phone number.");
+            return;
+        }
+        Pattern p = Pattern.compile("([0-9])");
+        Matcher m = p.matcher(nAddress);
+
+        if(!m.find()){
+            alertError("Please enter a valid address containing a postal code, city, street name and number.");
             return;
         }
 
@@ -162,10 +165,7 @@ public class AddUserController implements Initializable {
             clear();
         }
         else{
-            Alert emptyAlert = new Alert(Alert.AlertType.ERROR);
-            emptyAlert.setHeaderText(null);
-            emptyAlert.setContentText("Failed to add user to the database.");
-            emptyAlert.showAndWait();
+            alertError("Failed to add user to the database.");
         }
     }
 
@@ -180,10 +180,7 @@ public class AddUserController implements Initializable {
             emptyAlert.showAndWait();
         }
         else{
-            Alert emptyAlert = new Alert(Alert.AlertType.ERROR);
-            emptyAlert.setHeaderText(null);
-            emptyAlert.setContentText("Failed to update the user details.");
-            emptyAlert.showAndWait();
+            alertError("Failed to update the user details.");
         }
     }
 

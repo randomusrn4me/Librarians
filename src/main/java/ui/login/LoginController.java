@@ -1,5 +1,6 @@
 package ui.login;
 
+import javafx.scene.image.Image;
 import utils.*;
 import java.io.IOException;
 import java.math.BigInteger;
@@ -162,6 +163,7 @@ public class LoginController implements Initializable {
             Stage stage = new Stage(StageStyle.DECORATED);
             stage.setTitle(title);
             stage.setScene(new Scene(parent));
+            stage.getIcons().add(new Image("icons/library.png"));
             stage.show();
 
         } catch (IOException e) {

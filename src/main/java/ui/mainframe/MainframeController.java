@@ -1,5 +1,7 @@
 package ui.mainframe;
 
+import javafx.scene.image.Image;
+import javafx.scene.layout.VBox;
 import utils.*;
 import database.DatabaseHandler;
 import javafx.event.EventHandler;
@@ -70,6 +72,9 @@ public class MainframeController implements Initializable {
 
     @FXML
     private Text userInfoBox;
+
+    @FXML
+    private VBox vbox;
 
     private DatabaseHandler databaseHandler;
 
@@ -281,6 +286,7 @@ public class MainframeController implements Initializable {
             Stage stage = new Stage(StageStyle.DECORATED);
             stage.setTitle(title);
             stage.setScene(new Scene(parent));
+            stage.getIcons().add(new Image("icons/library.png"));
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -293,6 +299,11 @@ public class MainframeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         databaseHandler = DatabaseHandler.getInstance();
+
+        vbox.setStyle("-fx-background-image: url('/fxml/books.jpg');" +
+                "-fx-background-repeat: no-repeat;" +
+                "-fx-background-size: 600 450;" +
+                "-fx-background-position: center center;");
 
         bookTitle.setText("Enter Book ID then press ENTER!");
         bookAuthor.setText("");

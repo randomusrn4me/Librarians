@@ -170,7 +170,7 @@ public class ListIssuedController implements Initializable {
 
     public void initByHand(){
         if(receivedUserClass.getIsUser()){
-            renewMenu.setVisible(false);
+            //renewMenu.setVisible(false);
             returnMenu.setVisible(false);
             System.out.println("it's a user");
         }

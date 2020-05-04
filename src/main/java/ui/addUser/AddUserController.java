@@ -1,5 +1,8 @@
 package ui.addUser;
 
+import javafx.scene.control.TextArea;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Region;
 import utils.*;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
@@ -138,12 +141,24 @@ public class AddUserController implements Initializable {
 
         if(handler.execAction(st)){
             Alert emptyAlert = new Alert(Alert.AlertType.INFORMATION);
+            emptyAlert.setTitle("User added");
             emptyAlert.setHeaderText("User added");
             emptyAlert.setContentText("Successfully added user " + "'" + nUser + "'" + " to the database.");
             emptyAlert.showAndWait();
-            emptyAlert.setHeaderText("User password");
-            emptyAlert.setContentText("The user's password is: \"" + pw + "\"\nPlease ask the user to make a note of it\nand change it as soon as possible!");
-            emptyAlert.showAndWait();
+
+            TextArea textArea = new TextArea("The user's password is: \"" + pw + "\"\nPlease ask the user to make a note of it\nand change it as soon as possible!");
+            textArea.setEditable(false);
+            textArea.setWrapText(true);
+            GridPane gridPane = new GridPane();
+            gridPane.setMaxWidth(Double.MAX_VALUE);
+            gridPane.add(textArea, 0, 0);
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("User password");
+            alert.setHeaderText("User password");
+            alert.getDialogPane().setPrefSize(280, 200);
+            alert.getDialogPane().setContent(gridPane);
+            alert.showAndWait();
             clear();
         }
         else{

@@ -1,9 +1,0 @@
-.issue-button{
-    -fx-background-color: #424242;
-    -fx-text-fill: black;
-}
-
-.issue-button:hover{
-    -fx-background-color: #0288D1;
-    -fx-text-fill: white;
-}

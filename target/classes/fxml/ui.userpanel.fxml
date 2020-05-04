@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.effect.Bloom?>
+<?import javafx.scene.effect.Glow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
 
 <StackPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="472.0" prefWidth="704.0" stylesheets="@ui.userpanel.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.userPanel.UserPanelController">
     <children>
@@ -49,6 +53,9 @@
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
+                     <font>
+                        <Font name="Constantia" size="12.0" />
+                     </font>
                   </Button>
                   <Button contentDisplay="TOP" layoutX="10.0" layoutY="101.0" mnemonicParsing="false" onAction="#loadSearchWindow" prefHeight="91.0" prefWidth="153.0" style="-fx-background-color: #171B2A; -fx-border-color: white; -fx-text-fill: white;" text="Search Books">
                      <graphic>
@@ -61,6 +68,9 @@
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
+                     <font>
+                        <Font name="Constantia" size="12.0" />
+                     </font>
                   </Button>
                         <Button contentDisplay="TOP" layoutX="10.0" layoutY="101.0" mnemonicParsing="false" onAction="#loadListBooksWindow" prefHeight="91.0" prefWidth="153.0" style="-fx-background-color: #171B2A; -fx-border-color: white; -fx-text-fill: white;" text="All Books">
                             <graphic>
@@ -73,6 +83,9 @@
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
+                     <font>
+                        <Font name="Constantia" size="12.0" />
+                     </font>
                         </Button>
                   <Button contentDisplay="TOP" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#editUserInfoPushed" prefHeight="91.0" prefWidth="153.0" style="-fx-background-color: #171B2A; -fx-border-color: white; -fx-text-fill: white;" text="Edit user Information">
                      <graphic>
@@ -85,6 +98,9 @@
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
+                     <font>
+                        <Font name="Constantia" size="12.0" />
+                     </font>
                   </Button>
                         <Button contentDisplay="TOP" layoutX="10.0" layoutY="192.0" mnemonicParsing="false" onAction="#logoutButtonPushed" prefHeight="91.0" prefWidth="153.0" style="-fx-background-color: #171B2A; -fx-border-color: white; -fx-text-fill: white;" text="Logout">
                             <graphic>
@@ -97,6 +113,9 @@
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
+                     <font>
+                        <Font name="Constantia" size="12.0" />
+                     </font>
                         </Button>
                     </children>
                 </VBox>
@@ -104,32 +123,62 @@
          <center>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="418.0" prefWidth="573.0" BorderPane.alignment="CENTER">
                <children>
-                  <VBox prefHeight="418.0" prefWidth="551.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <VBox fx:id="welcomeBox" prefHeight="418.0" prefWidth="551.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <HBox alignment="CENTER" prefHeight="159.0" prefWidth="551.0" style="-fx-background-color: white; -fx-background-radius: 10;">
+                        <Text fx:id="userInfoBox" strokeType="OUTSIDE" strokeWidth="0.0" text="Current user: General User /null/" textAlignment="CENTER" visible="false" />
+                        <TextFlow maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.71" style="-fx-background-color: #EDA49A;">
                            <children>
-                              <VBox alignment="CENTER" prefHeight="159.0" prefWidth="409.0" style="-fx-background-color: #EDA49A; -fx-background-radius: 25; -fx-border-color: #171B2A; -fx-border-radius: 25; -fx-border-image-width: 3;" />
+                              <Text fill="#0d0c0c" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome to your Personal Library Manager!">
+                                 <font>
+                                    <Font name="Constantia Bold" size="17.0" />
+                                 </font>
+                                 <effect>
+                                    <Bloom />
+                                 </effect>
+                              </Text>
                            </children>
                            <VBox.margin>
-                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                              <Insets left="110.0" top="40.0" />
                            </VBox.margin>
-                        </HBox>
-                        <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="159.0" prefWidth="551.0" style="-fx-background-color: white; -fx-background-radius: 10;">
+                        </TextFlow>
+                        <VBox alignment="CENTER">
                            <children>
-                              <VBox alignment="CENTER" prefHeight="159.0" prefWidth="409.0" style="-fx-background-color: #EDA49A; -fx-background-radius: 25; -fx-border-color: #171B2A; -fx-border-radius: 25;" />
+                              <TextFlow opacity="0.63" prefHeight="19.0" prefWidth="141.0" style="-fx-background-color: #EDA49A;" visible="false">
+                                 <VBox.margin>
+                                    <Insets right="400.0" />
+                                 </VBox.margin>
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Opening hours:         " wrappingWidth="92.298828125">
+                                       <font>
+                                          <Font name="Constantia Bold Italic" size="15.0" />
+                                       </font>
+                                       <effect>
+                                          <Glow level="1.0" />
+                                       </effect>
+                                    </Text>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="M-F: 8-17, Sat: 9-15" textAlignment="CENTER" wrappingWidth="88.978515625">
+                                       <font>
+                                          <Font name="Constantia Bold Italic" size="15.0" />
+                                       </font>
+                                       <effect>
+                                          <Glow level="1.0" />
+                                       </effect>
+                                    </Text>
+                                 </children>
+                              </TextFlow>
+                              <JFXButton onAction="#loadUserGuide" style="-fx-background-color: #171B2A; -fx-border-color: white;" text="Click here to open the User Guide!" textFill="WHITE">
+                                 <font>
+                                    <Font name="Constantia" size="14.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </JFXButton>
                            </children>
                            <VBox.margin>
-                              <Insets left="20.0" right="20.0" />
+                              <Insets left="10.0" top="300.0" />
                            </VBox.margin>
-                        </HBox>
-                        <HBox alignment="CENTER" prefHeight="68.0" prefWidth="550.0">
-                           <children>
-                              <Text fx:id="userInfoBox" strokeType="OUTSIDE" strokeWidth="0.0" text="Current user: General User /null/" textAlignment="CENTER" />
-                           </children>
-                           <VBox.margin>
-                              <Insets top="20.0" />
-                           </VBox.margin>
-                        </HBox>
+                        </VBox>
                      </children>
                   </VBox>
                </children>

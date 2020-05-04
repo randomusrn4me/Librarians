@@ -1,5 +1,6 @@
 package ui.listUsers;
 
+import javafx.scene.image.Image;
 import utils.*;
 import database.DatabaseHandler;
 import javafx.beans.property.ReadOnlyStringWrapper;
@@ -165,6 +166,7 @@ public class ListUsersController implements Initializable {
         Stage stage = new Stage(StageStyle.DECORATED);
         stage.setTitle("Change password");
         stage.setScene(new Scene(parent));
+        stage.getIcons().add(new Image("icons/library.png"));
         stage.show();
 
         controller.initByHand();
@@ -186,6 +188,7 @@ public class ListUsersController implements Initializable {
             Stage stage = new Stage(StageStyle.DECORATED);
             stage.setTitle("Edit User Details");
             stage.setScene(new Scene(parent));
+            stage.getIcons().add(new Image("icons/library.png"));
             stage.showAndWait();
 
             String qu = "SELECT * FROM USER WHERE username = '" + selectedForEdit.getUsername() + "'";

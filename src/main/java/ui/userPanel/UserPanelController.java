@@ -1,5 +1,7 @@
 package ui.userPanel;
 
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 import utils.*;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -10,7 +12,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Menu;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -19,6 +20,8 @@ import ui.listBooks.ListBooksController;
 import ui.listIssued.ListIssuedController;
 import ui.listUsers.ListUsersController;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -46,6 +49,9 @@ public class UserPanelController implements Initializable {
     private Text userInfoBox;
 
     @FXML
+    private VBox welcomeBox;
+
+    @FXML
     private StackPane rootPane;
 
 
@@ -63,6 +69,11 @@ public class UserPanelController implements Initializable {
     void loadIssueList() {
         windowLoader("/fxml/ui.list_issued.fxml", "My Issued Books");
         System.out.println(receivedUserClass.getUsername() + "opened Issue List!");
+    }
+
+    @FXML
+    void loadUserGuide() {
+        windowLoader("/fxml/ui.userguide.fxml", "User Guide");
     }
 
     void windowLoader(String location, String title){
@@ -83,6 +94,7 @@ public class UserPanelController implements Initializable {
             Stage stage = new Stage(StageStyle.DECORATED);
             stage.setTitle(title);
             stage.setScene(new Scene(parent));
+            stage.getIcons().add(new Image("icons/library.png"));
             stage.show();
 
         } catch (IOException e) {
@@ -92,6 +104,11 @@ public class UserPanelController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        welcomeBox.setStyle("-fx-background-image: url('/fxml/books.jpg');" +
+                "-fx-background-repeat: no-repeat;" +
+                "-fx-background-size: 600 450;" +
+                "-fx-background-position: center center;");
+
         rootPane.setFocusTraversable(true);
         rootPane.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
@@ -121,10 +138,10 @@ public class UserPanelController implements Initializable {
             EditUserPasswordController controller = loader.getController();
             controller.setReceivedUser(receivedUserClass, receivedUserClass);
 
-
             Stage stage = new Stage(StageStyle.DECORATED);
             stage.setTitle("Change password");
             stage.setScene(new Scene(parent));
+            stage.getIcons().add(new Image("icons/library.png"));
             stage.show();
 
             controller.initByHand();

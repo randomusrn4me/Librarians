@@ -108,7 +108,7 @@
          <left>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="418.0" prefWidth="573.0" BorderPane.alignment="CENTER">
                <children>
-                  <VBox layoutX="14.0" prefHeight="418.0" prefWidth="559.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <VBox fx:id="vbox" layoutX="14.0" prefHeight="418.0" prefWidth="559.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <HBox alignment="CENTER" prefHeight="159.0" prefWidth="551.0" style="-fx-border-radius: 30; -fx-border-color: #171B2A; -fx-border-width: 2; -fx-background-color: #171B2A; -fx-background-radius: 25;">
                            <children>

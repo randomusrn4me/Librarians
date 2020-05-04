@@ -67,7 +67,7 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.3</version>
                 <configuration>
-                    <mainClass>ui.addbook.AddBookMain</mainClass>
+                    <mainClass>ui.addBook.AddBookMain</mainClass>
                 </configuration>
             </plugin>
             <plugin>
@@ -82,7 +82,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <mainClass>ui.addbook.AddBookMain</mainClass>
+                    <mainClass>ui.addBook.AddBookMain</mainClass>
                 </configuration>
             </plugin>
         </plugins>

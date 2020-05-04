@@ -1,6 +1,7 @@
 package database;
 
 import javafx.scene.control.Alert;
+import utils.*;
 
 import java.sql.*;
 
@@ -68,7 +69,7 @@ public final class DatabaseHandler {
             DatabaseMetaData dbm = conn.getMetaData();
             ResultSet tables = dbm.getTables(null, null, TABLE_NAME.toUpperCase(), null);
             if(tables.next()){
-                System.out.println("Table " + TABLE_NAME + "already exists. Ready to go!");
+                System.out.println("Table " + TABLE_NAME + " already exists.");
             } else{
                 stmt.execute("CREATE TABLE " + TABLE_NAME + "("
                         + "     id varchar(200) primary key,\n"
@@ -92,7 +93,7 @@ public final class DatabaseHandler {
             DatabaseMetaData dbm = conn.getMetaData();
             ResultSet tables = dbm.getTables(null, null, TABLE_NAME.toUpperCase(), null);
             if(tables.next()){
-                System.out.println("Table " + TABLE_NAME + "already exists. Ready to go!");
+                System.out.println("Table " + TABLE_NAME + " already exists.");
             } else{
                 stmt.execute("CREATE TABLE " + TABLE_NAME + "("
                         + "     username varchar(200) primary key,\n"
@@ -118,7 +119,7 @@ public final class DatabaseHandler {
             DatabaseMetaData dbm = conn.getMetaData();
             ResultSet tables = dbm.getTables(null, null, TABLE_NAME.toUpperCase(), null);
             if(tables.next()){
-                System.out.println("Table " + TABLE_NAME + "already exists. Ready to go!");
+                System.out.println("Table " + TABLE_NAME + " already exists.");
             } else{
                 stmt.execute("CREATE TABLE " + TABLE_NAME + "("
                         + "     bookID varchar(200) primary key,\n"
@@ -142,6 +143,7 @@ public final class DatabaseHandler {
 
     }
 
+    /*
     public void removeUser(String username){
         String act = "DELETE FROM USER WHERE username = '" + username + "'";
 
@@ -160,5 +162,7 @@ public final class DatabaseHandler {
             alert.showAndWait();
         }
     }
+
+     */
 
 }

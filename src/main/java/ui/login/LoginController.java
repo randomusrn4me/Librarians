@@ -1,5 +1,6 @@
 package ui.login;
 
+import utils.*;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.net.URL;
@@ -21,15 +22,18 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import org.apache.commons.lang3.RandomStringUtils;
 import ui.mainframe.MainframeController;
-import ui.userpanel.UserpanelController;
+import ui.userPanel.UserPanelController;
 
 public class LoginController implements Initializable {
+
+    @FXML
+    private AnchorPane rootPane;
 
     @FXML
     private TextField usernameBox;
@@ -42,6 +46,8 @@ public class LoginController implements Initializable {
 
     @FXML
     private Text statusText;
+
+    private User userToBeSent;
 
     @FXML
     void loginButtonPushed() {
@@ -71,9 +77,14 @@ public class LoginController implements Initializable {
             while (true) {
                 try {
                     if (!rs.next()) break;
+                    String fullname = rs.getString("fullname");
+                    String email = rs.getString("email");
+                    String address = rs.getString("address");
+                    String phone = rs.getString("phone");
                     isUser = rs.getBoolean("isUser");
                     firstLog = rs.getBoolean("firstLog");
                     pw = rs.getString("pass");
+                    userToBeSent = new User(username, fullname, email, address, phone, isUser, firstLog);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -99,6 +110,10 @@ public class LoginController implements Initializable {
             System.out.println("An admin (\"" + username +"\") has logged in!");
             closeStage();
             windowLoader("/fxml/ui.mainframe.fxml", "General Library Manager", username, false);
+            if(firstLog) {
+                String act = "UPDATE USER SET firstLog = false WHERE username = '" + username + "'";
+                databaseHandler.execAction(act);
+            }
         }
         else{
             statusText.setText("Incorrect password.");
@@ -136,12 +151,12 @@ public class LoginController implements Initializable {
             Parent parent = loader.load();
 
             if(isUser){
-                UserpanelController controller = loader.getController();
-                controller.setReceivedUser(username);
+                UserPanelController controller = loader.getController();
+                controller.setReceivedUser(userToBeSent);
             }
             else{
                 MainframeController controller = loader.getController();
-                controller.setReceivedUser(username);
+                controller.setReceivedUser(username, userToBeSent);
             }
 
             Stage stage = new Stage(StageStyle.DECORATED);
@@ -171,6 +186,16 @@ public class LoginController implements Initializable {
             public void handle(KeyEvent keyEvent) {
                 if (keyEvent.getCode() == KeyCode.ENTER)  {
                     loginButtonPushed();
+                }
+            }
+        });
+
+        rootPane.setFocusTraversable(true);
+        rootPane.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                if (keyEvent.getCode() == KeyCode.ESCAPE)  {
+                    ((Stage) rootPane.getScene().getWindow()).close();
                 }
             }
         });

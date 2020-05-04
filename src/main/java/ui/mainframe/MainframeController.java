@@ -1,26 +1,29 @@
 package ui.mainframe;
 
-
-import com.jfoenix.controls.JFXTextField;
+import utils.*;
 import database.DatabaseHandler;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import ui.listBooks.ListBooksController;
+import ui.listIssued.ListIssuedController;
+import ui.listUsers.ListUsersController;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -28,9 +31,21 @@ public class MainframeController implements Initializable {
 
     public String receivedUser;
 
-    public void setReceivedUser(String receivedUser) {
+    private User receivedUserClass;
+
+    private User queriedUser;
+
+    public void setReceivedUser(String receivedUser, User receivedUserClass) {
         this.receivedUser = receivedUser;
+        this.receivedUserClass = receivedUserClass;
+        loggedInUser.setText("Admin: " + receivedUserClass.getUsername());
     }
+
+    @FXML
+    private StackPane rootPane;
+
+    @FXML
+    private Text toolTip;
 
     @FXML
     private TextField bookIDInput;
@@ -54,13 +69,13 @@ public class MainframeController implements Initializable {
     private Text emailOfUser;
 
     @FXML
-    private JFXTextField bookIDToReturn;
+    private Text userInfoBox;
+
+    private DatabaseHandler databaseHandler;
+
 
     @FXML
-    private ListView<String> issueDataList;
-
-
-    DatabaseHandler databaseHandler;
+    private Menu loggedInUser;
 
     @FXML
     void loadBookInfo() {
@@ -105,9 +120,14 @@ public class MainframeController implements Initializable {
                 if (!rs.next()) break;
                 String uName = rs.getString("fullname");
                 String uEmail = rs.getString("email");
+                String fullname = rs.getString("fullname");
+                String address = rs.getString("address");
+                String phone = rs.getString("phone");
+                Boolean isUser = rs.getBoolean("isUser");
+                Boolean firstLog = rs.getBoolean("firstLog");
                 nameOfUser.setText("Name: " + uName);
                 emailOfUser.setText("E-mail: " + uEmail);
-
+                queriedUser = new User(uName.toLowerCase(),fullname, uEmail, address, phone, isUser, firstLog);
                 flag = true;
 
             } catch (SQLException e) {
@@ -125,21 +145,19 @@ public class MainframeController implements Initializable {
     void loadIssueBook() {
         String username = usernameInput.getText();
         String bookID = bookIDInput.getText();
+        toolTip.setText("");
+        toolTip.setStyle("-fx-font-weight:bold");
 
         if(username.isEmpty() || bookID.isEmpty()){
-            Alert empty = new Alert(Alert.AlertType.ERROR);
-            empty.setTitle("Input error");
-            empty.setHeaderText(null);
-            empty.setContentText("Please enter a Book ID and Username to issue a book.");
-            empty.showAndWait();
+            toolTip.setFill(Color.RED);
+            toolTip.setText("Please enter a Book ID and Username to issue a book.");
             return;
         }
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirm Book Issue");
         alert.setHeaderText(null);
-        alert.setContentText("Are you sure you want to issue that book to " + usernameInput.getText() + "?");
-        //alert.showAndWait();
+        alert.setContentText("Are you sure you want to issue that book to \"" + usernameInput.getText() + "\"?");
 
         Optional<ButtonType> response = alert.showAndWait();
         if(response.get() == ButtonType.OK){
@@ -170,54 +188,8 @@ public class MainframeController implements Initializable {
     }
 
     @FXML
-    void loadBookInfoForReturn() {
-        ObservableList<String> list = FXCollections.observableArrayList();
-
-        String bookID = bookIDToReturn.getText();
-        String qu = "SELECT * FROM ISSUE WHERE bookID = '" + bookID + "'";
-        ResultSet rs = databaseHandler.execQuery(qu);
-        while(true){
-            try {
-                assert rs != null;
-                if (!rs.next()) break;
-                String tUsername = rs.getString("username");
-                //Timestamp tIssueTime = rs.getTimestamp("issueDate");
-                int tRenewCount = rs.getInt("renewCount");
-
-                //list.add("Issue Date and Time: " + tIssueTime.toString());
-                list.add("Renew Count: " + tRenewCount);
-                list.add("Book Information:- ");
-
-                qu = "SELECT * FROM BOOK WHERE id = '" + bookID + "'";
-                ResultSet rsBook = databaseHandler.execQuery(qu);
-                assert rsBook != null;
-                while(rsBook.next()){
-                    list.add("\tTitle: " + rsBook.getString("title"));
-                    list.add("\tAuthor: " + rsBook.getString("author"));
-                    list.add("\tPublisher: " + rsBook.getString("publisher"));
-                    list.add("\tYear: " + rsBook.getString("year"));
-                    list.add("\tID: " + rsBook.getString("id"));
-                }
-
-                list.add("User Information:- ");
-                qu = "SELECT * FROM USER WHERE username = '" + tUsername + "'";
-                ResultSet rsUser = databaseHandler.execQuery(qu);
-                assert rsUser != null;
-                while(rsUser.next()){
-                    list.add("\tUsername: " + rsUser.getString("username"));
-                    list.add("\tName: " + rsUser.getString("fullname"));
-                    list.add("\tEmail address: " + rsUser.getString("email"));
-                    list.add("\tPhone number: " + rsUser.getString("phone"));
-                }
-
-
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-
-            issueDataList.getItems().setAll(list);
-
-        }
+    void handleAboutPushed() {
+        windowLoader("/fxml/about.fxml", "About");
     }
 
     @FXML
@@ -246,27 +218,97 @@ public class MainframeController implements Initializable {
     }
 
     @FXML
-    public void logoutButtonPushed(ActionEvent event) {
-        ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
+    void loadUserIssueList() throws SQLException {
+        loadUserInfo();
+        String username = usernameInput.getText();
+        toolTip.setText("");
+        toolTip.setStyle("-fx-font-weight:bold");
+
+        if(username.isEmpty()){
+            toolTip.setFill(Color.RED);
+            toolTip.setText("Please enter a Username to Renew/Return a book.");
+            return;
+        }
+        String qu = "SELECT * FROM USER WHERE username = '" + username + "'";
+        ResultSet rs = databaseHandler.execQuery(qu);
+        assert rs != null;
+        if(!rs.next()){
+            toolTip.setFill(Color.RED);
+            toolTip.setText("Please enter a valid Username.");
+            return;
+        }
+
+        windowLoader("/fxml/ui.list_issued.fxml", "Books issued to: " + username);
+    }
+
+    @FXML
+    public void logoutButtonPushed(/*ActionEvent event*/) {
+        //((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
+        ((Stage) rootPane.getScene().getWindow()).close();
         windowLoader("/fxml/ui.login.fxml", "Login");
     }
 
     void windowLoader(String location, String title){
         try {
-            Parent parent = FXMLLoader.load(getClass().getResource(location));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(location));
+            Parent parent = loader.load();
+
+            if(location.contains("list_issued")){
+                ListIssuedController controller = loader.getController();
+                controller.setReceivedUser(queriedUser);
+                System.out.println(queriedUser.getUsername());
+            }
+
+            if(location.contains("list_books")){
+                System.out.println("contains");
+                ListBooksController controller = loader.getController();
+                controller.setReceivedUser(receivedUserClass);
+            }
+
+            if(location.contains("list_users")){
+                if(receivedUserClass == null){
+                    Alert emptyAlert = new Alert(Alert.AlertType.ERROR);
+                    emptyAlert.setHeaderText("Current admin is /null/");
+                    emptyAlert.setContentText("You must log in to view and edit the users!");
+                    emptyAlert.showAndWait();
+                    return;
+                }
+                System.out.println("contains users");
+                ListUsersController controller = loader.getController();
+                controller.setReceivedUser(receivedUserClass);
+            }
+
             Stage stage = new Stage(StageStyle.DECORATED);
             stage.setTitle(title);
             stage.setScene(new Scene(parent));
             stage.show();
-
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
 
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         databaseHandler = DatabaseHandler.getInstance();
+
+        bookTitle.setText("Enter Book ID then press ENTER!");
+        bookAuthor.setText("");
+        bookStatus.setText("");
+
+        nameOfUser.setText("Enter Username then press ENTER!");
+        emailOfUser.setText("");
+
+        rootPane.setFocusTraversable(true);
+        rootPane.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                if (keyEvent.getCode() == KeyCode.ESCAPE)  {
+                    logoutButtonPushed();
+                }
+            }
+        });
     }
 }

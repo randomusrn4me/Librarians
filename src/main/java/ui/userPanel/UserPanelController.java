@@ -29,8 +29,7 @@ import java.util.ResourceBundle;
 public class UserPanelController implements Initializable {
 
     @FXML
-    public void logoutButtonPushed(/*ActionEvent event*/) {
-        //((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
+    public void logoutButtonPushed() {
         ((Stage) rootPane.getScene().getWindow()).close();
         windowLoader("/fxml/ui.login.fxml", "Login");
     }
@@ -44,9 +43,6 @@ public class UserPanelController implements Initializable {
 
     @FXML
     private Menu loggedInUser;
-
-    @FXML
-    private Text userInfoBox;
 
     @FXML
     private VBox welcomeBox;
@@ -139,7 +135,7 @@ public class UserPanelController implements Initializable {
             controller.setReceivedUser(receivedUserClass, receivedUserClass);
 
             Stage stage = new Stage(StageStyle.DECORATED);
-            stage.setTitle("Change password");
+            stage.setTitle("Editing User Information");
             stage.setScene(new Scene(parent));
             stage.getIcons().add(new Image("icons/library.png"));
             stage.show();

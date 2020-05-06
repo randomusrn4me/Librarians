@@ -26,11 +26,6 @@
                 <MenuBar style="-fx-background-color: #171B2A;" BorderPane.alignment="CENTER">
                     <menus>
                         <Menu fx:id="loggedInUser" mnemonicParsing="false" style="-fx-font-weight: bold; -fx-font-size: 12;" text="User: /null/" />
-                        <Menu mnemonicParsing="false" text="Preferences">
-                            <items>
-                                <MenuItem mnemonicParsing="false" onAction="#userDetailsButtonPushed" text="Change password" />
-                            </items>
-                        </Menu>
                         <Menu mnemonicParsing="false" text="Help">
                             <items>
                                 <MenuItem mnemonicParsing="false" onAction="#handleAboutPushed" text="About" />

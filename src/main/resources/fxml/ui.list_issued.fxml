@@ -10,12 +10,12 @@
     <children>
         <TableView fx:id="tableView" layoutX="7.0" layoutY="30.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <columns>
-                <TableColumn fx:id="titleCol" prefWidth="75.0" text="Title" />
-                <TableColumn fx:id="authorCol" prefWidth="75.0" text="Author" />
-                <TableColumn fx:id="idCol" prefWidth="75.0" text="Book ID" />
-                <TableColumn fx:id="dateCol" prefWidth="75.0" text="Date of Issue" />
-                <TableColumn fx:id="dueDateCol" prefWidth="75.0" text="Date Due" />
-                <TableColumn fx:id="renewCol" prefWidth="75.0" text="Times Renewed" />
+                <TableColumn fx:id="titleCol" prefWidth="75.0" style="-fx-alignment: center;" text="Title" />
+                <TableColumn fx:id="authorCol" prefWidth="75.0" style="-fx-alignment: center;" text="Author" />
+                <TableColumn fx:id="idCol" prefWidth="75.0" style="-fx-alignment: center;" text="Book ID" />
+                <TableColumn fx:id="dateCol" prefWidth="75.0" style="-fx-alignment: center;" text="Date of Issue" />
+                <TableColumn fx:id="dueDateCol" prefWidth="75.0" style="-fx-alignment: center;" text="Date Due" />
+                <TableColumn fx:id="renewCol" prefWidth="75.0" style="-fx-alignment: center;" text="Times Renewed" />
             </columns>
             <columnResizePolicy>
                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -23,8 +23,8 @@
             <contextMenu>
                 <ContextMenu>
                     <items>
-                        <MenuItem fx:id="renewMenu" onAction="#loadRenewBook" mnemonicParsing="false" text="Renew" />
-                        <MenuItem fx:id="returnMenu" onAction="#loadReturnBook" mnemonicParsing="false" text="Return" />
+                        <MenuItem fx:id="renewMenu" mnemonicParsing="false" onAction="#loadRenewBook" text="Renew" />
+                        <MenuItem fx:id="returnMenu" mnemonicParsing="false" onAction="#loadReturnBook" text="Return" />
                     </items>
                 </ContextMenu>
             </contextMenu>

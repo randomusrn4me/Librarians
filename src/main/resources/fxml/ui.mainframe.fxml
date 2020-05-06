@@ -176,7 +176,7 @@
                               </TextField>
                               <VBox alignment="CENTER" prefHeight="130.0" prefWidth="331.0" style="-fx-background-radius: 25; -fx-background-color: #EDA49A;">
                                  <children>
-                                    <Text fx:id="nameOfUser" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #171B2A;" text="Name of User" textAlignment="CENTER" wrappingWidth="385.88671875">
+                                    <Text fx:id="nameOfUser" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #171B2A;" text="Full name of User" textAlignment="CENTER" wrappingWidth="385.88671875">
                                        <VBox.margin>
                                           <Insets />
                                        </VBox.margin>
@@ -184,13 +184,21 @@
                                           <Font size="14.0" />
                                        </font>
                                     </Text>
-                                    <Text fx:id="emailOfUser" fill="WHITE" layoutX="10.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #171B2A;" text="Contact Information" textAlignment="CENTER" wrappingWidth="385.88671875">
+                                    <Text fx:id="usernameOfUser" fill="WHITE" layoutX="10.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #171B2A;" text="Username" textAlignment="CENTER" wrappingWidth="385.88671875">
                                        <VBox.margin>
                                           <Insets top="10.0" />
                                        </VBox.margin>
                                        <font>
                                           <Font size="14.0" />
                                        </font>
+                                    </Text>
+                                    <Text fx:id="emailOfUser" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #171B2A;" text="Contact Information" textAlignment="CENTER" wrappingWidth="385.88671875">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
                                     </Text>
                                  </children>
                               </VBox>
@@ -223,7 +231,6 @@
                                     <Insets left="40.0" right="40.0" />
                                  </HBox.margin>
                               </JFXButton>
-                              <Text fx:id="userInfoBox" strokeType="OUTSIDE" strokeWidth="0.0" text="Current admin: /null/" />
                            </children>
                         </HBox>
                      </children>
@@ -237,7 +244,7 @@
                 <Menu fx:id="loggedInUser" mnemonicParsing="false" style="-fx-font-weight: bold; -fx-font-size: 12;" text="Admin: /null/" />
                 <Menu mnemonicParsing="false" text="Preferences">
                   <items>
-                    <MenuItem mnemonicParsing="false" text="Delete" />
+                    <MenuItem mnemonicParsing="false" onAction="#bulkRenewPressed" text="Bulk renew" />
                   </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Help">

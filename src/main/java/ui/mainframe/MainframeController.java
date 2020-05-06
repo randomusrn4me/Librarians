@@ -47,6 +47,9 @@ public class MainframeController implements Initializable {
     private StackPane rootPane;
 
     @FXML
+    private Text usernameOfUser;
+
+    @FXML
     private Text toolTip;
 
     @FXML
@@ -71,20 +74,23 @@ public class MainframeController implements Initializable {
     private Text emailOfUser;
 
     @FXML
-    private Text userInfoBox;
-
-    @FXML
     private VBox vbox;
 
     private DatabaseHandler databaseHandler;
 
-
     @FXML
     private Menu loggedInUser;
+
+
+    @FXML
+    void bulkRenewPressed() {
+        System.out.println("bulkrenew");
+    }
 
     @FXML
     void loadBookInfo() {
         String id = bookIDInput.getText();
+        //String id = bookIDInput.getText().toLowerCase();
         String qu = "SELECT * FROM BOOK WHERE id = '" + id + "'";
         ResultSet rs = databaseHandler.execQuery(qu);
         boolean flag = false;
@@ -115,6 +121,7 @@ public class MainframeController implements Initializable {
 
     @FXML
     void loadUserInfo() {
+        //String username = usernameInput.getText().toLowerCase();
         String username = usernameInput.getText();
         String qu = "SELECT * FROM USER WHERE username = '" + username + "'";
         ResultSet rs = databaseHandler.execQuery(qu);
@@ -130,8 +137,9 @@ public class MainframeController implements Initializable {
                 String phone = rs.getString("phone");
                 Boolean isUser = rs.getBoolean("isUser");
                 Boolean firstLog = rs.getBoolean("firstLog");
-                nameOfUser.setText("Name: " + uName);
+                nameOfUser.setText("Name: " + fullname);
                 emailOfUser.setText("E-mail: " + uEmail);
+                usernameOfUser.setText("Username: "+ uName);
                 queriedUser = new User(uName.toLowerCase(),fullname, uEmail, address, phone, isUser, firstLog);
                 flag = true;
 
@@ -305,12 +313,13 @@ public class MainframeController implements Initializable {
                 "-fx-background-size: 600 450;" +
                 "-fx-background-position: center center;");
 
-        bookTitle.setText("Enter Book ID then press ENTER!");
-        bookAuthor.setText("");
+        bookTitle.setText("");
+        bookAuthor.setText("Enter Book ID then press ENTER!");
         bookStatus.setText("");
 
-        nameOfUser.setText("Enter Username then press ENTER!");
+        nameOfUser.setText("");
         emailOfUser.setText("");
+        usernameOfUser.setText("Enter Username then press ENTER!");
 
         rootPane.setFocusTraversable(true);
         rootPane.setOnKeyPressed(new EventHandler<KeyEvent>() {

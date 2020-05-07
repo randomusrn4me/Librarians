@@ -1,5 +1,6 @@
 package ui.mainframe;
 
+import com.jfoenix.controls.JFXButton;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import utils.*;
@@ -36,6 +37,8 @@ public class MainframeController implements Initializable {
     private User receivedUserClass;
 
     private User queriedUser;
+
+    private boolean validBook = false, validUser = false;
 
     public void setReceivedUser(String receivedUser, User receivedUserClass) {
         this.receivedUser = receivedUser;
@@ -81,6 +84,12 @@ public class MainframeController implements Initializable {
     @FXML
     private Menu loggedInUser;
 
+    @FXML
+    private JFXButton issueButton;
+
+    @FXML
+    private JFXButton renewButton;
+
 
     @FXML
     void bulkRenewPressed() {
@@ -89,7 +98,13 @@ public class MainframeController implements Initializable {
 
     @FXML
     void loadBookInfo() {
-        String id = bookIDInput.getText();
+        String id = bookIDInput.getText().toUpperCase();
+        if(id.isEmpty()){
+            entID();
+            validBook = false;
+            validityCheck();
+            return;
+        }
         //String id = bookIDInput.getText().toLowerCase();
         String qu = "SELECT * FROM BOOK WHERE id = '" + id + "'";
         ResultSet rs = databaseHandler.execQuery(qu);
@@ -105,24 +120,34 @@ public class MainframeController implements Initializable {
                 bookAuthor.setText("Author: " + bAuthor);
                 String printStatus = "Status: " + (bStatus ? "Available" : "Unavailable");
                 bookStatus.setText(printStatus);
+                bookStatus.setStyle("-fx-font-weight:bold");
+                if(bStatus) bookStatus.setFill(Color.GREEN);
+                if(!bStatus) bookStatus.setFill(Color.RED);
                 flag = true;
-
+                validBook = true;
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
         if(!flag){
-            bookTitle.setText("The requested Book ID is not registered.");
-            bookAuthor.setText("");
+            validBook = false;
+            bookTitle.setText("");
+            bookAuthor.setText("The requested Book ID is not registered!");
             bookStatus.setText("");
         }
-
+        validityCheck();
     }
 
     @FXML
     void loadUserInfo() {
-        //String username = usernameInput.getText().toLowerCase();
-        String username = usernameInput.getText();
+        String username = usernameInput.getText().toLowerCase();
+        //String username = usernameInput.getText();
+        if(username.isEmpty()){
+            entName();
+            validUser = false;
+            validityCheck();
+            return;
+        }
         String qu = "SELECT * FROM USER WHERE username = '" + username + "'";
         ResultSet rs = databaseHandler.execQuery(qu);
         boolean flag = false;
@@ -130,7 +155,7 @@ public class MainframeController implements Initializable {
             try {
                 assert rs != null;
                 if (!rs.next()) break;
-                String uName = rs.getString("fullname");
+                String uName = rs.getString("username");
                 String uEmail = rs.getString("email");
                 String fullname = rs.getString("fullname");
                 String address = rs.getString("address");
@@ -142,28 +167,48 @@ public class MainframeController implements Initializable {
                 usernameOfUser.setText("Username: "+ uName);
                 queriedUser = new User(uName.toLowerCase(),fullname, uEmail, address, phone, isUser, firstLog);
                 flag = true;
-
+                validUser = true;
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
         if(!flag){
-            nameOfUser.setText("The requested Username is not registered.");
+            validUser = false;
+            nameOfUser.setText("");
+            usernameOfUser.setText("The requested Username is not registered!");
             emailOfUser.setText("");
         }
+        validityCheck();
 
     }
 
     @FXML
     void loadIssueBook() {
-        String username = usernameInput.getText();
-        String bookID = bookIDInput.getText();
+        //String username = usernameInput.getText();
+        loadBookInfo();
+        if(!validBook){
+            return;
+        }
+        String username = usernameInput.getText().toLowerCase();
+        String bookID = bookIDInput.getText().toUpperCase();
         toolTip.setText("");
         toolTip.setStyle("-fx-font-weight:bold");
+
+        //String qu = "SELECT * FROM USER WHERE username = '" + username + "'";
 
         if(username.isEmpty() || bookID.isEmpty()){
             toolTip.setFill(Color.RED);
             toolTip.setText("Please enter a Book ID and Username to issue a book.");
+            if(username.isEmpty()){
+                entName();
+                validUser = false;
+                validityCheck();
+            }
+            if(bookID.isEmpty()){
+                entID();
+                validBook = false;
+                validityCheck();
+            }
             return;
         }
 
@@ -195,6 +240,8 @@ public class MainframeController implements Initializable {
                     alert3.setHeaderText(null);
                     alert3.setContentText("Could not issue book.");
                     alert3.showAndWait();
+                    validBook = false;
+                    validityCheck();
             }
         }
 
@@ -233,13 +280,18 @@ public class MainframeController implements Initializable {
     @FXML
     void loadUserIssueList() throws SQLException {
         loadUserInfo();
-        String username = usernameInput.getText();
+        String username = usernameInput.getText().toLowerCase();
+        //String username = usernameInput.getText();
         toolTip.setText("");
         toolTip.setStyle("-fx-font-weight:bold");
 
         if(username.isEmpty()){
             toolTip.setFill(Color.RED);
             toolTip.setText("Please enter a Username to Renew/Return a book.");
+            entName();
+            validUser = false;
+            validityCheck();
+            //nameOfUser.setText("");
             return;
         }
         String qu = "SELECT * FROM USER WHERE username = '" + username + "'";
@@ -255,8 +307,7 @@ public class MainframeController implements Initializable {
     }
 
     @FXML
-    public void logoutButtonPushed(/*ActionEvent event*/) {
-        //((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
+    public void logoutButtonPushed() {
         ((Stage) rootPane.getScene().getWindow()).close();
         windowLoader("/fxml/ui.login.fxml", "Login");
     }
@@ -301,7 +352,26 @@ public class MainframeController implements Initializable {
         }
     }
 
+    private void entName(){
+        nameOfUser.setText("");
+        usernameOfUser.setText("Enter Username then press ENTER!");
+        emailOfUser.setText("");
+    }
 
+    private void entID(){
+        bookTitle.setText("");
+        bookAuthor.setText("Enter Book ID then press ENTER!");
+        bookStatus.setText("");
+    }
+
+    private void validityCheck(){
+        if(validBook && validUser) issueButton.setDisable(false);
+        else issueButton.setDisable(true);
+
+        if(validUser) renewButton.setDisable(false);
+        else renewButton.setDisable(true);
+
+    }
 
 
     @Override
@@ -313,13 +383,9 @@ public class MainframeController implements Initializable {
                 "-fx-background-size: 600 450;" +
                 "-fx-background-position: center center;");
 
-        bookTitle.setText("");
-        bookAuthor.setText("Enter Book ID then press ENTER!");
-        bookStatus.setText("");
-
-        nameOfUser.setText("");
-        emailOfUser.setText("");
-        usernameOfUser.setText("Enter Username then press ENTER!");
+        entID();
+        entName();
+        validityCheck();
 
         rootPane.setFocusTraversable(true);
         rootPane.setOnKeyPressed(new EventHandler<KeyEvent>() {

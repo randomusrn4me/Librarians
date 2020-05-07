@@ -209,7 +209,7 @@
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                            <children>
-                              <JFXButton onAction="#loadIssueBook" prefHeight="33.0" prefWidth="69.0" style="-fx-background-color: #171B2A; -fx-background-radius: 100; -fx-text-fill: white;" styleClass="issue-button" text="Issue" textAlignment="CENTER">
+                              <JFXButton fx:id="issueButton" onAction="#loadIssueBook" prefHeight="33.0" prefWidth="69.0" style="-fx-background-color: #171B2A; -fx-background-radius: 100; -fx-text-fill: white;" styleClass="issue-button" text="Issue" textAlignment="CENTER">
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
@@ -220,7 +220,7 @@
                                     <Insets left="40.0" right="40.0" />
                                  </HBox.margin>
                               </JFXButton>
-                              <JFXButton layoutX="255.0" layoutY="35.0" onAction="#loadUserIssueList" prefHeight="33.0" prefWidth="120.0" style="-fx-background-color: #171B2A; -fx-background-radius: 100; -fx-text-fill: white;" styleClass="issue-button" text="Renew/Return" textAlignment="CENTER">
+                              <JFXButton fx:id="renewButton" layoutX="255.0" layoutY="35.0" onAction="#loadUserIssueList" prefHeight="33.0" prefWidth="120.0" style="-fx-background-color: #171B2A; -fx-background-radius: 100; -fx-text-fill: white;" styleClass="issue-button" text="Renew/Return" textAlignment="CENTER">
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor>

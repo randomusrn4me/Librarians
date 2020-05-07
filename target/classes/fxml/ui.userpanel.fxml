@@ -1,25 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.effect.Bloom?>
-<?import javafx.scene.effect.Glow?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
-<?import javafx.scene.text.TextFlow?>
+<?import com.jfoenix.controls.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<StackPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="472.0" prefWidth="704.0" stylesheets="@ui.userpanel.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.userPanel.UserPanelController">
+<StackPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="472.0" prefWidth="704.0" stylesheets="@ui.userpanel.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.userPanel.UserPanelController">
     <children>
         <BorderPane prefHeight="200.0" prefWidth="704.0">
             <top>
@@ -121,23 +111,21 @@
                   <VBox fx:id="welcomeBox" prefHeight="418.0" prefWidth="551.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <Text fx:id="userInfoBox" strokeType="OUTSIDE" strokeWidth="0.0" text="Current user: General User /null/" textAlignment="CENTER" visible="false" />
-                        <TextFlow maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.71" style="-fx-background-color: #EDA49A;">
+                        <Text fill="#0d0c0c" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome to your Personal Library Manager!" textAlignment="CENTER" wrappingWidth="296.18603515625">
+                           <font>
+                              <Font name="Constantia" size="20.0" />
+                           </font>
+                        </Text>
+                        <VBox alignment="CENTER" prefHeight="57.0" prefWidth="541.0">
                            <children>
-                              <Text fill="#0d0c0c" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome to your Personal Library Manager!">
+                              <JFXButton alignment="CENTER" contentDisplay="CENTER" onAction="#loadUserGuide" prefHeight="72.0" prefWidth="232.0" style="-fx-background-color: #171B2A;" text="Click here to open the User Guide!" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP">
                                  <font>
-                                    <Font name="Constantia Bold" size="17.0" />
+                                    <Font name="Constantia" size="14.0" />
                                  </font>
-                                 <effect>
-                                    <Bloom />
-                                 </effect>
-                              </Text>
-                           </children>
-                           <VBox.margin>
-                              <Insets left="110.0" top="40.0" />
-                           </VBox.margin>
-                        </TextFlow>
-                        <VBox alignment="CENTER">
-                           <children>
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </JFXButton>
                               <TextFlow opacity="0.63" prefHeight="19.0" prefWidth="141.0" style="-fx-background-color: #EDA49A;" visible="false">
                                  <VBox.margin>
                                     <Insets right="400.0" />
@@ -161,14 +149,6 @@
                                     </Text>
                                  </children>
                               </TextFlow>
-                              <JFXButton onAction="#loadUserGuide" style="-fx-background-color: #171B2A; -fx-border-color: white;" text="Click here to open the User Guide!" textFill="WHITE">
-                                 <font>
-                                    <Font name="Constantia" size="14.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets />
-                                 </VBox.margin>
-                              </JFXButton>
                            </children>
                            <VBox.margin>
                               <Insets left="10.0" top="300.0" />

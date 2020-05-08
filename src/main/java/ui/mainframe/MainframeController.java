@@ -169,10 +169,17 @@ public class MainframeController implements Initializable {
                 String printStatus = "Status: " + (bStatus ? "Available" : "Unavailable");
                 bookStatus.setText(printStatus);
                 bookStatus.setStyle("-fx-font-weight:bold");
-                if(bStatus) bookStatus.setFill(Color.GREEN);
-                if(!bStatus) bookStatus.setFill(Color.RED);
+                if(bStatus){
+                    bookStatus.setFill(Color.GREEN);
+                    validBook = true;
+                }
+
+                if(!bStatus){
+                    bookStatus.setFill(Color.RED);
+                    validBook = false;
+                }
                 flag = true;
-                validBook = true;
+
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -190,6 +197,7 @@ public class MainframeController implements Initializable {
     void loadUserInfo() {
         String username = usernameInput.getText().toLowerCase();
         //String username = usernameInput.getText();
+
         if(username.isEmpty()){
             entName();
             validUser = false;
@@ -234,7 +242,8 @@ public class MainframeController implements Initializable {
     void loadIssueBook() {
         //String username = usernameInput.getText();
         loadBookInfo();
-        if(!validBook){
+        loadUserInfo();
+        if(!validBook || !validUser){
             return;
         }
         String username = usernameInput.getText().toLowerCase();
@@ -353,12 +362,12 @@ public class MainframeController implements Initializable {
 
     @FXML
     void loadListBooksWindow() {
-        windowLoader("/fxml/ui.list_books.fxml", "List Of Books");
+        windowLoader("/fxml/ui.list_books.fxml", "List of Books");
     }
 
     @FXML
     void loadListUsersWindow() {
-        windowLoader("/fxml/ui.list_users.fxml", "List Of Users");
+        windowLoader("/fxml/ui.list_users.fxml", "List of Users");
     }
 
     @FXML

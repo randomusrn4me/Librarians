@@ -122,7 +122,7 @@ public class ListUsersController implements Initializable {
         assert rs != null;
         if(rs.next()){
             alertError("Selected user cannot be deleted, there are still books issued to them." +
-                    "Please notify them to return all books before deletion.");
+                    " Please notify them to return all books before deletion.");
             return;
         }
         String act = "DELETE FROM USER WHERE username = '" + selectedForDelete.getUsername() + "'";

@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ContextMenu?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="rootPane" prefHeight="400.0" prefWidth="700.0" style="-fx-background-radius: 30;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.listBooks.ListBooksController">
+<AnchorPane fx:id="rootPane" prefHeight="400.0" prefWidth="700.0" style="-fx-background-radius: 30;" stylesheets="@ui.listbooks.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.listBooks.ListBooksController">
    <children>
       <TableView fx:id="tableView" layoutX="7.0" layoutY="30.0" prefHeight="400.0" prefWidth="600.0" stylesheets="@ui.tables.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columns>
@@ -20,6 +23,7 @@
                   <items>
                       <MenuItem fx:id="delMenu" mnemonicParsing="false" onAction="#handleDeleteBook" text="Delete book" />
                       <MenuItem fx:id="editMenu" mnemonicParsing="false" onAction="#handleEditBook" text="Edit book details" />
+                      <MenuItem fx:id="issuedMenu" mnemonicParsing="false" onAction="#handleShowIssued" text="Issued to..." />
                   </items>
               </ContextMenu>
           </contextMenu>

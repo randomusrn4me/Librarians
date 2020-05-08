@@ -163,6 +163,7 @@ public class LoginController implements Initializable {
             Stage stage = new Stage(StageStyle.DECORATED);
             stage.setTitle(title);
             stage.setScene(new Scene(parent));
+            stage.setResizable(false);
             stage.getIcons().add(new Image("icons/library.png"));
             stage.show();
 

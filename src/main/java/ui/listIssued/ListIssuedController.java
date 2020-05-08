@@ -228,9 +228,9 @@ public class ListIssuedController implements Initializable {
             return;
         }
 
-        String act = "UPDATE ISSUE SET dueDate = default, issueDate = default, " +
+        String act = "UPDATE ISSUE SET dueDate = default, " +
                 "renewCount = renewCount + 1  WHERE bookID IN (" + in.toString();
-        String act2 = "UPDATE ISSUE SET dueDate = DATEADD('week', 2, issueDate) WHERE bookID IN (" + in.toString();
+        String act2 = "UPDATE ISSUE SET dueDate = DATEADD('week', 2, dueDate) WHERE bookID IN (" + in.toString();
 
         if(databaseHandler.execAction(act) && databaseHandler.execAction(act2)){
             for(Issue li : list){

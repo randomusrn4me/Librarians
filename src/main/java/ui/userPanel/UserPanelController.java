@@ -76,20 +76,28 @@ public class UserPanelController implements Initializable {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(location));
             Parent parent = loader.load();
+            boolean resizeable = false;
 
-            if(location.contains("issued")){
+            if(location.contains("list_issued")){
                 ListIssuedController controller = loader.getController();
                 controller.setReceivedUser(receivedUserClass);
                 controller.initByHand();
+                resizeable = true;
             } else if(location.contains("list_books")){
                 System.out.println("contains");
                 ListBooksController controller = loader.getController();
                 controller.setReceivedUser(receivedUserClass);
                 controller.initByHand();
+                resizeable = true;
+            } else if(location.contains("search")){
+                resizeable = true;
             }
             Stage stage = new Stage(StageStyle.DECORATED);
             stage.setTitle(title);
             stage.setScene(new Scene(parent));
+            if(!resizeable){
+                stage.setResizable(false);
+            }
             stage.getIcons().add(new Image("icons/library.png"));
             stage.show();
 
@@ -137,6 +145,7 @@ public class UserPanelController implements Initializable {
             Stage stage = new Stage(StageStyle.DECORATED);
             stage.setTitle("Editing User Information");
             stage.setScene(new Scene(parent));
+            stage.setResizable(false);
             stage.getIcons().add(new Image("icons/library.png"));
             stage.show();
 

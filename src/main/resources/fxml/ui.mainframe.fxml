@@ -242,7 +242,7 @@
             <MenuBar prefHeight="26.0" prefWidth="568.0" style="-fx-background-color: #171B2A;" BorderPane.alignment="CENTER">
               <menus>
                 <Menu fx:id="loggedInUser" mnemonicParsing="false" style="-fx-font-weight: bold; -fx-font-size: 12;" text="Admin: /null/" />
-                <Menu mnemonicParsing="false" text="Preferences">
+                <Menu mnemonicParsing="false" text="Options">
                   <items>
                     <MenuItem mnemonicParsing="false" onAction="#bulkRenewPressed" text="Bulk renew" />
                   </items>

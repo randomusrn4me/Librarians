@@ -90,10 +90,54 @@ public class MainframeController implements Initializable {
     @FXML
     private JFXButton renewButton;
 
-
     @FXML
     void bulkRenewPressed() {
-        System.out.println("bulkrenew");
+        StringBuilder act = new StringBuilder();
+        act.append("UPDATE ISSUE SET dueDate = DATEADD('week',");
+
+        Alert confirm = new Alert(Alert.AlertType.CONFIRMATION,
+            "Are you sure you want to renew all the issued books?", ButtonType.NEXT, ButtonType.CANCEL);
+        confirm.setTitle("Confirm Bulk Renew");
+        confirm.setHeaderText(null);
+        Optional<ButtonType> conf = confirm.showAndWait();
+        if(conf.get() != ButtonType.NEXT) return;
+
+        ButtonType one = new ButtonType("1 week", ButtonBar.ButtonData.OK_DONE);
+        ButtonType two = new ButtonType("2 weeks", ButtonBar.ButtonData.OK_DONE);
+        ButtonType four = new ButtonType("4 weeks", ButtonBar.ButtonData.OK_DONE);
+
+
+        Alert amountAlert = new Alert(Alert.AlertType.CONFIRMATION,
+                "How long would you like to renew them for?", one, two, four, ButtonType.CANCEL);
+        amountAlert.setTitle("Bulk Renew Length");
+        amountAlert.setHeaderText(null);
+
+        Optional<ButtonType> response = amountAlert.showAndWait();
+        if(response.get() == one){
+            act.append("1, dueDate)");
+        }
+        else if(response.get() == two){
+            act.append("2, dueDate)");
+        }
+        else if(response.get() == four){
+            act.append("4, dueDate)");
+        }
+        else return;
+
+        if(databaseHandler.execAction(act.toString())){
+            Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
+            alert2.setTitle("Success");
+            alert2.setHeaderText(null);
+            alert2.setContentText("All issued books have been renewed for an additional "
+                    + response.get().getText() + " successfully.");
+            alert2.showAndWait();
+        }else {
+            Alert alert3 = new Alert(Alert.AlertType.ERROR);
+            alert3.setTitle("Failed");
+            alert3.setHeaderText(null);
+            alert3.setContentText("Could not renew the issued books.");
+            alert3.showAndWait();
+        }
     }
 
     @FXML
@@ -316,17 +360,20 @@ public class MainframeController implements Initializable {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(location));
             Parent parent = loader.load();
+            boolean resizeable = false;
 
             if(location.contains("list_issued")){
                 ListIssuedController controller = loader.getController();
                 controller.setReceivedUser(queriedUser);
                 System.out.println(queriedUser.getUsername());
+                resizeable = true;
             }
 
             if(location.contains("list_books")){
                 System.out.println("contains");
                 ListBooksController controller = loader.getController();
                 controller.setReceivedUser(receivedUserClass);
+                resizeable = true;
             }
 
             if(location.contains("list_users")){
@@ -340,11 +387,18 @@ public class MainframeController implements Initializable {
                 System.out.println("contains users");
                 ListUsersController controller = loader.getController();
                 controller.setReceivedUser(receivedUserClass);
+                resizeable = true;
+            }
+            if(location.contains("search")){
+                resizeable = true;
             }
 
             Stage stage = new Stage(StageStyle.DECORATED);
             stage.setTitle(title);
             stage.setScene(new Scene(parent));
+            if(!resizeable){
+                stage.setResizable(false);
+            }
             stage.getIcons().add(new Image("icons/library.png"));
             stage.show();
         } catch (IOException e) {

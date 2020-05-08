@@ -27,8 +27,12 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.TreeMap;
 
 public class MainframeController implements Initializable {
 
@@ -238,7 +242,7 @@ public class MainframeController implements Initializable {
         toolTip.setText("");
         toolTip.setStyle("-fx-font-weight:bold");
 
-        //String qu = "SELECT * FROM USER WHERE username = '" + username + "'";
+
 
         if(username.isEmpty() || bookID.isEmpty()){
             toolTip.setFill(Color.RED);
@@ -253,6 +257,47 @@ public class MainframeController implements Initializable {
                 validBook = false;
                 validityCheck();
             }
+            return;
+        }
+        String qu = "SELECT * FROM ISSUE WHERE username = '" + username + "'";
+        ResultSet rs = databaseHandler.execQuery(qu);
+        TreeMap<String, LocalDate> overdueBooks = new TreeMap<>();
+        LocalDate actual = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        formatter.format(actual);
+        //boolean found = false;
+        while(true){
+            try {
+                assert rs != null;
+                if (!rs.next()) break;
+                String bid = rs.getString("bookID");
+                LocalDate dueDate = rs.getDate("dueDate").toLocalDate();
+                if(dueDate.compareTo(actual) < 0){
+                    qu = "SELECT * FROM BOOK WHERE id = '" + bid + "'";
+                    ResultSet rsBook = databaseHandler.execQuery(qu);
+                    assert rsBook != null;
+                    if(rsBook.next()){
+                        String title = rsBook.getString("title");
+                        overdueBooks.put(title, dueDate);
+                    }
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+        }
+        if(!overdueBooks.isEmpty()){
+            StringBuilder msg = new StringBuilder();
+            msg.append("Cannot issue more books to that user.\nThe following book(s) must be returned (or renewed) first:\n");
+            for(Map.Entry<String, LocalDate> entry : overdueBooks.entrySet()){
+                msg.append("\n-Title: ").append(entry.getKey()).append("\n-Exp. Due Date: ").append(entry.getValue()).append("\n");
+            }
+            Alert err = new Alert(Alert.AlertType.ERROR);
+            err.setTitle("Overdue error");
+            err.setHeaderText(null);
+            err.setContentText(msg.toString());
+            err.showAndWait();
             return;
         }
 

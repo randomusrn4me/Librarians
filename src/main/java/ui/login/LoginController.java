@@ -154,6 +154,7 @@ public class LoginController implements Initializable {
             if(isUser){
                 UserPanelController controller = loader.getController();
                 controller.setReceivedUser(userToBeSent);
+                controller.alertOverdue();
             }
             else{
                 MainframeController controller = loader.getController();

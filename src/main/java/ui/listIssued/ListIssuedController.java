@@ -19,6 +19,7 @@ import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
@@ -217,26 +218,47 @@ public class ListIssuedController implements Initializable {
         toAlert.append("The following book(s) have already been renewed 3 times " +
                 "and must be returned before their due date: \n");
         boolean flag = false;
+        boolean maxrenew = false;
+        boolean overdue = false;
+        LocalDate actual = LocalDate.now();
+        StringBuilder overdueAlert = new StringBuilder();
+        overdueAlert.append("\nThe following book(s) have been issued/renewed too recently:\n");
         for(Issue i : selectedForRenew){
             if(i.getRenewCount() == 3){
                 flag = true;
-                toAlert.append(i.getId()).append("\n");
+                maxrenew = true;
+                toAlert.append("-").append(i.getId()).append("\n");
+            }
+            Period period = Period.between(i.getDueDate(), actual);
+            if(period.getDays() < 7){
+                flag = true;
+                overdue = true;
+                overdueAlert.append("-").append(i.getId()).append("\n");
             }
         }
+        overdueAlert.append("\nBooks may only be renewed within 7 days of their due date.");
         if(flag){
-            alertError(toAlert.toString());
+            if(maxrenew && overdue){
+                alertError(toAlert.toString().concat(overdueAlert.toString()));
+                return;
+            }
+            else if(maxrenew){
+                alertError(toAlert.toString());
+                return;
+            }
+            else alertError(overdueAlert.toString());
             return;
         }
 
-        String act = "UPDATE ISSUE SET dueDate = default, issueDate = default, " +
-                "renewCount = renewCount + 1  WHERE bookID IN (" + in.toString();
-        String act2 = "UPDATE ISSUE SET dueDate = DATEADD('week', 2, issueDate) WHERE bookID IN (" + in.toString();
+        String act = "UPDATE ISSUE SET dueDate = DATEADD('week', 2, dueDate)," +
+                " renewCount = renewCount + 1 WHERE bookID IN (" + in.toString();
 
-        if(databaseHandler.execAction(act) && databaseHandler.execAction(act2)){
+        if(databaseHandler.execAction(act)){
             for(Issue li : list){
                 for(Issue issue : selectedForRenew){
                     if(issue.getId().equals(li.getId())){
                         li.setRenewCount(li.getRenewCount() + 1);
+                        li.setDueDate(li.getDueDate().plusWeeks(2));
                     }
                 }
             }

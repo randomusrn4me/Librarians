@@ -1,5 +1,7 @@
 package ui.userPanel;
 
+import database.DatabaseHandler;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import utils.*;
@@ -24,7 +26,13 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.TreeMap;
 
 public class UserPanelController implements Initializable {
 
@@ -50,6 +58,49 @@ public class UserPanelController implements Initializable {
     @FXML
     private StackPane rootPane;
 
+    public void alertOverdue(){
+        DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
+        String qu = "SELECT * FROM ISSUE WHERE username = '" + receivedUserClass.getUsername() + "'";
+        ResultSet rs = databaseHandler.execQuery(qu);
+        TreeMap<String, LocalDate> overdueBooks = new TreeMap<>();
+        LocalDate actual = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        formatter.format(actual);
+        while(true){
+            try {
+                assert rs != null;
+                if (!rs.next()) break;
+                String bid = rs.getString("bookID");
+                LocalDate dueDate = rs.getDate("dueDate").toLocalDate();
+                if(dueDate.compareTo(actual) < 0){
+                    qu = "SELECT * FROM BOOK WHERE id = '" + bid + "'";
+                    ResultSet rsBook = databaseHandler.execQuery(qu);
+                    assert rsBook != null;
+                    if(rsBook.next()){
+                        String title = rsBook.getString("title");
+                        overdueBooks.put(title, dueDate);
+                    }
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+        }
+        if(!overdueBooks.isEmpty()){
+            StringBuilder msg = new StringBuilder();
+            msg.append("Hi '").append(receivedUserClass.getUsername()).append("',\nPlease return (or renew) the following overdue book(s):\n");
+            for(Map.Entry<String, LocalDate> entry : overdueBooks.entrySet()){
+                msg.append("\n-Title: ").append(entry.getKey()).append("\n-Exp. Due Date: ").append(entry.getValue()).append("\n");
+            }
+            msg.append("\nAll overdue books must be returned before borrowing more books.\nYou may be subject to overdue charges.");
+            Alert err = new Alert(Alert.AlertType.WARNING);
+            err.setTitle("Overdue books");
+            err.setHeaderText(null);
+            err.setContentText(msg.toString());
+            err.showAndWait();
+        }
+    }
 
     @FXML
     void loadListBooksWindow() {
@@ -76,20 +127,28 @@ public class UserPanelController implements Initializable {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(location));
             Parent parent = loader.load();
+            boolean resizeable = false;
 
-            if(location.contains("issued")){
+            if(location.contains("list_issued")){
                 ListIssuedController controller = loader.getController();
                 controller.setReceivedUser(receivedUserClass);
                 controller.initByHand();
+                resizeable = true;
             } else if(location.contains("list_books")){
                 System.out.println("contains");
                 ListBooksController controller = loader.getController();
                 controller.setReceivedUser(receivedUserClass);
                 controller.initByHand();
+                resizeable = true;
+            } else if(location.contains("search")){
+                resizeable = true;
             }
             Stage stage = new Stage(StageStyle.DECORATED);
             stage.setTitle(title);
             stage.setScene(new Scene(parent));
+            if(!resizeable){
+                stage.setResizable(false);
+            }
             stage.getIcons().add(new Image("icons/library.png"));
             stage.show();
 
@@ -104,6 +163,8 @@ public class UserPanelController implements Initializable {
                 "-fx-background-repeat: no-repeat;" +
                 "-fx-background-size: 600 450;" +
                 "-fx-background-position: center center;");
+
+
 
         rootPane.setFocusTraversable(true);
         rootPane.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -137,6 +198,7 @@ public class UserPanelController implements Initializable {
             Stage stage = new Stage(StageStyle.DECORATED);
             stage.setTitle("Editing User Information");
             stage.setScene(new Scene(parent));
+            stage.setResizable(false);
             stage.getIcons().add(new Image("icons/library.png"));
             stage.show();
 

@@ -167,6 +167,7 @@ public class AddUserController implements Initializable {
         else{
             alertError("Failed to add user to the database.");
         }
+        fullname.requestFocus();
     }
 
     private void handleEditUser() {
@@ -226,5 +227,6 @@ public class AddUserController implements Initializable {
                 }
             }
         });
+        fullname.requestFocus();
     }
 }

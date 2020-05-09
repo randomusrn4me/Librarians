@@ -1,0 +1,29 @@
+.menu .label
+{
+    -fx-text-fill: white;
+}
+.menu-item .label
+{
+	-fx-background-color: rgba(0,0,0,0);
+
+}
+.menu:hover, .menu:focused, .menu:pressed {
+    -fx-background-color: rgba(	0, 139, 139, 0.2);
+}
+
+.menu-item:hover {
+    -fx-background-color: rgba(	0, 139, 139, 0.3);
+}
+.context-menu {
+    -fx-background-color: rgba(53, 62, 98, 1);
+	-fx-border-radius: 10%;
+}
+.menu-bar {
+    -fx-background-color: transparent;
+}
+.menu-item:focused {
+   -fx-background-color : rgba(101, 115, 171, 0.8);
+}
+.menu:hover, .menu:showing{
+  -fx-background-color: rgba(23,27,42,0.2);
+}

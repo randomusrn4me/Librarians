@@ -73,6 +73,7 @@ public class EditUserPasswordController implements Initializable {
             Stage stage = new Stage(StageStyle.DECORATED);
             stage.setTitle("Edit Own User Details");
             stage.setScene(new Scene(parent));
+            stage.setResizable(false);
             stage.getIcons().add(new Image("icons/library.png"));
             stage.showAndWait();
         } catch (IOException e) {

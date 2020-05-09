@@ -17,6 +17,7 @@ public class LoginMain extends Application {
         Parent root = (Parent)FXMLLoader.load(this.getClass().getResource("/fxml/ui.login.fxml"));
         Scene scene = new Scene(root);
         stage.setTitle("Login");
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.getIcons().add(new Image("icons/library.png"));
         stage.show();

@@ -15,7 +15,10 @@
                <children>
                   <HBox alignment="TOP_CENTER" prefHeight="55.0" prefWidth="377.0">
                      <children>
-                        <Text fx:id="statusText" strokeType="OUTSIDE" strokeWidth="0.0" text="Please sign in to start using the software!" textAlignment="CENTER" wrappingWidth="217.34765625" />
+                        <Text fx:id="statusText" strokeType="OUTSIDE" strokeWidth="0.0" text="Please sign in to start using the software!" textAlignment="CENTER" wrappingWidth="217.34765625">
+                           <font>
+                              <Font name="Constantia" size="12.0" />
+                           </font></Text>
                      </children>
                   </HBox>
                   <HBox alignment="CENTER">
@@ -25,7 +28,10 @@
                               <Insets right="5.0" />
                            </HBox.margin>
                         </FontAwesomeIconView>
-                        <TextField fx:id="usernameBox" promptText="username" style="-fx-background-radius: 30; -fx-border-radius: 30; -fx-background-color: #EDA49A; -fx-prompt-text-fill: white;" />
+                        <TextField fx:id="usernameBox" prefHeight="22.0" prefWidth="139.0" promptText="username" style="-fx-background-radius: 30; -fx-border-radius: 30; -fx-background-color: #EDA49A; -fx-prompt-text-fill: white;">
+                           <font>
+                              <Font name="Constantia" size="12.0" />
+                           </font></TextField>
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0">
@@ -35,33 +41,42 @@
                               <Insets right="5.0" top="25.0" />
                            </HBox.margin>
                         </FontAwesomeIconView>
-                        <PasswordField fx:id="passwordBox" promptText="password" style="-fx-background-radius: 30; -fx-border-radius: 30; -fx-background-color: #EDA49A; -fx-prompt-text-fill: white;">
+                        <PasswordField fx:id="passwordBox" prefHeight="22.0" prefWidth="139.0" promptText="password" style="-fx-background-radius: 30; -fx-border-radius: 30; -fx-background-color: #EDA49A; -fx-prompt-text-fill: white;">
                            <HBox.margin>
                               <Insets top="25.0" />
                            </HBox.margin>
                            <cursor>
                               <Cursor fx:constant="TEXT" />
                            </cursor>
+                           <font>
+                              <Font name="Constantia" size="12.0" />
+                           </font>
                         </PasswordField>
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" layoutX="10.0" layoutY="90.0">
                      <children>
-                        <Button fx:id="loginButton" mnemonicParsing="false" onAction="#loginButtonPushed" style="-fx-background-radius: 100; -fx-background-color: #171B2A; -fx-text-fill: white;" text="Login" textAlignment="CENTER">
+                        <Button fx:id="loginButton" mnemonicParsing="false" onAction="#loginButtonPushed" prefHeight="24.0" prefWidth="46.0" style="-fx-background-radius: 100; -fx-background-color: #171B2A; -fx-text-fill: white;" text="Login" textAlignment="CENTER">
                            <HBox.margin>
                               <Insets right="5.0" top="15.0" />
                            </HBox.margin>
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
+                           <font>
+                              <Font name="Constantia" size="12.0" />
+                           </font>
                         </Button>
-                        <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#cancelButtonPushed" style="-fx-background-radius: 100; -fx-background-color: #171B2A; -fx-text-fill: white;" text="Cancel" textAlignment="CENTER">
+                        <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#cancelButtonPushed" prefHeight="24.0" prefWidth="53.0" style="-fx-background-radius: 100; -fx-background-color: #171B2A; -fx-text-fill: white;" text="Cancel" textAlignment="CENTER">
                            <HBox.margin>
                               <Insets left="5.0" top="15.0" />
                            </HBox.margin>
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
+                           <font>
+                              <Font name="Constantia" size="12.0" />
+                           </font>
                         </Button>
                      </children>
                   </HBox>
@@ -72,7 +87,10 @@
                   <Font name="Constantia" size="19.0" />
                </font>
             </Text>
-            <Text layoutX="86.0" layoutY="320.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-line-spacing: 1.5px;" text="If you don't have an account yet or have forgotten your password, please find a librarian for assistance!" textAlignment="CENTER" underline="true" wrappingWidth="217.34765624999994" />
+            <Text layoutX="86.0" layoutY="320.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-line-spacing: 1.5px;" text="If you don't have an account yet or have forgotten your password, please find a librarian for assistance!" textAlignment="CENTER" underline="true" wrappingWidth="217.34765624999994">
+               <font>
+                  <Font name="Constantia" size="12.0" />
+               </font></Text>
          </children>
       </Pane>
    </children>

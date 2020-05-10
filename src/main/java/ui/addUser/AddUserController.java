@@ -2,7 +2,7 @@ package ui.addUser;
 
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Region;
+import ui.login.LoginController;
 import utils.*;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
@@ -17,8 +17,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import org.apache.commons.lang3.RandomStringUtils;
-import ui.listUsers.ListUsersController;
-import ui.login.LoginController;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -167,7 +165,6 @@ public class AddUserController implements Initializable {
         else{
             alertError("Failed to add user to the database.");
         }
-        fullname.requestFocus();
     }
 
     private void handleEditUser() {
@@ -227,6 +224,5 @@ public class AddUserController implements Initializable {
                 }
             }
         });
-        fullname.requestFocus();
     }
 }

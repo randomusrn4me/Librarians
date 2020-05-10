@@ -1,21 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.Cursor?>
-<?import javafx.scene.control.DialogPane?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
-<?import javafx.scene.text.TextFlow?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="534.0" prefWidth="724.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.userGuide.UserGuideController">
+<AnchorPane prefHeight="534.0" prefWidth="724.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.userGuide.UserGuideController">
    <children>
       <DialogPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="480.0">
           <header>
@@ -34,7 +26,7 @@
                <children>
                   <Text fx:id="guideText" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER">
                      <font>
-                        <Font name="System Bold" size="12.0" />
+                        <Font name="Constantia Bold" size="12.0" />
                      </font>
                   </Text>
                </children>
@@ -73,6 +65,9 @@
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
+                           <font>
+                              <Font name="Constantia" size="12.0" />
+                           </font>
                         </Label>
                         <Label fx:id="editInfoLabel" text="Change your User Details" GridPane.columnIndex="2" GridPane.rowIndex="1">
                            <GridPane.margin>
@@ -81,6 +76,9 @@
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
+                           <font>
+                              <Font name="Constantia" size="12.0" />
+                           </font>
                         </Label>
                         <Label fx:id="issuedLabel" alignment="BOTTOM_CENTER" text="View/Renew your Issued Books">
                            <GridPane.margin>
@@ -89,6 +87,9 @@
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
+                           <font>
+                              <Font name="Constantia" size="12.0" />
+                           </font>
                         </Label>
                         <Label fx:id="allBooksLabel" text="List All Books" GridPane.rowIndex="1">
                            <GridPane.margin>
@@ -97,6 +98,9 @@
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
+                           <font>
+                              <Font name="Constantia" size="12.0" />
+                           </font>
                         </Label>
                         <Label fx:id="changePassLabel" layoutX="110.0" layoutY="41.0" text="Change your Password" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <GridPane.margin>
@@ -105,6 +109,9 @@
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
+                           <font>
+                              <Font name="Constantia" size="12.0" />
+                           </font>
                         </Label>
                         <Label fx:id="generalLabel" text="General Information" GridPane.columnIndex="1">
                            <GridPane.margin>
@@ -113,6 +120,9 @@
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
+                           <font>
+                              <Font name="Constantia" size="12.0" />
+                           </font>
                         </Label>
                      </children>
                      <HBox.margin>

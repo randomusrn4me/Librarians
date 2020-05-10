@@ -8,7 +8,7 @@ import java.sql.*;
 public final class DatabaseHandler {
 
     private static DatabaseHandler handler = null;
-    private static final String DB_URL = "jdbc:h2:~/database;AUTO_SERVER=TRUE;create=true";
+    private static final String DB_URL = "jdbc:h2:~/database;create=true";
     private static Connection conn = null;
     private static Statement stmt = null;
 
@@ -142,5 +142,27 @@ public final class DatabaseHandler {
         execAction(act);
 
     }
+
+    /*
+    public void removeUser(String username){
+        String act = "DELETE FROM USER WHERE username = '" + username + "'";
+
+        if(execAction(act)){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Success");
+            alert.setHeaderText(null);
+            alert.setContentText("Successfully removed user: + " + username + " from the database.");
+            alert.showAndWait();
+        }
+        else{
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("User not found in the database!");
+            alert.showAndWait();
+        }
+    }
+
+     */
 
 }

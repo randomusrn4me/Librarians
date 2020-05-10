@@ -1,24 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import com.jfoenix.controls.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<StackPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="472.0" prefWidth="728.0" stylesheets="@ui.mainframe.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.mainframe.MainframeController">
+<StackPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="472.0" prefWidth="728.0" stylesheets="@ui.mainframe.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.mainframe.MainframeController">
    <children>
       <BorderPane prefHeight="472.0" prefWidth="606.0">
          <right>
@@ -38,6 +28,9 @@
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
+                     <font>
+                        <Font name="Constantia" size="12.0" />
+                     </font>
                   </Button>
                   <Button contentDisplay="TOP" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#loadAddBookWindow" prefHeight="91.0" prefWidth="153.0" style="-fx-background-color: #171B2A; -fx-text-fill: white; -fx-border-color: white;" text="Add Book">
                      <graphic>
@@ -53,6 +46,9 @@
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
+                     <font>
+                        <Font name="Constantia" size="12.0" />
+                     </font>
                   </Button>
                   <Button contentDisplay="TOP" layoutX="10.0" layoutY="101.0" mnemonicParsing="false" onAction="#loadListUsersWindow" prefHeight="91.0" prefWidth="153.0" style="-fx-background-color: #171B2A; -fx-text-fill: white; -fx-border-color: white;" text="List Users">
                      <graphic>
@@ -65,6 +61,9 @@
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
+                     <font>
+                        <Font name="Constantia" size="12.0" />
+                     </font>
                   </Button>
                   <Button contentDisplay="TOP" layoutX="10.0" layoutY="101.0" mnemonicParsing="false" onAction="#loadListBooksWindow" prefHeight="91.0" prefWidth="153.0" style="-fx-background-color: #171B2A; -fx-text-fill: white; -fx-border-color: white;" text="List Books">
                      <graphic>
@@ -77,6 +76,9 @@
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
+                     <font>
+                        <Font name="Constantia" size="12.0" />
+                     </font>
                   </Button>
                   <Button contentDisplay="TOP" layoutX="10.0" layoutY="367.0" mnemonicParsing="false" onAction="#loadSearchWindow" prefHeight="91.0" prefWidth="153.0" style="-fx-background-color: #171B2A; -fx-text-fill: white; -fx-border-color: white;" text="Search Books">
                      <graphic>
@@ -89,6 +91,9 @@
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
+                     <font>
+                        <Font name="Constantia" size="12.0" />
+                     </font>
                   </Button>
                   <Button contentDisplay="TOP" layoutX="10.0" layoutY="192.0" mnemonicParsing="false" onAction="#logoutButtonPushed" prefHeight="91.0" prefWidth="153.0" style="-fx-background-color: #171B2A; -fx-text-fill: white; -fx-border-color: white;" text="Logout">
                      <graphic>
@@ -101,6 +106,9 @@
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
+                     <font>
+                        <Font name="Constantia" size="12.0" />
+                     </font>
                   </Button>
                </children>
             </VBox>
@@ -119,6 +127,9 @@
                                  <cursor>
                                     <Cursor fx:constant="TEXT" />
                                  </cursor>
+                                 <font>
+                                    <Font name="Constantia" size="12.0" />
+                                 </font>
                               </TextField>
                               <VBox alignment="CENTER" prefHeight="159.0" prefWidth="409.0" style="-fx-background-color: #EDA49A; -fx-background-radius: 25;">
                                  <children>
@@ -127,7 +138,7 @@
                                           <Insets />
                                        </VBox.margin>
                                        <font>
-                                          <Font size="14.0" />
+                                          <Font name="Constantia" size="14.0" />
                                        </font>
                                     </Text>
                                     <Text fx:id="bookAuthor" fill="WHITE" layoutX="10.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #171B2A;" text="Author" textAlignment="CENTER" wrappingWidth="385.88671875">
@@ -135,7 +146,7 @@
                                           <Insets top="10.0" />
                                        </VBox.margin>
                                        <font>
-                                          <Font size="14.0" />
+                                          <Font name="Constantia" size="14.0" />
                                        </font>
                                     </Text>
                                     <Text fx:id="bookStatus" fill="WHITE" layoutX="10.0" layoutY="106.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #171B2A;" text="Status" textAlignment="CENTER" wrappingWidth="385.88671875">
@@ -143,7 +154,7 @@
                                           <Insets top="10.0" />
                                        </VBox.margin>
                                        <font>
-                                          <Font size="14.0" />
+                                          <Font name="Constantia" size="14.0" />
                                        </font>
                                     </Text>
                                  </children>
@@ -173,6 +184,9 @@
                                  <cursor>
                                     <Cursor fx:constant="TEXT" />
                                  </cursor>
+                                 <font>
+                                    <Font name="Constantia" size="12.0" />
+                                 </font>
                               </TextField>
                               <VBox alignment="CENTER" prefHeight="130.0" prefWidth="331.0" style="-fx-background-radius: 25; -fx-background-color: #EDA49A;">
                                  <children>
@@ -181,7 +195,7 @@
                                           <Insets />
                                        </VBox.margin>
                                        <font>
-                                          <Font size="14.0" />
+                                          <Font name="Constantia" size="14.0" />
                                        </font>
                                     </Text>
                                     <Text fx:id="usernameOfUser" fill="WHITE" layoutX="10.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #171B2A;" text="Username" textAlignment="CENTER" wrappingWidth="385.88671875">
@@ -189,12 +203,12 @@
                                           <Insets top="10.0" />
                                        </VBox.margin>
                                        <font>
-                                          <Font size="14.0" />
+                                          <Font name="Constantia" size="14.0" />
                                        </font>
                                     </Text>
                                     <Text fx:id="emailOfUser" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #171B2A;" text="Contact Information" textAlignment="CENTER" wrappingWidth="385.88671875">
                                        <font>
-                                          <Font size="14.0" />
+                                          <Font name="Constantia" size="14.0" />
                                        </font>
                                        <VBox.margin>
                                           <Insets top="10.0" />
@@ -214,7 +228,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                                  <font>
-                                    <Font size="15.0" />
+                                    <Font name="Constantia" size="15.0" />
                                  </font>
                                  <HBox.margin>
                                     <Insets left="40.0" right="40.0" />
@@ -225,7 +239,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                                  <font>
-                                    <Font size="15.0" />
+                                    <Font name="Constantia" size="15.0" />
                                  </font>
                                  <HBox.margin>
                                     <Insets left="40.0" right="40.0" />
@@ -242,7 +256,7 @@
             <MenuBar prefHeight="26.0" prefWidth="568.0" style="-fx-background-color: #171B2A;" BorderPane.alignment="CENTER">
               <menus>
                 <Menu fx:id="loggedInUser" mnemonicParsing="false" style="-fx-font-weight: bold; -fx-font-size: 12;" text="Admin: /null/" />
-                <Menu mnemonicParsing="false" text="Options">
+                <Menu mnemonicParsing="false" text="Preferences">
                   <items>
                     <MenuItem mnemonicParsing="false" onAction="#bulkRenewPressed" text="Bulk renew" />
                   </items>

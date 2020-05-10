@@ -1,11 +1,10 @@
 package ui.listUsers;
 
 import javafx.scene.image.Image;
+import ui.editUserPassword.EditUserPasswordController;
 import utils.*;
 import database.DatabaseHandler;
 import javafx.beans.property.ReadOnlyStringWrapper;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -22,13 +21,11 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import ui.addUser.AddUserController;
-import ui.editUserPassword.EditUserPasswordController;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -122,7 +119,7 @@ public class ListUsersController implements Initializable {
         assert rs != null;
         if(rs.next()){
             alertError("Selected user cannot be deleted, there are still books issued to them." +
-                    " Please notify them to return all books before deletion.");
+                    "Please notify them to return all books before deletion.");
             return;
         }
         String act = "DELETE FROM USER WHERE username = '" + selectedForDelete.getUsername() + "'";

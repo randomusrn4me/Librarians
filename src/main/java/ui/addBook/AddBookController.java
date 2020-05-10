@@ -61,7 +61,7 @@ public class AddBookController implements Initializable {
         String bookAuthor = author.getText();
         String bookYear = year.getText();
         String bookPublisher = publisher.getText();
-        String bookID = id.getText().toUpperCase();
+        String bookID = id.getText();
         char[] idChars = bookID.toCharArray();
         boolean correctID = idChars.length >= 2;
         for(int i = 1; i < idChars.length; i++){
@@ -114,7 +114,7 @@ public class AddBookController implements Initializable {
         else{
             alertError("Failed to add the book to the database.");
         }
-        title.requestFocus();
+
     }
 
     private void handleEditBook() {
@@ -179,7 +179,6 @@ public class AddBookController implements Initializable {
                 }
             }
         });
-        title.requestFocus();
     }
 
 }

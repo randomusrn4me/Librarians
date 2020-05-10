@@ -29,6 +29,6 @@
     <orderEntry type="library" name="javafx-swt" level="application" />
     <orderEntry type="library" name="fontawesomefx-commons-9.1.2" level="application" />
     <orderEntry type="library" name="com_jfoenix_jfoenix_9.0.8_jfoenix-9.0.8" level="application" />
-    <orderEntry type="library" name="h2-1.4.200" level="project" />
+    <orderEntry type="library" name="h2-1.4.200" level="application" />
   </component>
 </module>

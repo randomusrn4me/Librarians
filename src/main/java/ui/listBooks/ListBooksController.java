@@ -68,6 +68,9 @@ public class ListBooksController implements Initializable {
     @FXML
     private MenuItem editMenu;
 
+    @FXML
+    private MenuItem issuedMenu;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -94,6 +97,7 @@ public class ListBooksController implements Initializable {
         if(receivedUserClass.getIsUser()){
             delMenu.setVisible(false);
             editMenu.setVisible(false);
+            issuedMenu.setVisible(false);
             System.out.println("it's a user");
         }
     }
@@ -103,6 +107,36 @@ public class ListBooksController implements Initializable {
         alert.setTitle("Error");
         alert.setHeaderText(null);
         alert.setContentText(text);
+        alert.showAndWait();
+    }
+
+    @FXML
+    void handleShowIssued() throws SQLException{
+        DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
+        Book selectedBook = tableView.getSelectionModel().getSelectedItem();
+        if(selectedBook == null){
+            return;
+        }
+        if(selectedBook.isAvailability()){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Issued to...");
+            alert.setHeaderText(null);
+            alert.setContentText("This book (ID: " + selectedBook.getId() + ") is not issued to anyone.");
+            alert.showAndWait();
+            return;
+        }
+        String qu = "SELECT username FROM ISSUE WHERE bookID='" + selectedBook.getId() + "'";
+
+        ResultSet rs = databaseHandler.execQuery(qu);
+        if(rs == null){
+            System.out.println("db error");
+            return;
+        }
+        rs.next();
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Issued to...");
+        alert.setHeaderText(null);
+        alert.setContentText("This book (ID: " + selectedBook.getId() + ") is issued to \"" + rs.getString("username") + "\".");
         alert.showAndWait();
     }
 

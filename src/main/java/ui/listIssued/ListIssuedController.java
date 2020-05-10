@@ -68,6 +68,7 @@ public class ListIssuedController implements Initializable {
     @FXML
     private AnchorPane rootPane;
 
+
     void loadData() throws SQLException {
         DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
 
@@ -100,6 +101,7 @@ public class ListIssuedController implements Initializable {
                 e.printStackTrace();
             }
             tableView.setItems(list);
+
         }
 
         tableView.getSelectionModel().setSelectionMode(
@@ -191,7 +193,9 @@ public class ListIssuedController implements Initializable {
             alertError("No book selected.\nPlease select a book to be renewed.");
             return;
         }
-
+        if(list.isEmpty()){
+            return;
+        }
         Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
         confirm.setTitle("Confirm Renew");
         confirm.setHeaderText(null);

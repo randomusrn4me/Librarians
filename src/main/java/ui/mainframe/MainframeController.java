@@ -332,6 +332,8 @@ public class MainframeController implements Initializable {
                     alert2.setHeaderText(null);
                     alert2.setContentText("Book issued successfully.");
                     alert2.showAndWait();
+                    loadBookInfo();
+                    validityCheck();
             } else{
                     Alert alert3 = new Alert(Alert.AlertType.ERROR);
                     alert3.setTitle("Failed");

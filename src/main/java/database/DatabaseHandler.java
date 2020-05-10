@@ -8,7 +8,8 @@ import java.sql.*;
 public final class DatabaseHandler {
 
     private static DatabaseHandler handler = null;
-    private static final String DB_URL = "jdbc:h2:~/database;create=true";
+    //private static final String DB_URL = "jdbc:h2:~/database;create=true";
+    private static final String DB_URL = "jdbc:h2:~/database;AUTO_SERVER=TRUE;create=true";
     private static Connection conn = null;
     private static Statement stmt = null;
 

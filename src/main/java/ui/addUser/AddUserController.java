@@ -19,6 +19,8 @@ import javafx.stage.Stage;
 import org.apache.commons.lang3.RandomStringUtils;
 
 import java.net.URL;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -55,6 +57,8 @@ public class AddUserController implements Initializable {
     private CheckBox userCheckBox;
 
     private boolean isInEditMode = false;
+
+    private User updUser;
 
     private void alertError(String text){
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -183,6 +187,7 @@ public class AddUserController implements Initializable {
     }
 
     public void inflateAddUserUI(User user){
+
         fullname.setText(user.getFullname());
         username.setText(user.getUsername());
         address.setText(user.getAddress());
@@ -192,6 +197,22 @@ public class AddUserController implements Initializable {
         userCheckBox.setDisable(true);
         addUser.setText("Save");
         isInEditMode = true;
+
+        String qu = "SELECT * FROM USER WHERE username = '" + user.getUsername() + "'";
+        ResultSet rs = handler.execQuery(qu);
+        assert rs != null;
+
+            try {
+                if (!rs.next()) return;
+                fullname.setText(rs.getString("fullname"));
+                email.setText(rs.getString("email"));
+                address.setText(rs.getString("address"));
+                phonenumber.setText(rs.getString("phone"));
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
     }
 
     @FXML

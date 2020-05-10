@@ -229,8 +229,8 @@ public class ListIssuedController implements Initializable {
                 maxrenew = true;
                 toAlert.append("-").append(i.getId()).append("\n");
             }
-            Period period = Period.between(i.getDueDate(), actual);
-            if(period.getDays() < 7){
+            Period period = Period.between(actual,i.getDueDate());
+            if(period.getDays() > 7){
                 flag = true;
                 overdue = true;
                 overdueAlert.append("-").append(i.getId()).append("\n");

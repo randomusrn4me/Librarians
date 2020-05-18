@@ -2,6 +2,7 @@
 Developers: Berényi Ervin, Kátai Patrik, Kovács Máté, Molnár István
 
 Our goal was to create a software for libraries to manage their day-to-day operations, such as maintaining a catalog of books, issuing to readers, who may view, search and handle their corner of the library through an intuitive user interface.
+
 Development tools used: JDK 11.0.2, IntelliJ IDEA, Apache Maven, JavaFX + Gluon SceneBuilder, H2 Database (SQL),  Trello development table (Kanban), Git for VCS
 
 ## User Manual for Librarians

@@ -3,6 +3,8 @@ Developers: Berényi Ervin, Kátai Patrik, Kovács Máté, Molnár István
 
 Our goal was to create a software for libraries to manage their day-to-day operations, such as maintaining a catalog of books, issuing to readers, who may view, search and handle their corner of the library through an intuitive user interface.
 
+Requires JDK 11.0.2 to run the Librarians.jar executable.
+
 Development tools used: JDK 11.0.2, IntelliJ IDEA, Apache Maven, JavaFX 11 + Gluon SceneBuilder, H2 Database (SQL),  Trello development table (Kanban), Git for VCS
 
 ## User Manual for Librarians

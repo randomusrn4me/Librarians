@@ -196,7 +196,6 @@ public class MainframeController implements Initializable {
     @FXML
     void loadUserInfo() {
         String username = usernameInput.getText().toLowerCase();
-        //String username = usernameInput.getText();
 
         if(username.isEmpty()){
             entName();
@@ -451,6 +450,7 @@ public class MainframeController implements Initializable {
 
             Stage stage = new Stage(StageStyle.DECORATED);
             stage.setTitle(title);
+            stage.initOwner(rootPane.getScene().getWindow());
             stage.setScene(new Scene(parent));
             if(!resizeable){
                 stage.setResizable(false);
@@ -482,7 +482,6 @@ public class MainframeController implements Initializable {
         else renewButton.setDisable(true);
 
     }
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

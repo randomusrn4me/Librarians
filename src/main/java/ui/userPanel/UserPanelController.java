@@ -143,8 +143,14 @@ public class UserPanelController implements Initializable {
             } else if(location.contains("search")){
                 resizeable = true;
             }
+            else if(location.contains("edit_user")){
+                EditUserPasswordController controller = loader.getController();
+                controller.setReceivedUser(receivedUserClass, receivedUserClass);
+                controller.initByHand();
+            }
             Stage stage = new Stage(StageStyle.DECORATED);
             stage.setTitle(title);
+            stage.initOwner(rootPane.getScene().getWindow());
             stage.setScene(new Scene(parent));
             if(!resizeable){
                 stage.setResizable(false);
@@ -167,46 +173,21 @@ public class UserPanelController implements Initializable {
 
 
         rootPane.setFocusTraversable(true);
-        rootPane.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent keyEvent) {
-                if (keyEvent.getCode() == KeyCode.ESCAPE)  {
-                    logoutButtonPushed();
-                }
+        rootPane.setOnKeyPressed(e -> {
+            if (e.getCode() == KeyCode.ESCAPE)  {
+                logoutButtonPushed();
             }
         });
     }
 
     @FXML
     void editUserInfoPushed() {
-        userDetailsButtonPushed();
+        windowLoader("/fxml/ui.edit_user_password.fxml", "Editing User Information");
     }
 
     @FXML
     void handleAboutPushed() {
         windowLoader("/fxml/about.fxml", "About");
-    }
-
-
-    public void userDetailsButtonPushed() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ui.edit_user_password.fxml"));
-            Parent parent = loader.load();
-            EditUserPasswordController controller = loader.getController();
-            controller.setReceivedUser(receivedUserClass, receivedUserClass);
-
-            Stage stage = new Stage(StageStyle.DECORATED);
-            stage.setTitle("Editing User Information");
-            stage.setScene(new Scene(parent));
-            stage.setResizable(false);
-            stage.getIcons().add(new Image("icons/library.png"));
-            stage.show();
-
-            controller.initByHand();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
 

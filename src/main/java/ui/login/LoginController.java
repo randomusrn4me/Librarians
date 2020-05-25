@@ -150,6 +150,9 @@ public class LoginController implements Initializable {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(location));
             Parent parent = loader.load();
+            Stage stage = new Stage(StageStyle.DECORATED);
+            stage.setTitle(title);
+            stage.setScene(new Scene(parent));
 
             if(isUser){
                 UserPanelController controller = loader.getController();
@@ -161,9 +164,7 @@ public class LoginController implements Initializable {
                 controller.setReceivedUser(username, userToBeSent);
             }
 
-            Stage stage = new Stage(StageStyle.DECORATED);
-            stage.setTitle(title);
-            stage.setScene(new Scene(parent));
+
             stage.setResizable(false);
             stage.getIcons().add(new Image("icons/library.png"));
             stage.show();

@@ -151,7 +151,7 @@ public class ListUsersController implements Initializable {
         User editedUser = tableView.getSelectionModel().getSelectedItem();
         System.out.println("User password edit attempt: " + editedUser.getUsername());
         if(editedUser == null){
-            alertError("No user selected.\nPlease select a user to delete.");
+            alertError("No user selected.\nPlease select a user to edit.");
             return;
         }
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ui.edit_user_password.fxml"));
@@ -184,6 +184,7 @@ public class ListUsersController implements Initializable {
             controller.inflateAddUserUI(selectedForEdit);
             Stage stage = new Stage(StageStyle.DECORATED);
             stage.setTitle("Editing User Information");
+            stage.initOwner(rootPane.getScene().getWindow());
             stage.setScene(new Scene(parent));
             stage.getIcons().add(new Image("icons/library.png"));
             stage.showAndWait();
